@@ -4,7 +4,7 @@ import './App.css'
 import HomeView from './Views/Home-view'
 import LoginView from './Views/Login-view'
 import RegisterView from './Views/Register-view'
-import { Header } from './Components/Header'
+import { Header } from './Components/Header/Header'
 import Footer from './Components/Footer'
 import Category from './Views/Category-view'
 

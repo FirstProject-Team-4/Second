@@ -1,0 +1,33 @@
+.header-class{
+   padding-top: 60px;
+  font-size: 27px;
+  background-color: aquamarine;
+}
+
+.home{
+position: relative;
+left: 10px;
+
+}
+
+.register{
+position: relative;
+left: 1340px;
+}
+
+.login{
+    position: relative;
+left: 1170px;
+}
+
+.search{
+    position: relative;
+left: 600px;
+font-size: large;
+}
+
+
+.category {
+    display: flex;
+    flex-direction: column;
+  }

@@ -28,6 +28,13 @@ font-size: large;
 
 
 .category {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
+    background-color: aqua;
+    position: absolute;
+    left: 10px;
+    top: 100px;
+    bottom: 0;
+    padding: 30px;
+    margin-top: 20px;
   }

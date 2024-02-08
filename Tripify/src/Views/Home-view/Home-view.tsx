@@ -1,6 +1,7 @@
+import './Home-view.css';
 export default function HomeView() {
   return (
-    <div>
+    <div className='home-view'>
       <h1>Home</h1>
     </div>
   )

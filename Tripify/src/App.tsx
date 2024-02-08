@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import './App.css'
-import HomeView from './Views/Home-view'
-import LoginView from './Views/Login-view'
-import RegisterView from './Views/Register-view'
+import HomeView from './Views/Home-view/Home-view'
+import LoginView from './Views/Login-view/Login-view'
+import RegisterView from './Views/Register-view/Register-view'
 import { Header } from './Components/Header/Header'
 import Footer from './Components/Footer'
-import Category from './Views/Category-view'
+import Category from './Views/Category-view/Category-view'
 
 function App() {
 

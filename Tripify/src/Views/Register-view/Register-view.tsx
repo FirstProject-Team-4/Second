@@ -1,3 +1,4 @@
+import './Register-view.css';
 export default function RegisterView() {
   return (
     <div>

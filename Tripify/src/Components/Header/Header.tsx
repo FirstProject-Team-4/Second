@@ -9,10 +9,10 @@ export const Header = () => {
                 <NavLink to="/login" className='login'>Login</NavLink>
             </div>
             <input type="text" placeholder="Search..." className="search"/>
-            <div className="category">
+            {/* <div className="category">
                 <NavLink to="/category/1">1</NavLink>
                 <NavLink to="/category/2">2</NavLink>
                 <NavLink to="/category/3">3</NavLink>
-            </div>
+            </div> */}
         </header>);
 }

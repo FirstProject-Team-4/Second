@@ -7,13 +7,19 @@ import RegisterView from './Views/Register-view/Register-view'
 import { Header } from './Components/Header/Header'
 import Footer from './Components/Footer'
 import Category from './Views/Category-view/Category-view'
+import { AppContext } from './Context/AppContext'
 
 function App() {
+  const [context, setContext] = useState({
+    user: null,
+    userData: null,
+  })
 
 
   return (
     <>
       <BrowserRouter>
+      <AppContext.Provider value={{ ...context, setContext }}>
         <Header />
         <Routes>
           <Route path="/" element={<HomeView />} />
@@ -24,6 +30,7 @@ function App() {
           <Route path="*" element={<h1> 404 Not Found</h1>} />
         </Routes>
         <Footer />
+      </AppContext.Provider>
       </BrowserRouter>
 
     </>

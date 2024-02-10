@@ -8,7 +8,8 @@ import { Header } from './Components/Header/Header'
 import Footer from './Components/Footer'
 import Category from './Views/Category-view/Category-view'
 import { AppContext } from './Context/AppContext'
-
+import CreatePost from './Views/CreatePost/CreatePost'
+import AllPosts from './Views/AllPosts/AllPosts'
 function App() {
   const [context, setContext] = useState({
     user: null,
@@ -26,7 +27,9 @@ function App() {
           <Route path="/home" element={<HomeView />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/register" element={<RegisterView />} />
+          <Route path="/posts" element={<AllPosts />}/>
           <Route path="/category/:id" element={<Category/>} />
+          <Route path="/posts-create" element={<CreatePost />} />
           <Route path="*" element={<h1> 404 Not Found</h1>} />
         </Routes>
         <Footer />

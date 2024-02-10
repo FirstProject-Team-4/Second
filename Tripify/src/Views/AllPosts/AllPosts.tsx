@@ -20,7 +20,7 @@ export default function AllPosts() {
     const togglePostLike = (handle: string, id: string) => {
         setPosts(posts.map((post) => {
             if (post.id === id) {
-                post.likedBy = post.likedBy.includes(handle) ? post.likedBy.filter(u => u !== handle) : [...post.likedBy, handle];
+                post.likedBy = post.likedBy.includes(handle) ? post.likedBy.filter((u: string) => u !== handle) : [...post.likedBy, handle];
             }
             return post;
         }));

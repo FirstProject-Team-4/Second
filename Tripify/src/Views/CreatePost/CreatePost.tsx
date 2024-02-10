@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AppContext } from "../../Context/AppContext";
 import Button from "../../Components/Button";
 import { addPost } from "../../Service/post-service";
+import { useAppContext } from "../../Context/AppContext";
 //· Each post must have a user who created it, a title, content, comments and how many likes it has received.
 
 // o The title must be between 16 and 64 symbols.
@@ -15,7 +16,7 @@ import { addPost } from "../../Service/post-service";
 
 export default function CreatePost() {
 
-    const { userData } = useContext(AppContext);
+    const { userData } = useAppContext();
     const [post, setPost] = useState({
         title: '',
         content: '',

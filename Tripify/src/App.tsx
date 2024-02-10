@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import './App.css'
 import HomeView from './Views/Home-view/Home-view'
@@ -10,11 +10,28 @@ import Category from './Views/Category-view/Category-view'
 import { AppContext } from './Context/AppContext'
 import CreatePost from './Views/CreatePost/CreatePost'
 import AllPosts from './Views/AllPosts/AllPosts'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from './config/config-firebase'
+import { getUserData } from './Service/user-service'
+
 function App() {
   const [context, setContext] = useState({
-    user: null,
+    user: null as any,
     userData: null,
   })
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    if (user) {
+      getUserData(user.uid)
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            console.log(snapshot.val());
+            setContext({ user, userData: snapshot.val()[Object.keys(snapshot.val())[0]] });
+          }
+        })
+      }
+  }, [user]);
 
 
   return (

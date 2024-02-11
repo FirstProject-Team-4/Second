@@ -2,12 +2,12 @@ import { ref, push, get, query, orderByChild, update } from 'firebase/database';
 import { db } from '../config/config-firebase';
 
 //image: string
-export const addPost = async (author: string, title: string, content: string ) => {
+export const addPost = async (author: string, title: string, content: string,image:any ) => {
     return push(ref(db, 'posts'), {
         author,
         title,
         content,
-        image:'',
+        image,
         likes: 0,
         dislikes:0,
         createdOn: Date.now(),

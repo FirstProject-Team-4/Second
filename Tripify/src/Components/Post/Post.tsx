@@ -5,7 +5,7 @@ import { removeLike, addLike, removeDislike, addDislike } from '../../Service/po
 import { useAppContext } from '../../Context/AppContext';
 
 export default function Post({ post, likeCurrentPost, dislikeCurrentPost }: {
-    post: { id: string,author:string, title: string, content: string, dislikes: number, likes: number, createdOn: string,  dislikesBy: [string],likedBy: [string] },
+    post: { id: string,author:string, title: string, content: string,image:any, dislikes: number, likes: number, createdOn: string,  dislikesBy: [string],likedBy: [string] },
     dislikeCurrentPost: (handle: string, id: string) => void,
     likeCurrentPost: (handle: string, id: string) => void
 }) {
@@ -55,6 +55,7 @@ export default function Post({ post, likeCurrentPost, dislikeCurrentPost }: {
         <div className="post" style={{ border: '4px solid black' }}>
             <h4>{post.title} </h4>
             <p>{post.content}</p>
+            <img src={post.image} alt="post" />
             <p>{new Date(post.createdOn).toLocaleDateString('bg-BG')}</p>
             <Button color={setLikeButtonColor()} onClick={toggleLike}>{post.likes}👍</Button>
             <Button color={setDislikeButtonColor()} onClick={toggleDislike}>{post.dislikes}👎</Button>

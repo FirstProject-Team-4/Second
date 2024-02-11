@@ -27,6 +27,18 @@ export default function CreatePost() {
           [key]: value,
         });
       };
+      const updateImage = (value: any, key: string) => {
+        console.log(value);
+        if (!value) {
+          return;
+        } 
+       const image=URL.createObjectURL(value[0]);
+       console.log(image);
+        setPost({
+          ...post,
+          [key]: image,
+        });
+      }
     
     // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => { // New handler for image upload
     //    setPost()
@@ -45,7 +57,7 @@ export default function CreatePost() {
         //     return alert('Other users must be able to post replies.');
         // }
 //post.comments, image
-        await addPost(userData.handle, post.title, post.content); // Pass the image to the service function
+       await addPost(userData.handle, post.title, post.content,post.image); // Pass the image to the service function
 
         setPost({
             title: '',
@@ -65,7 +77,7 @@ export default function CreatePost() {
             <label htmlFor="input-content">Content:</label><br />
             <textarea value={post.content} onChange={e => updatePost(e.target.value, 'content')} name="input-content" id="input-content" cols={30} rows={10}></textarea><br /><br />
             <label htmlFor="input-image">Image:</label>
-      <input id="input-image" type="file" accept="image/*" onChange={e => updatePost(e.target.value, 'image')} /><br />
+      <input id="input-image" type="file"  onChange={e => updateImage(e.target.files , 'image')} /><br />
             <Button onClick={createPost}>Create</Button>
         </div>
     );

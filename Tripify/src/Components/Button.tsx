@@ -1,15 +1,18 @@
-import React from "react";
+
+
+import React, { CSSProperties } from "react";
 
 interface ButtonProps {
     children?: React.ReactNode;
     onClick?: () => void;
+    color?: string;
 }
 
-const Button:React.FC<ButtonProps>=({ children = null, onClick = () => {} })=> {
+const Button: React.FC<ButtonProps> = ({ children = null, onClick = () => {}, color = "" }) => {
 
   return (
     <>
-      <button onClick={onClick}>{children}</button>
+      <button style={color ? { border: `2px solid ${color}` } : undefined} onClick={onClick}>{children}</button>
     </>
   );
 }

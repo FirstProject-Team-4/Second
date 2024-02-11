@@ -7,7 +7,7 @@ export const addPost = async (author: string, title: string, content: string ) =
         author,
         title,
         content,
-        image,
+        image:'',
         likes: 0,
         dislikes:0,
         createdOn: Date.now(),

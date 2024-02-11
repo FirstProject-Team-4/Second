@@ -1,8 +1,9 @@
-import { useContext, useState } from "react";
-import { AppContext } from "../../Context/AppContext";
+import {  useState } from "react";
+// import { AppContext } from "../../Context/AppContext";
 import Button from "../../Components/Button";
 import { addPost } from "../../Service/post-service";
 import { useAppContext } from "../../Context/AppContext";
+// import { set } from "firebase/database";
 
 
 
@@ -14,10 +15,11 @@ export default function CreatePost() {
         content: '',
         user: '',
         comments: '',
+        image: '',
     });
 
    
-    const [image, setImage] = useState(null); // New state variable for the image
+    // const [image, setImage] = useState(null); // New state variable for the image
 
     const updatePost = (value: string, key: string) => {
         setPost({
@@ -26,9 +28,9 @@ export default function CreatePost() {
         });
       };
     
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => { // New handler for image upload
-        setImage(e.target.files[0]);
-    };
+    // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => { // New handler for image upload
+    //    setPost()
+    // };
     const createPost = async () => {
         if (post.title.length < 16 || post.title.length > 64) {
             return alert('The title must be between 16 and 64 symbols.');
@@ -43,16 +45,16 @@ export default function CreatePost() {
         //     return alert('Other users must be able to post replies.');
         // }
 //post.comments, image
-        await addPost(userData.handle, post.title, post.content,post.comments,image); // Pass the image to the service function
+        await addPost(userData.handle, post.title, post.content); // Pass the image to the service function
 
         setPost({
             title: '',
             content: '',
             user: '',
-            // image: '',
+            image: '',
             comments: '',
         });
-        setImage(null); // Reset the image state variable
+      
     };
 
     return (
@@ -63,7 +65,7 @@ export default function CreatePost() {
             <label htmlFor="input-content">Content:</label><br />
             <textarea value={post.content} onChange={e => updatePost(e.target.value, 'content')} name="input-content" id="input-content" cols={30} rows={10}></textarea><br /><br />
             <label htmlFor="input-image">Image:</label>
-      <input id="input-image" type="file" accept="image/*" onChange={handleImageUpload} /><br />
+      <input id="input-image" type="file" accept="image/*" onChange={e => updatePost(e.target.value, 'image')} /><br />
             <Button onClick={createPost}>Create</Button>
         </div>
     );

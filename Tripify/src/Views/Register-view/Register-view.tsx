@@ -14,8 +14,25 @@ export default function RegisterView() {
     password: ''
   });
 
+  // o	Email must be a valid email and unique in the system.
 
   const submit = async (): Promise<void> => {
+      // Validate the input
+  if (form.username.length < 4 || form.username.length > 32) {
+    alert('Username must be between 4 and 32 symbols.');
+    return;
+  }
+  if(!form.email.includes('@')){
+    alert('Email must be a valid email.');
+  }
+  if(form.email.length < 6 || form.email.length > 32){
+    alert('Email must be between 6 and 32 symbols.');
+    return;
+  }
+  if(form.password.length < 6 || form.password.length > 32){
+    alert('Password must be between 6 and 32 symbols.');
+  }
+ 
     const response = await registerUser(form.email, form.password);
     createUserHandle(form.username, response.user.uid, form.email);
     loginUser(form.email, form.password);

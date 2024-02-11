@@ -3,6 +3,7 @@ import {  useState } from "react";
 import Button from "../../Components/Button";
 import { addPost } from "../../Service/post-service";
 import { useAppContext } from "../../Context/AppContext";
+import { saveImage } from "../../Service/firebase-storage";
 // import { set } from "firebase/database";
 
 
@@ -32,12 +33,13 @@ export default function CreatePost() {
         if (!value) {
           return;
         } 
-       const image=URL.createObjectURL(value[0]);
-       console.log(image);
-        setPost({
-          ...post,
-          [key]: image,
-        });
+        saveImage(value[0]).then((url) => {
+          setPost({
+            ...post,
+            [key]: url,
+          });
+        }
+        );
       }
     
     // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => { // New handler for image upload

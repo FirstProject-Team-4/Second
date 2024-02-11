@@ -18,7 +18,8 @@ export const Header = () => {
                 <NavLink to='/home' className='home'>Home</NavLink>
                 {!user&&<NavLink to="/register" className='register'>Register</NavLink>}
                 {!user&&<NavLink to="/login" className='login'>Login</NavLink>}
-                {user&&<span>{userData.handle} </span>}
+                {user&&<NavLink to="/posts-create" className='create-post'>Create Post</NavLink>}
+                {user&&<span>{userData?.handle} </span>}
                 {user&&<Button onClick={logout}>Logout</Button>}
             </div>
             <input type="text" placeholder="Search..." className="search"/>

@@ -8,6 +8,8 @@ export const addPost = async (author: string, title: string, content: string ) =
         title,
         content,
         image,
+        likes: 0,
+        dislikes:0,
         createdOn: Date.now(),
     });
 };
@@ -24,9 +26,9 @@ export const getAllPosts = async (search: string) => {
         createdOn: new Date(snapshot.val()[key].createdOn).toString(),
         likedBy: snapshot.val()[key].likedBy ? Object.keys(snapshot.val()[key].likedBy) : [],
         imageUrl: snapshot.val().imageUrl,
+        dislikesBy: snapshot.val()[key].dislikesBy ? Object.keys(snapshot.val()[key].dislikesBy) : [],
     }))
-        .filter(p => p.title.toLowerCase().includes(search.toLowerCase()));
-    console.log(posts);
+        .filter(p => p.title?.toLowerCase().includes(search.toLowerCase()));
 
     return posts;
 };
@@ -64,18 +66,38 @@ export const getPostById = async (id: string) => {
 //     return post;
 //   };
 
-export const likePost = (handle: string, postId: string) => {
-        const updateLikes: { [key: string]: any } = {};
-        updateLikes[`/posts/${postId}/likedBy/${handle}`] = true;
-        updateLikes[`/users/${handle}/likedPosts/${postId}`] = true;
+export const addLike = (handle: string, postId: string,likesCount:number) => {
+    const updateLikes: { [key: string]: any } = {};
+    updateLikes[`/posts/${postId}/likedBy/${handle}`] = true;
+    updateLikes[`/posts/${postId}/likes/`] = likesCount;
+    updateLikes[`/users/${handle}/likedPosts/${postId}`] = true;
+    
 
-        return update(ref(db), updateLikes);
-    };
+    return update(ref(db), updateLikes);
+};
+export const addDislike = (handle: string, postId: string,dislikeCount:number) => {
+    const updateLikes: { [key: string]: any } = {};
+    updateLikes[`/posts/${postId}/dislikesBy/${handle}`] = true;
+    updateLikes[`/posts/${postId}/dislikes/`] = dislikeCount;
+    updateLikes[`/users/${handle}/dislikedPosts/${postId}`] = true;
+    
 
-    export const dislikePost = (handle: string, postId: string) => {
-        const updateLikes: { [key: string]: any } = {};
-        updateLikes[`/posts/${postId}/likedBy/${handle}`] = null;
-        updateLikes[`/users/${handle}/likedPosts/${postId}`] = null;
+    return update(ref(db), updateLikes);
+};
+
+export const removeLike = (handle: string, postId: string,likes:number) => {
+    const updateLikes: { [key: string]: any } = {};
+    updateLikes[`/posts/${postId}/likedBy/${handle}`] = null;
+    updateLikes[`/posts/${postId}/likes/`] = likes;
+    updateLikes[`/users/${handle}/likedPosts/${postId}`] = null;
+
+    return update(ref(db), updateLikes);
+};
+export const removeDislike = (handle: string, postId: string,dislikeCount:number) => {
+    const updateLikes: { [key: string]: any } = {};
+    updateLikes[`/posts/${postId}/dislikesBy/${handle}`] = null;
+    updateLikes[`/posts/${postId}/dislikes/`] = dislikeCount;
+    updateLikes[`/users/${handle}/dislikedPosts/${postId}`] = null;
 
     return update(ref(db), updateLikes);
 };

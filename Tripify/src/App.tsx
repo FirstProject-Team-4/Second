@@ -47,6 +47,7 @@ function App() {
           <Route path="/posts" element={<AllPosts />}/>
           <Route path="/category/:id" element={<Category/>} />
           <Route path="/posts-create" element={<CreatePost />} />
+          <Route path="/posts-create" element={<CreatePost />} />
           <Route path="*" element={<h1> 404 Not Found</h1>} />
         </Routes>
         <Footer />

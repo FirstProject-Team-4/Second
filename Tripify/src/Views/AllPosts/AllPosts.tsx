@@ -65,6 +65,9 @@ export default function AllPosts() {
             return post;
         }));
     }
+    const deleteCurrentPost=(id:string)=>{
+        setPosts(posts.filter(p=>p.id!==id))
+    }
 
     return (
         <div>
@@ -72,7 +75,10 @@ export default function AllPosts() {
                 <label htmlFor="search">Search </label>
                 <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/>
                 {posts.map((post) => (
-                    <Post key={post.id} post={post} likeCurrentPost={likeCurrentPost} dislikeCurrentPost={dislikeCurrentPost}/>
+                    <Post key={post.id} post={post} 
+                    likeCurrentPost={likeCurrentPost} 
+                    dislikeCurrentPost={dislikeCurrentPost}
+                    deleteCurrentPost={deleteCurrentPost}/>
                 ))}
         </div>
     );

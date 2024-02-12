@@ -1,14 +1,16 @@
 
 import Button from '../Button';
-import { removeLike, addLike, removeDislike, addDislike } from '../../Service/post-service';
+import { removeLike, addLike, removeDislike, addDislike, deletePost } from '../../Service/post-service';
+// import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../Context/AppContext';
 import Comments from './Comments';
 import { useState } from 'react';
 
-export default function Post({ post, likeCurrentPost, dislikeCurrentPost }: {
+export default function Post({ post, likeCurrentPost, dislikeCurrentPost,deleteCurrentPost }: {
     post: { id: string,author:string, title: string, content: string,image:any, dislikes: number, likes: number, createdOn: string,  dislikesBy: [string],likedBy: [string] },
     dislikeCurrentPost: (handle: string, id: string) => void,
     likeCurrentPost: (handle: string, id: string) => void
+    deleteCurrentPost:(id:string)=>void
 }) {
 
     const { userData } = useAppContext();
@@ -49,12 +51,21 @@ export default function Post({ post, likeCurrentPost, dislikeCurrentPost }: {
         }
         dislikeCurrentPost(userData.handle, post.id);
     };
+    const deleteWindowPop=()=>{
+        if (window.confirm('Are you sure you want to delete this post?')) {
+            deletePost(post.id);
+            deleteCurrentPost(post.id)
+            
+        } else {
+            return;
+        }
+    }
 
     return (
         <div className="post" style={{ border: '4px solid black' }}>
             <h4>{post.title} </h4>
             <p>{post.content}</p>
-            <img src={post.image} alt="post" />
+            {post.image&&<img src={post.image} alt="post" />}
             <p>{new Date(post.createdOn).toLocaleDateString('bg-BG')}</p>
             <Button color={setLikeButtonColor()} onClick={toggleLike}>{post.likes}👍</Button>
             <Button color={setDislikeButtonColor()} onClick={toggleDislike}>{post.dislikes}👎</Button>
@@ -63,6 +74,7 @@ export default function Post({ post, likeCurrentPost, dislikeCurrentPost }: {
             {/* Comments */}
             <button onClick={() => setShowComments(!showComments)}>Comments</button> 
             {showComments && <Comments postId={post.id} />} 
+            {post.author === userData?.handle && <Button onClick={deleteWindowPop}>Delete</Button>}
         </div>
     )
 }

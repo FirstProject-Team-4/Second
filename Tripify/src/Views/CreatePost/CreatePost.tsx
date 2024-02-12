@@ -3,6 +3,7 @@ import {  useState } from "react";
 import Button from "../../Components/Button";
 import { addPost } from "../../Service/post-service";
 import { useAppContext } from "../../Context/AppContext";
+import { saveImage } from "../../Service/firebase-storage";
 // import { set } from "firebase/database";
 
 
@@ -32,12 +33,13 @@ export default function CreatePost() {
         if (!value) {
           return;
         } 
-       const image=URL.createObjectURL(value[0]);
-       console.log(image);
-        setPost({
-          ...post,
-          [key]: image,
-        });
+        saveImage(value[0]).then((url) => {
+          setPost({
+            ...post,
+            [key]: url,
+          });
+        }
+        );
       }
     
     // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => { // New handler for image upload
@@ -77,7 +79,7 @@ export default function CreatePost() {
             <label htmlFor="input-content">Content:</label><br />
             <textarea value={post.content} onChange={e => updatePost(e.target.value, 'content')} name="input-content" id="input-content" cols={30} rows={10}></textarea><br /><br />
             <label htmlFor="input-image">Image:</label>
-      <input id="input-image" type="file"  onChange={e => updateImage(e.target.files , 'image')} /><br />
+      <input id="input-image" type="file" accept="image/*" onChange={e => updateImage(e.target.files , 'image')} /><br />
             <Button onClick={createPost}>Create</Button>
         </div>
     );

@@ -70,7 +70,7 @@ export default function Post({ post, likeCurrentPost, dislikeCurrentPost,deleteC
             <Button color={setLikeButtonColor()} onClick={toggleLike}>{post.likes}👍</Button>
             <Button color={setDislikeButtonColor()} onClick={toggleDislike}>{post.dislikes}👎</Button>
             {post.author === userData?.handle && <Button onClick={() => { }}>Edit</Button>}  /*Todo**/
-            {post.author === userData?.handle && <Button onClick={() => { }}>Delete</Button>}/*Todo**/
+
             {/* Comments */}
             <button onClick={() => setShowComments(!showComments)}>Comments</button> 
             {showComments && <Comments postId={post.id} />} 

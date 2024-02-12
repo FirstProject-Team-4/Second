@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue, push } from 'firebase/database';
+import { getDatabase, ref, onValue } from 'firebase/database';
 import { useAppContext } from '../../Context/AppContext';
 import { addComment } from '../../Service/post-service';
+// import Reply from '../Reply';
+import Button from '../Button';
 
 interface Comment {
   author: string;
@@ -21,7 +23,7 @@ const Comments: React.FC<CommentsProps> = ({ postId }) => {
   const [newComment, setNewComment] = useState('');
   const { userData } = useAppContext();
   const [replyTo, setReplyTo] = useState<string | null>(null);
-  const [viewRepliesTo, setViewRepliesTo] = useState<string | null>(null);
+
 
   const handleReply = (commentId: string) => {
     setReplyTo(commentId);
@@ -72,20 +74,24 @@ const Comments: React.FC<CommentsProps> = ({ postId }) => {
 
 
     <div>
+
+
     {/* Display the comments... */}
     {comments.map((comment, index) => (
-      <div key={index} style={{ marginLeft: comment.replyTo ? '20px' : '0' }}>
+      <div key={index} style={{ marginLeft: comment.replyTo ? '50px' : '0', border:'2px solid black', }}>
         <p>{comment.content} - {comment.author}</p>
-        <button onClick={() => handleReply(comment.author)}>Reply</button>
+        {/* <button onClick={() => handleReply(comment.author)}>Reply</button> */}
+        <Button onClick={() => handleReply(comment.author)}>Reply</Button>
       </div>
     ))}
 
-    {/* Form for new comments... */}
-    <form onSubmit={handleNewCommentSubmit}>
+<form onSubmit={handleNewCommentSubmit}>
+      <button type="submit">Add Comment</button>
       {replyTo && <p>Replying to comment {replyTo}</p>}
       <input type="text" value={newComment} onChange={handleNewCommentChange} />
-      <button type="submit">Add Comment</button>
+      {/* <Button >Add Comment</Button> */}
     </form>
+
   </div>
 );
 };

@@ -15,3 +15,24 @@ export const getUserData = (uid:string) => {
 
   return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
 };
+
+
+export const getAllUsers=async()=>{
+  const snapshot = await get(query(ref(db, 'users')));
+  if (!snapshot.exists()) {
+      return [];
+  }
+
+  const users = Object.keys(snapshot.val()).map(key => ({
+      id: key,
+      ...snapshot.val()[key],
+      createdOn: new Date(snapshot.val()[key].createdOn).toString(),
+      likedPosts: snapshot.val()[key].likedPosts ? Object.keys(snapshot.val()[key].likedPosts) : [],
+      imageUrl: snapshot.val().imageUrl,
+      dislikedPosts: snapshot.val()[key].dislikedPosts ? Object.keys(snapshot.val()[key].dislikedPosts) : [],
+  }))
+     
+
+  return users;
+  
+}

@@ -79,7 +79,7 @@ export default function CreatePost() {
             <label htmlFor="input-content">Content:</label><br />
             <textarea value={post.content} onChange={e => updatePost(e.target.value, 'content')} name="input-content" id="input-content" cols={30} rows={10}></textarea><br /><br />
             <label htmlFor="input-image">Image:</label>
-      <input id="input-image" type="file"  onChange={e => updateImage(e.target.files , 'image')} /><br />
+      <input id="input-image" type="file" accept="image/*" onChange={e => updateImage(e.target.files , 'image')} /><br />
             <Button onClick={createPost}>Create</Button>
         </div>
     );

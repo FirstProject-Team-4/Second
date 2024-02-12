@@ -1,5 +1,6 @@
 import { ref, push, get, query, orderByChild, update } from 'firebase/database';
 import { db } from '../config/config-firebase';
+import { getAllUsers } from './user-service';
 
 //image: string
 export const addPost = async (author: string, title: string, content: string,image:any ) => {
@@ -102,3 +103,25 @@ export const removeDislike = (handle: string, postId: string,dislikeCount:number
     return update(ref(db), updateLikes);
 };
 
+export const deletePost=async(postId:string)=>{
+    const user= await getAllUsers();
+    user.forEach(u=>{
+        if(u.likedPosts){
+            if(u.likedPosts.includes(postId)){
+                const updateLikes: { [key: string]: any } = {};
+                updateLikes[`/users/${u.handle}/likedPosts/${postId}`] = null;
+                update(ref(db), updateLikes);
+            }
+        }
+        if(u.dislikedPosts){
+            if(u.dislikedPosts.includes(postId)){
+                const updateLikes: { [key: string]: any } = {};
+                updateLikes[`/users/${u.handle}/dislikedPosts/${postId}`] = null;
+                update(ref(db), updateLikes);
+            }
+        }
+    })
+    const deletePost: { [key: string]: any } = {};
+    deletePost[`posts/${postId}`]=null;
+    update(ref(db),deletePost)
+}

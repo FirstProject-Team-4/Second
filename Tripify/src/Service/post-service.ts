@@ -3,7 +3,7 @@ import { db } from '../config/config-firebase';
 import { getAllUsers } from './user-service';
 
 //image: string
-export const addPost = async (author: string, title: string, content: string, image: any) => {
+export const addPost = async (author: string, title: string, content: string, image: any='') => {
     return push(ref(db, 'posts'), {
         author,
         title,

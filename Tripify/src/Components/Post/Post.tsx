@@ -1,8 +1,9 @@
 
 import Button from '../Button';
 import { removeLike, addLike, removeDislike, addDislike } from '../../Service/post-service';
-// import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../Context/AppContext';
+import Comments from './Comments';
+import { useState } from 'react';
 
 export default function Post({ post, likeCurrentPost, dislikeCurrentPost }: {
     post: { id: string,author:string, title: string, content: string,image:any, dislikes: number, likes: number, createdOn: string,  dislikesBy: [string],likedBy: [string] },
@@ -11,9 +12,7 @@ export default function Post({ post, likeCurrentPost, dislikeCurrentPost }: {
 }) {
 
     const { userData } = useAppContext();
-
-
-
+ const [showComments, setShowComments] = useState(false);
     const toggleLike = async () => {
         if(post.dislikesBy?.includes(userData.handle)){
             await removeDislike(userData.handle, post.id, post.dislikes-1);
@@ -61,6 +60,9 @@ export default function Post({ post, likeCurrentPost, dislikeCurrentPost }: {
             <Button color={setDislikeButtonColor()} onClick={toggleDislike}>{post.dislikes}👎</Button>
             {post.author === userData?.handle && <Button onClick={() => { }}>Edit</Button>}  /*Todo**/
             {post.author === userData?.handle && <Button onClick={() => { }}>Delete</Button>}/*Todo**/
+            {/* Comments */}
+            <button onClick={() => setShowComments(!showComments)}>Comments</button> 
+            {showComments && <Comments postId={post.id} />} 
         </div>
     )
 }

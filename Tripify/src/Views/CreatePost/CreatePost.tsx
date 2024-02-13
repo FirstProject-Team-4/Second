@@ -80,7 +80,7 @@ export default function CreatePost() {
 
   return (
     <div>
-      <h1>Create tweet</h1>
+      <h1>Create post</h1>
       <label htmlFor="input-title">Title:</label>
       <input value={post.title} onChange={e => updatePost(e.target.value, 'title')} type="text" name="input-title" id="input-title" /><br />
       <label htmlFor="input-content">Content:</label><br />

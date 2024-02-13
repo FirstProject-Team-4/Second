@@ -33,7 +33,8 @@ const[isEditing,setIsEditing]=useState(false)
     await addReply(comments.id, comments.postId, userData.handle, reply)
     setComments((comments: any) => {
       let updatedComments = { ...comments };
-      updatedComments.replies = { ...comments.replies, [new Date().getTime()]: { author: userData.handle, content: reply, createdOn: new Date().getTime() } };
+      updatedComments.replies = [...comments.replies];
+      updatedComments.replies.push({ content: reply, author: userData.handle, likes: 0, dislikes: 0, likedBy: [], dislikesBy: [] })
       return updatedComments;
     })
     setReply('')

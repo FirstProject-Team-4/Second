@@ -18,7 +18,7 @@ export default function SinglePostView() {
         if (id) {
             getPostById(id).then((value: any) => setPosts(value));
         }
-    }, [])
+    }, [posts])
 
     const addCurrentComment = () => {
         if (comment.length < 1) {
@@ -32,9 +32,6 @@ export default function SinglePostView() {
            
      
     }
-
-
-        console.log(posts[0])
         return (
             <div>
                 <h1>Post</h1>
@@ -43,7 +40,7 @@ export default function SinglePostView() {
                 <input value={comment} type="text" name="comment" id="comment-input" onChange={e => setComment(e.target.value)} />
                 <Button onClick={addCurrentComment}>Add Comment</Button>
                 <div>
-                    {posts[0]?.comments && posts[0].comments.map((c: any) => <Comments key={c.id}  comment={c}  />)}
+                    {posts[0]?.comments && posts[0].comments.map((c: any) => <Comments key={c.id}  comment={c} setPosts={setPosts} />)}
                 </div>
             </div>
         )

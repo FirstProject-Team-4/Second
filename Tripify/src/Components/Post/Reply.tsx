@@ -4,7 +4,7 @@ import { useAppContext } from "../../Context/AppContext";
 import { addDislikeReply, addLikeReply, deleteReply, removeDislikeReply, removeLikeReply } from "../../Service/post-service";
 
 
-export default function Reply(prop: { reply: { content: string, likes: number, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string } }) {
+export default function Reply(prop: { reply: { content: string, likes: number, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string },setCommends:any }) {
   const [reply, setReply] = useState(prop.reply);
 const {userData}=useAppContext();
 
@@ -68,8 +68,13 @@ const toggleDisLikeReply = async () => {
         if (window.confirm('Are you sure you want to delete this comment?')) {
 
           deleteReply(prop.reply.postId, prop.reply.commentId, prop.reply.id);
-          setReply(null as any);
           
+            prop.setCommends((comments:any)=>{
+                let updatedPost = { ...comments };
+                updatedPost.replies = updatedPost.replies.filter((r: any) => r.id !== prop.reply.id);
+                return updatedPost;
+            });
+            setReply(null as any);
         }
 }
 const setLikeButtonColor = () => {

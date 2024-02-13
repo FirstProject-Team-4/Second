@@ -10,17 +10,17 @@ export default function Comments(prop: any,) {
 
   const [replyIsActive, setReplyIsActive] = useState(false)
   const [comments, setComments] = useState(prop.comment)
-const[isEditing,setIsEditing]=useState(false)
+  const [isEditing, setIsEditing] = useState(false)
   const { userData } = useAppContext();
-  const[editedComment,setEditedComment]=useState(comments?.content)
-  
+  const [editedComment, setEditedComment] = useState(comments?.content)
+
   // useEffect(() => {
   //   if(prop.postId){
   //     getPostById(prop.postId).then((value: any) => {
   //       prop.setPosts(value);
   //       setComments(value[0]?.comments || []);
   //       !replyIsActive && setReplyIsActive(true);
-        
+
   //   });
   //   }
   // }, [comments])
@@ -31,15 +31,16 @@ const[isEditing,setIsEditing]=useState(false)
     setReplyIsActive(!replyIsActive)
   }
   const addCurrentReply = async () => {
+    await addReply(comments.id, comments.postId, userData.handle, reply);
 
-    await addReply(comments.id, comments.postId, userData.handle, reply)
-    getPostById(prop.postId).then((value: any) => {
-      prop.setPosts(value);
-      setComments(value[0]?.comments || []);
-      setReplyIsActive(true);
-    setReply('')
-  });
-}
+    getPostById(prop.comment.postId).then((value: any) => {
+
+      setComments(value[0].comments.filter((c: any) => c.id === comments.id)[0]) // Explicitly specify the type of prevComments
+    });
+    setReplyIsActive(true);
+    setReply('');
+
+  };
 
   const toggleCommentLikes = async () => {
 
@@ -112,56 +113,56 @@ const[isEditing,setIsEditing]=useState(false)
       deleteComment(comments.postId, comments.id);
       setReplyIsActive(false);
       setComments(null);
-      
+
     }
   }
-  const isEditOn=()=>{
+  const isEditOn = () => {
     setIsEditing(!isEditing)
   }
-  const confirmEdit=()=>{
-    
+  const confirmEdit = () => {
+
 
     setIsEditing(false)
     const updatePost: { [key: string]: any } = {};
     updatePost[`/posts/${comments.postId}/comments/${comments.id}/content`] = editedComment;
     update(ref(db), updatePost);
 
-    setComments({...comments,content:editedComment})
+    setComments({ ...comments, content: editedComment })
 
-  
+
   }
 
 
 
   return (
-    isEditing?
+    isEditing ?
 
-    <div style={{ border: '2px solid green' }}>
-      <h3>{prop.comment.author}</h3>
-      <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
-      <input value={editedComment} type="text" name="comment" id="comment-input" onChange={(e) => {
-        setEditedComment( e.target.value )
-      }} />
-      <Button onClick={confirmEdit}>Save</Button>
-      <Button onClick={() => {setIsEditing(false)}}>Cancel</Button>
-    </div>
-    :
-    comments &&
-    <div style={{ border: '2px solid green' }}>
-      <h3>{prop.comment.author}</h3>
-      <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
-      <p>{prop.comment.content}</p>
-      <Button color={setLikeButtonColor()} onClick={toggleCommentLikes}>{comments?.likes}👍</Button>
-      <Button color={setDislikeButtonColor()} onClick={toggleCommentDislikes}>{comments?.dislikes}👎</Button>
-      <Button onClick={toggleReply}>Reply</Button>
-      {comments.author === userData?.handle && <Button onClick={isEditOn}>Edit</Button>}
-      {comments.author === userData?.handle && <Button onClick={deleteWindowPop}>Delete</Button>}
-      {replyIsActive && <div>
-        <input value={reply} type="text" name="comment" id="comment-input" onChange={e => setReply(e.target.value)} />
-        <Button onClick={addCurrentReply}>Add Reply</Button>
-      </div>}
-      {replyIsActive && comments.replies && Object.values(comments.replies).map((r: any, index) => <Reply key={r.id ? r.id : index} reply={r} />)}
-    </div>
+      <div style={{ border: '2px solid green' }}>
+        <h3>{prop.comment.author}</h3>
+        <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
+        <input value={editedComment} type="text" name="comment" id="comment-input" onChange={(e) => {
+          setEditedComment(e.target.value)
+        }} />
+        <Button onClick={confirmEdit}>Save</Button>
+        <Button onClick={() => { setIsEditing(false) }}>Cancel</Button>
+      </div>
+      :
+      comments &&
+      <div style={{ border: '2px solid green' }}>
+        <h3>{prop.comment.author}</h3>
+        <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
+        <p>{prop.comment.content}</p>
+        <Button color={setLikeButtonColor()} onClick={toggleCommentLikes}>{comments?.likes}👍</Button>
+        <Button color={setDislikeButtonColor()} onClick={toggleCommentDislikes}>{comments?.dislikes}👎</Button>
+        <Button onClick={toggleReply}>Reply</Button>
+        {comments.author === userData?.handle && <Button onClick={isEditOn}>Edit</Button>}
+        {comments.author === userData?.handle && <Button onClick={deleteWindowPop}>Delete</Button>}
+        {replyIsActive && <div>
+          <input value={reply} type="text" name="comment" id="comment-input" onChange={e => setReply(e.target.value)} />
+          <Button onClick={addCurrentReply}>Add Reply</Button>
+        </div>}
+        {replyIsActive && comments.replies && Object.values(comments.replies).map((r: any, index) => <Reply key={r.id ? r.id : index} reply={r} setCommends={setComments} />)}
+      </div>
   )
 }
 

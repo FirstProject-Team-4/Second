@@ -1,15 +1,28 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "../Button"
-import { addDislikeComment, addLikeComment, addReply, removeDislikeComment, removeLikeComment } from "../../Service/post-service"
+import { addDislikeComment, addLikeComment, addReply, deleteComment, getPostById, removeDislikeComment, removeLikeComment } from "../../Service/post-service"
 import { useAppContext } from "../../Context/AppContext"
 import Reply from "./Reply"
+import { get, ref, update } from "firebase/database"
+import { db } from "../../config/config-firebase"
 
-export default function Comments(prop: any) {
+export default function Comments(prop: any,{setPosts}:any) {
 
   const [replyIsActive, setReplyIsActive] = useState(false)
   const [comments, setComments] = useState(prop.comment)
-
+const[isEditing,setIsEditing]=useState(false)
   const { userData } = useAppContext();
+  const[editedComment,setEditedComment]=useState(comments?.content)
+  
+  useEffect(() => {
+    if(prop.postId){
+      getPostById(prop.postId).then((value: any) => {
+        setPosts(value);
+        setComments(value[0]?.comments || []);
+    });
+    }
+  }, [comments])
+
 
   const [reply, setReply] = useState('')
   const toggleReply = () => {
@@ -81,26 +94,66 @@ export default function Comments(prop: any) {
   }
 
   const setLikeButtonColor = () => {
-    if (comments.likedBy?.includes(userData?.handle)) {
+    if (comments?.likedBy?.includes(userData?.handle)) {
       return 'orange';
     }
     return '';
   }
   const setDislikeButtonColor = () => {
-    if (comments.dislikesBy?.includes(userData?.handle)) {
+    if (comments?.dislikesBy?.includes(userData?.handle)) {
       return 'orange';
     }
     return '';
   }
+  const deleteWindowPop = () => {
+    if (window.confirm('Are you sure you want to delete this comment?')) {
+      deleteComment(comments.postId, comments.id);
+      setReplyIsActive(false);
+      setComments(null);
+      
+    }
+  }
+  const isEditOn=()=>{
+    setIsEditing(!isEditing)
+  }
+  const confirmEdit=()=>{
+    
+
+    setIsEditing(false)
+    const updatePost: { [key: string]: any } = {};
+    updatePost[`/posts/${comments.postId}/comments/${comments.id}/content`] = editedComment;
+    update(ref(db), updatePost);
+
+    setComments({...comments,content:editedComment})
+
+  
+  }
+
+
 
   return (
+    isEditing?
+
+    <div style={{ border: '2px solid green' }}>
+      <h3>{prop.comment.author}</h3>
+      <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
+      <input value={editedComment} type="text" name="comment" id="comment-input" onChange={(e) => {
+        setEditedComment( e.target.value )
+      }} />
+      <Button onClick={confirmEdit}>Save</Button>
+      <Button onClick={() => {setIsEditing(false)}}>Cancel</Button>
+    </div>
+    :
+    comments &&
     <div style={{ border: '2px solid green' }}>
       <h3>{prop.comment.author}</h3>
       <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
       <p>{prop.comment.content}</p>
-      <Button color={setLikeButtonColor()} onClick={toggleCommentLikes}>{comments.likes}👍</Button>
-      <Button color={setDislikeButtonColor()} onClick={toggleCommentDislikes}>{comments.dislikes}👎</Button>
+      <Button color={setLikeButtonColor()} onClick={toggleCommentLikes}>{comments?.likes}👍</Button>
+      <Button color={setDislikeButtonColor()} onClick={toggleCommentDislikes}>{comments?.dislikes}👎</Button>
       <Button onClick={toggleReply}>Reply</Button>
+      {comments.author === userData?.handle && <Button onClick={isEditOn}>Edit</Button>}
+      {comments.author === userData?.handle && <Button onClick={deleteWindowPop}>Delete</Button>}
       {replyIsActive && <div>
         <input value={reply} type="text" name="comment" id="comment-input" onChange={e => setReply(e.target.value)} />
         <Button onClick={addCurrentReply}>Add Reply</Button>
@@ -109,3 +162,4 @@ export default function Comments(prop: any) {
     </div>
   )
 }
+

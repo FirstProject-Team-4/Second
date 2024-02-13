@@ -178,6 +178,7 @@ export const addReply = async (commentId: string, postId: string, author:string,
 
 
 
+
 export const deletePost=async(postId:string)=>{
     const user= await getAllUsers();
     user.forEach(u=>{
@@ -199,4 +200,10 @@ export const deletePost=async(postId:string)=>{
     const deletePost: { [key: string]: any } = {};
     deletePost[`posts/${postId}`]=null;
     update(ref(db),deletePost)
+}
+export const deleteComment=async(postId:string,commentId:string)=>{
+   
+    const deleteComment: { [key: string]: any } = {};
+    deleteComment[`posts/${postId}/comments/${commentId}`]=null;
+    update(ref(db),deleteComment)
 }

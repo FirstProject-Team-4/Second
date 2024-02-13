@@ -142,8 +142,7 @@ export default function Post({ post,setPosts }: {
                 <p>{new Date(post.createdOn).toLocaleDateString('bg-BG')}</p>
                 <Button color={setLikeButtonColor()} onClick={toggleLike}>{post.likes}👍</Button>
                 <Button color={setDislikeButtonColor()} onClick={toggleDislike}>{post.dislikes}👎</Button>
-                {post.author === userData?.handle && <Button onClick={isEditOn}>Edit</Button>}  /*Todo**/
-
+                {post.author === userData?.handle && <Button onClick={isEditOn}>Edit</Button>}
                 {/* Comments */}
                 <button onClick={comments}>Comments</button>
                 {post.author === userData?.handle && <Button onClick={deleteWindowPop}>Delete</Button>}

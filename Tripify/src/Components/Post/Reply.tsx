@@ -1,7 +1,7 @@
 import Button from "../Button";
 import { useState } from "react";
 import { useAppContext } from "../../Context/AppContext";
-import { addDislikeReply, addLikeReply, removeDislikeReply, removeLikeReply } from "../../Service/post-service";
+import { addDislikeReply, addLikeReply, deleteReply, removeDislikeReply, removeLikeReply } from "../../Service/post-service";
 
 
 export default function Reply(prop: { reply: { content: string, likes: number, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string } }) {
@@ -63,6 +63,15 @@ const toggleDisLikeReply = async () => {
         return updatedPost;
     });
 }
+
+    const deleteCurrentReply = () => {
+        if (window.confirm('Are you sure you want to delete this comment?')) {
+
+          deleteReply(prop.reply.postId, prop.reply.commentId, prop.reply.id);
+          setReply(null as any);
+          
+        }
+}
 const setLikeButtonColor = () => {
     if (reply.likedBy?.includes(userData?.handle)) {
       return 'orange';
@@ -76,10 +85,12 @@ const setLikeButtonColor = () => {
     return '';
   }
         return (
+            reply &&
         <div style={{ border: '1px solid red' }}>
             <h1>{prop.reply.content}</h1>
             <Button color={setLikeButtonColor()} onClick={toggleReplyLikes}>{reply.likes}👍</Button>
             <Button color={setDislikeButtonColor()} onClick={toggleDisLikeReply}>{reply.dislikes}👎</Button>
+            <Button onClick={deleteCurrentReply}>Delete</Button>
         </div>
     )
 }

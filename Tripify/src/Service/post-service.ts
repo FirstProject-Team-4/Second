@@ -159,6 +159,7 @@ export const removeDislikeComment = (handle: string, postId: string, commentId: 
 
 export const addLikeReply = (handle: string, postId: string, commentId: string, replyId: string, likesCount: number) => {
     const updateLikes: { [key: string]: any } = {};
+    console.log(replyId,postId,commentId,likesCount,handle)
     updateLikes[`/posts/${postId}/comments/${commentId}/replies/${replyId}/likedBy/${handle}`] = true;
     updateLikes[`/posts/${postId}/comments/${commentId}/replies/${replyId}/likes/`] = likesCount;
     return update(ref(db), updateLikes);
@@ -197,7 +198,7 @@ export const addComment = async (postId: string, userData:{handle:string},conten
     });
 };
 export const addReply = async (commentId: string, postId: string, author:string, content: string) => {
-    push(ref(db, `posts/${postId}/comments/${commentId}/replies/`), {
+   return push(ref(db, `posts/${postId}/comments/${commentId}/replies/`), {
         author,
         content,
         createdOn: Date.now(),
@@ -238,4 +239,10 @@ export const deleteComment=async(postId:string,commentId:string)=>{
     const deleteComment: { [key: string]: any } = {};
     deleteComment[`posts/${postId}/comments/${commentId}`]=null;
     update(ref(db),deleteComment)
+}
+export const deleteReply=async(postId:string,commentId:string,replyId:string)=>{
+    const deleteReply: { [key: string]: any } = {};
+
+    deleteReply[`posts/${postId}/comments/${commentId}/replies/${replyId}`]=null;
+    update(ref(db),deleteReply)
 }

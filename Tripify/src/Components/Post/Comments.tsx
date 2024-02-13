@@ -6,7 +6,7 @@ import Reply from "./Reply"
 import { get, ref, update } from "firebase/database"
 import { db } from "../../config/config-firebase"
 
-export default function Comments(prop: any,{setPosts}:any) {
+export default function Comments(prop: any,) {
 
   const [replyIsActive, setReplyIsActive] = useState(false)
   const [comments, setComments] = useState(prop.comment)
@@ -14,14 +14,16 @@ const[isEditing,setIsEditing]=useState(false)
   const { userData } = useAppContext();
   const[editedComment,setEditedComment]=useState(comments?.content)
   
-  useEffect(() => {
-    if(prop.postId){
-      getPostById(prop.postId).then((value: any) => {
-        setPosts(value);
-        setComments(value[0]?.comments || []);
-    });
-    }
-  }, [comments])
+  // useEffect(() => {
+  //   if(prop.postId){
+  //     getPostById(prop.postId).then((value: any) => {
+  //       prop.setPosts(value);
+  //       setComments(value[0]?.comments || []);
+  //       !replyIsActive && setReplyIsActive(true);
+        
+  //   });
+  //   }
+  // }, [comments])
 
 
   const [reply, setReply] = useState('')
@@ -31,14 +33,13 @@ const[isEditing,setIsEditing]=useState(false)
   const addCurrentReply = async () => {
 
     await addReply(comments.id, comments.postId, userData.handle, reply)
-    setComments((comments: any) => {
-      let updatedComments = { ...comments };
-      updatedComments.replies = [...comments.replies];
-      updatedComments.replies.push({ content: reply, author: userData.handle, likes: 0, dislikes: 0, likedBy: [], dislikesBy: [] })
-      return updatedComments;
-    })
+    getPostById(prop.postId).then((value: any) => {
+      prop.setPosts(value);
+      setComments(value[0]?.comments || []);
+      setReplyIsActive(true);
     setReply('')
-  }
+  });
+}
 
   const toggleCommentLikes = async () => {
 

@@ -1,93 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue, push } from 'firebase/database';
-import { useAppContext } from '../../Context/AppContext';
-import { addComment } from '../../Service/post-service';
+import { useEffect, useState } from "react"
+import Button from "../Button"
+import { addReply } from "../../Service/post-service"
+import { useAppContext } from "../../Context/AppContext"
+import Reply from "./Reply"
 
-interface Comment {
-  author: string;
-  content: string;
-  createdOn: number;
-  replyTo: string | null;
-  id: string;
-}
+export default function Comments(prop: any) {
 
-interface CommentsProps {
-  postId: string;
-}
+  const [replyIsActive, setReplyIsActive] = useState(false)
+  const [comments,setComments] = useState(prop.comment)
 
-const Comments: React.FC<CommentsProps> = ({ postId }) => {
-
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [newComment, setNewComment] = useState('');
   const { userData } = useAppContext();
-  const [replyTo, setReplyTo] = useState<string | null>(null);
-  const [viewRepliesTo, setViewRepliesTo] = useState<string | null>(null);
 
-  const handleReply = (commentId: string) => {
-    setReplyTo(commentId);
+  const [reply, setReply] = useState('')
+  const toggleReply = () => {
+    setReplyIsActive(!replyIsActive)
   }
-  
-  useEffect(() => {
-    const db = getDatabase();
-    const commentsRef = ref(db, 'comments/' + postId);
+  const addCurrentReply = async() => {
 
-    onValue(commentsRef, (snapshot) => {
-      setComments(snapshot.val() ? Object.values(snapshot.val()) : []);
-    });
-  }, [postId]);
+   await addReply(comments.id, comments.postId, userData.handle, reply)
+    setComments((comments:any)=>{
+      let updatedComments = {...comments};
+      updatedComments.replies = {...comments.replies, [new Date().getTime()]:{author:userData.handle,content:reply,createdOn:new Date().getTime()}};
+      return updatedComments;
+    })
+    setReply('')
+    
 
-
-  const handleNewCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewComment(e.target.value);
-  };
-
-  //   const handleNewCommentSubmit = async (e: React.FormEvent) => {
-  //     e.preventDefault();
-
-  //     const db = getDatabase();
-  //     const commentsRef = ref(db, 'comments/' + postId);
-
-  //     await push(commentsRef, {
-  //       author: userData.handle,
-  //       content: newComment,
-  //       createdOn: Date.now(),
-
-  //     });
-
-  //     setNewComment('');
-  //   };
-
-
-
-  const handleNewCommentSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    await addComment(postId, userData.handle, newComment, replyTo);
-
-    setNewComment('');
-    setReplyTo(null);
-  };
-
+  }
   return (
-
-
-    <div>
-    {/* Display the comments... */}
-    {comments.map((comment, index) => (
-      <div key={index} style={{ marginLeft: comment.replyTo ? '20px' : '0' }}>
-        <p>{comment.content} - {comment.author}</p>
-        <button onClick={() => handleReply(comment.author)}>Reply</button>
-      </div>
-    ))}
-
-    {/* Form for new comments... */}
-    <form onSubmit={handleNewCommentSubmit}>
-      {replyTo && <p>Replying to comment {replyTo}</p>}
-      <input type="text" value={newComment} onChange={handleNewCommentChange} />
-      <button type="submit">Add Comment</button>
-    </form>
-  </div>
-);
-};
-
-export default Comments;
+    <div style={{ border: '2px solid green' }}>
+      <h3>{prop.comment.author}</h3>
+      <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
+      <p>{prop.comment.content}</p>
+      <button>Like</button>Todo
+      <button>Dislike</button>Todo
+      <Button onClick={toggleReply}>Reply</Button>
+      {replyIsActive && <div>
+        <input value={reply} type="text" name="comment" id="comment-input" onChange={e => setReply(e.target.value)} />
+        <Button onClick={addCurrentReply}>Add Reply</Button>
+      </div>}
+      {replyIsActive&&comments.replies && Object.values(comments.replies).map((r: any,index) => <Reply key={r.id?r.id:index} reply={r} />)}
+    </div>
+  )
+}

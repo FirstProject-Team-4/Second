@@ -36,6 +36,7 @@ export const getAllPosts = async (search: string) => {
     return posts;
 };
 
+
 export const getPostById = async (id: string) => {
 
     const snapshot = await get(ref(db, `posts/${id}`));
@@ -43,12 +44,29 @@ export const getPostById = async (id: string) => {
         return null;
     }
 
-    const post = {
+    const post = [{
         id,
         ...snapshot.val(),
         createdOn: new Date(snapshot.val().createdOn).toString(),
         likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
-    };
+        imageUrl: snapshot.val().imageUrl,
+        dislikesBy: snapshot.val().dislikesBy ? Object.keys(snapshot.val().dislikesBy) : [],
+        comments: snapshot.val().comments ? Object.keys(snapshot.val().comments).map(c=>{
+            return {
+                id:c,
+                ...snapshot.val().comments[c],
+                createdOn: new Date(snapshot.val().comments[c].createdOn).toString(),
+                replies: snapshot.val().comments[c].replies ? Object.keys(snapshot.val().comments[c].replies).map(r=>{
+                    return {
+                        id:r,
+                        ...snapshot.val().comments[c].replies[r],
+                        createdOn: new Date(snapshot.val().comments[c].replies[r].createdOn).toString(),
+                    }
+                }) : [],
+            }
+        }) : [],
+       
+    }];
 
     return post;
 };
@@ -105,15 +123,27 @@ export const removeDislike = (handle: string, postId: string, dislikeCount: numb
     return update(ref(db), updateLikes);
 };
 
-export const addComment = async (postId: string, author: string, content: string, replyTo: string | null = null) => {
-    return push(ref(db, `comments/${postId}`), {
+export const addComment = async (postId: string, userData:{handle:string},content:string) => {
+    push(ref(db, `posts/${postId}/comments/`), {
         postId,
+        author:userData.handle,
+        content,
+        createdOn: Date.now(),
+        replies:{}
+    });
+};
+export const addReply = async (commentId: string, postId: string, author:string, content: string) => {
+    push(ref(db, `posts/${postId}/comments/${commentId}/replies/`), {
         author,
         content,
         createdOn: Date.now(),
-        replyTo,
+        postId,
+        commentId
     });
-};
+}
+
+
+
 export const deletePost=async(postId:string)=>{
     const user= await getAllUsers();
     user.forEach(u=>{

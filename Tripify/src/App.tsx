@@ -13,6 +13,7 @@ import AllPosts from './Views/AllPosts/AllPosts'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from './config/config-firebase'
 import { getUserData } from './Service/user-service'
+import SinglePostView from './Views/AllPosts/SinglePost-view'
 
 function App() {
   const [context, setContext] = useState({
@@ -26,7 +27,6 @@ function App() {
       getUserData(user.uid)
         .then(snapshot => {
           if (snapshot.exists()) {
-            console.log(snapshot.val());
             setContext({ user, userData: snapshot.val()[Object.keys(snapshot.val())[0]] });
           }
         })
@@ -45,6 +45,7 @@ function App() {
           <Route path="/login" element={<LoginView />} />
           <Route path="/register" element={<RegisterView />} />
           <Route path="/posts" element={<AllPosts />}/>
+          <Route path="/posts/:id" element={<SinglePostView />}/>
           <Route path="/category/:id" element={<Category/>} />
           <Route path="/posts-create" element={<CreatePost />} />
           <Route path="/posts-create" element={<CreatePost />} />

@@ -16,7 +16,8 @@ export default function CreatePost() {
     content: '',
     user: '',
     comments: '',
-    image:''
+    image:'',
+    userImage: '',
   });
 
 
@@ -58,7 +59,14 @@ export default function CreatePost() {
     if (post.content.length < 32 || post.content.length > 8192) {
       return alert('The content must be between 32 symbols and 8192 symbols.');
     }
-  
+  let currentUserImage;
+  if(userData.userImage){
+    currentUserImage=userData.userImage;
+  }
+  else{
+    currentUserImage=userData.handle[0];
+  }
+
     // if (post.user === null || post.user === undefined || post.user === '') {
     //     return alert('The post must have a user who created it.');
     // }
@@ -66,7 +74,7 @@ export default function CreatePost() {
     //     return alert('Other users must be able to post replies.');
     // }
     //post.comments, image
-    await addPost(userData.handle, post.title, post.content, post.image); // Pass the image to the service function
+    await addPost(userData.handle, post.title, post.content, post.image,currentUserImage); // Pass the image to the service function
 
     setPost({
       title: '',
@@ -74,6 +82,7 @@ export default function CreatePost() {
       user: '',
       image: '',
       comments: '',
+      userImage: '',
     });
 
   };

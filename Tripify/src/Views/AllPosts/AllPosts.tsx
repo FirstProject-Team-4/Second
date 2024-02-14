@@ -17,6 +17,7 @@ export type PostType = {
     imageUrl: string[];
     comments: string[];
     commentsCount: number;
+    userImage: string;
 
 };
 

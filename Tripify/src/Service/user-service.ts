@@ -8,8 +8,8 @@ export const getUserByHandle = (handle:string) => {
 
 export const createUserHandle = (handle:string, uid:string, email:string) => {
 const isAdmin=false;
-const image='';
-  return set(ref(db, `users/${handle}`), { handle, uid,image, email, createdOn: new Date().valueOf(),isAdmin, likedPosts: {} })
+
+  return set(ref(db, `users/${handle}`), { handle, uid, email, createdOn: new Date().valueOf(),isAdmin, likedPosts: {} })
 };
 
 export const getUserData = (uid:string) => {

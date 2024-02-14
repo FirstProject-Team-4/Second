@@ -3,13 +3,14 @@ import Button from '../Button';
 import { removeLike, addLike, removeDislike, addDislike, deletePost } from '../../Service/post-service';
 // import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../Context/AppContext';
-import { useState } from 'react';
+import {  useState } from 'react';
 import { ref, update } from 'firebase/database';
 import { db } from '../../config/config-firebase';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
 
 export default function Post({ post,setPosts }: {
-    post: { id: string, commentsCount:number, author: string, title: string, content: string, image: any, dislikes: number,
+    post: { id: string,userImage:string, commentsCount:number, author: string, title: string, content: string, image: any, dislikes: number,
     likes: number, createdOn: string, dislikesBy: string[], likedBy: string[] },
     setPosts:any
 }) {
@@ -17,7 +18,8 @@ export default function Post({ post,setPosts }: {
     const { userData } = useAppContext();
     const [isEditing, setIsEditing] = useState(false);
     const [editedPost, setEditedPost] = useState({ title: post.title, content: post.content });
-    const navigate = useNavigate();
+    
+
 
     const isEditOn = () => {
         setIsEditing(!isEditing);
@@ -120,9 +122,7 @@ export default function Post({ post,setPosts }: {
             return;
         }
     }
-    const comments = () => {
-        navigate(`/posts/${post.id}`);
-    }
+
 
     return (
         isEditing ?
@@ -136,6 +136,8 @@ export default function Post({ post,setPosts }: {
             </div>
             :
             <div className="post" style={{ border: '4px solid black' }}>
+                {post?.userImage?.length>1&&<img src={post.userImage} style={{height:'50px',width:'30px'}} alt="profile" />}
+                {post?.userImage?.length===1&&<span>{post.userImage}</span>}
                 <NavLink to={`/profile/${post.author}`}>{post.author}</NavLink>
                 <h4>{post.title} </h4>
                 <p>{post.content}</p>

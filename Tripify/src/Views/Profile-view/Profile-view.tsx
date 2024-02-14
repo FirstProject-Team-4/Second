@@ -12,41 +12,54 @@ import { getUserByHandle } from "../../Service/user-service";
 
 
 const Profile = () => {
-    const { user,userData, setContext } = useAppContext();
+    const { userData } = useAppContext();
     const [post, setPosts] = useState<PostType[]>([]);
+    const [currentUser, setCurrentUser] = useState(null as any);
     const { id } = useParams();
 
     useEffect(() => {
         if (id) {
+        getUserByHandle(id).then((snapshot) => {
+            if (snapshot.exists()) {
+                setCurrentUser(snapshot.val());
+            }
+        });
+       
             getAllPostsByUser(id).then(setPosts);
         }
-    }, [id]);
+    }, [id,currentUser]);
 
-    const handleUploadClick = () => {
+    const handleUploadClick = async () => {
         document.getElementById('fileInput')?.click();
     }
-    const handleFileSelect = (e: any) => {
+    const handleFileSelect = async(e: any) => {
         const file = e.target.files[0];
-        saveImage(file).then((url) => {
-            update(ref(db, `users/${userData.handle}`), { image: url });
-   
-          getUserByHandle(userData.handle).then((snapshot) => {
-            if (snapshot.exists()) {
-                setContext({ ...user, userData: snapshot.val() });
-            }
-        });});
+        const url=await saveImage(file)
+        const updatePost: { [key: string]: any } = {};
        
+       const posts=await getAllPostsByUser(currentUser.handle);
+       posts.map((p:any)=>{
+              updatePost[`/posts/${p.id}/userImage`] = url;
+              update(ref(db), updatePost);
+         });
+         
+        
+         updatePost[`/users/${userData.handle}/userImage`] = url;
+         update(ref(db), updatePost)
+         setCurrentUser({...currentUser,userImage:url});
+
     }
 
     return (
 
-        post.length && <div>
+        currentUser&& <div>
             <h1>Profile</h1>
-            <img src={userData?.image} alt="profile" />
-            <input type="file" id="fileInput" accept="image/*"  style={{ display: 'none' }} onChange={handleFileSelect} />
+            {currentUser.userImage&&<img src={currentUser?.userImage} style={{height:'200px',width:'300px'}} alt="profile" />}
+            {!currentUser.userImage&&<span>{currentUser.handle[0]}</span>}
+            <input type="file" id="fileInput" accept="image/*"  style={{ display: 'none' }} onChange={handleFileSelect} /><br></br>
             {userData?.handle === id && <span onClick={handleUploadClick}>upload image</span>}
-            <h2>{post[0].author}</h2>
-            {post.map((post) => (
+            {post&&<h2>{currentUser.handle}</h2>}
+            {post&&post.map((post) => (
                 <Post key={post.id} post={post} setPosts={setPosts}></Post>))}
 
         </div>

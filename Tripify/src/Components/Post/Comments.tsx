@@ -5,6 +5,7 @@ import { useAppContext } from "../../Context/AppContext"
 import Reply from "./Reply"
 import {  ref, update } from "firebase/database"
 import { db } from "../../config/config-firebase"
+import { NavLink } from "react-router-dom"
 
 export default function Comments(prop: any) {
 
@@ -19,7 +20,7 @@ export default function Comments(prop: any) {
     setReplyIsActive(!replyIsActive)
   }
   const addCurrentReply = async () => {
-    await addReply(comments.id, comments.postId, userData.handle, reply);
+    await addReply(comments.id, comments.postId, userData.handle, reply,userData);
 
     getPostById(prop.comment.postId).then((value: any) => {
 
@@ -139,7 +140,8 @@ export default function Comments(prop: any) {
       :
       comments &&
       <div style={{ border: '2px solid green' }}>
-        <h3>{prop.comment.author}</h3>
+      {comments?.userImage?.length>1&&<img src={comments.userImage} style={{height:'50px',width:'30px'}} alt="profile" />}
+        <NavLink to={`/profile/${prop.comment.author}`}>{prop.comment.author}</NavLink>
         <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
         <p>{prop.comment.content}</p>
         <Button color={setLikeButtonColor()} onClick={toggleCommentLikes}>{comments?.likes}👍</Button>

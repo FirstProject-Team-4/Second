@@ -207,7 +207,9 @@ export const removeDislikeReply = (handle: string, postId: string, commentId: st
     return update(ref(db), updateLikes);
 }
 
-export const addComment = async (postId: string, userData: { handle: string }, content: string) => {
+export const addComment = async (postId: string, userData: { handle: string , userImage:string}, content: string) => {
+   console.log(userData);
+   
     push(ref(db, `posts/${postId}/comments/`), {
         postId,
         author: userData.handle,
@@ -217,9 +219,11 @@ export const addComment = async (postId: string, userData: { handle: string }, c
         likes: 0,
         dislikes: 0,
         replyCounter: 0,
+        userImage:userData.userImage,
     });
 };
-export const addReply = async (commentId: string, postId: string, author: string, content: string) => {
+export const addReply = async (commentId: string, postId: string, author: string, content: string, userData: { userImage:string}) => {
+   console.log(userData);
     return push(ref(db, `posts/${postId}/comments/${commentId}/replies/`), {
         author,
         content,
@@ -228,6 +232,7 @@ export const addReply = async (commentId: string, postId: string, author: string
         commentId,
         likes: 0,
         dislikes: 0,
+        userImage:userData.userImage,
     });
 }
 

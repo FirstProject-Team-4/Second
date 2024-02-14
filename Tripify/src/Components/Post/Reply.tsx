@@ -6,8 +6,9 @@ import { addDislikeReply, addLikeReply, deleteReply, removeDislikeReply, removeL
 // import { ref } from "firebase/storage";
 import { db } from "../../config/config-firebase";
 import { ref, update } from 'firebase/database';
+import { NavLink } from "react-router-dom";
 
-export default function Reply(prop: { reply: { content: string,author:string, createdOn:string, likes: number, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string }, setCommends: any , comment: any}) {
+export default function Reply(prop: { reply: { content: string,author:string, createdOn:string, likes: number,userImage:string, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string }, setCommends: any , comment: any}) {
     const [reply, setReply] = useState(prop.reply);
     const { userData } = useAppContext();
     const [isEditing, setIsEditing] = useState(false);
@@ -125,8 +126,8 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
       };
     return (
         isEditing ?
-      <div style={{ border: '2px solid green' }}>
-        <h3>{reply.author}</h3>
+        <div style={{ border: '2px solid green' }}>
+          <NavLink to={`/profile/${reply.author}`}>{reply.author}</NavLink>
         <span>{new Date(reply.createdOn).toLocaleString()}</span>
         <input value={editedReply} type="text" name="comment" id="comment-input" onChange={(e) => {
           setEditedReply(e.target.value) }} />
@@ -137,6 +138,9 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
       :
         reply &&
         <div style={{ border: '1px solid red' }}>
+        {reply?.userImage?.length>1&&<img src={reply.userImage} style={{height:'50px',width:'30px'}} alt="profile" />}
+        <NavLink to={`/profile/${reply.author}`}>{reply.author}</NavLink>
+        <span>{new Date(reply.createdOn).toLocaleString()}</span>
             <h1>{prop.reply.content}</h1>
             <Button color={setLikeButtonColor()} onClick={toggleReplyLikes}>{reply.likes}👍</Button>
             <Button color={setDislikeButtonColor()} onClick={toggleDisLikeReply}>{reply.dislikes}👎</Button>

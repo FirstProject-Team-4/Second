@@ -14,18 +14,6 @@ export default function Comments(prop: any,) {
   const { userData } = useAppContext();
   const [editedComment, setEditedComment] = useState(comments?.content)
 
-  // useEffect(() => {
-  //   if(prop.postId){
-  //     getPostById(prop.postId).then((value: any) => {
-  //       prop.setPosts(value);
-  //       setComments(value[0]?.comments || []);
-  //       !replyIsActive && setReplyIsActive(true);
-
-  //   });
-  //   }
-  // }, [comments])
-
-
   const [reply, setReply] = useState('')
   const toggleReply = () => {
     setReplyIsActive(!replyIsActive)
@@ -131,8 +119,6 @@ export default function Comments(prop: any,) {
 
 
   }
-
-
 
   return (
     isEditing ?

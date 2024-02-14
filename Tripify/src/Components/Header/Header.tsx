@@ -3,15 +3,21 @@ import './Header.css';
 import Button from "../Button";
 import { useAppContext } from "../../Context/AppContext";
 import { logoutUser } from "../../Service/auth-service";
-
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
 
     const { user,userData, setContext } = useAppContext();
+    const navigate = useNavigate();
     const logout = async() => {
         await logoutUser();
         setContext({user:null, userData:null});
     }
+
+    const profilView = () => {
+        navigate(`/profile/${userData?.handle}`);
+    }
+
     return (
         <header>
             <div className="header-class" >
@@ -19,7 +25,7 @@ export const Header = () => {
                 {!user&&<NavLink to="/register" className='register'>Register</NavLink>}
                 {!user&&<NavLink to="/login" className='login'>Login</NavLink>}
                 {user&&<NavLink to="/posts-create" className='create-post'>Create Post</NavLink>}
-                {user&&<span>{userData?.handle} </span>}
+               {user&& <Button onClick={profilView} >{userData?.handle}</Button>}
                 {user&&<Button onClick={logout}>Logout</Button>}
             </div>
             <input type="text" placeholder="Search..." className="search"/>

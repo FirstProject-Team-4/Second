@@ -7,7 +7,7 @@ import { addDislikeReply, addLikeReply, deleteReply, removeDislikeReply, removeL
 import { db } from "../../config/config-firebase";
 import { ref, update } from 'firebase/database';
 
-export default function Reply(prop: { reply: { content: string, likes: number, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string }, setCommends: any }) {
+export default function Reply(prop: { reply: { content: string, likes: number, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string }, setCommends: any , comment: any}) {
     const [reply, setReply] = useState(prop.reply);
     const { userData } = useAppContext();
     const [isEditing, setIsEditing] = useState(false);
@@ -71,11 +71,17 @@ export default function Reply(prop: { reply: { content: string, likes: number, d
     const deleteCurrentReply = () => {
         if (window.confirm('Are you sure you want to delete this comment?')) {
 
+            console.log(prop.comment.replyCounter);
+            const updatePost: { [key: string]: any } = {};
+            updatePost[`/posts/${reply.postId}/comments/${reply.commentId}/replyCounter`] = prop.comment.replyCounter - 1;
+    
+            update(ref(db),updatePost);
             deleteReply(prop.reply.postId, prop.reply.commentId, prop.reply.id);
 
             prop.setCommends((comments: any) => {
                 let updatedPost = { ...comments };
                 updatedPost.replies = updatedPost.replies.filter((r: any) => r.id !== prop.reply.id);
+                updatedPost.replyCounter -= 1;
                 return updatedPost;
             });
             setReply(null as any);

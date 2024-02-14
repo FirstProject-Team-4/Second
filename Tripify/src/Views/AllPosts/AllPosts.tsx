@@ -16,6 +16,8 @@ export type PostType = {
     likedBy: string[];
     imageUrl: string[];
     comments: string[];
+    commentsCount: number;
+
 };
 
 export default function AllPosts() {

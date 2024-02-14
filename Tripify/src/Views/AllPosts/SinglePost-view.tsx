@@ -6,6 +6,8 @@ import Post from "../../Components/Post/Post";
 import Button from "../../Components/Button";
 import { useAppContext } from "../../Context/AppContext";
 import Comments from "../../Components/Post/Comments";
+import { ref, update } from "firebase/database";
+import { db } from "../../config/config-firebase";
 
 
 export default function SinglePostView() {
@@ -26,7 +28,10 @@ export default function SinglePostView() {
         }
         addComment(posts[0].id, userData, comment,);
         if(id){
-            getPostById(id).then((value: any) => setPosts(value));;
+            const updatePost: { [key: string]: any } = {};
+            updatePost[`/posts/${id}/commentsCount`] = posts[0].commentsCount + 1;
+            update(ref(db),updatePost);
+            getPostById(id).then((value: any) => setPosts(value));
         }
         setComment('');
            
@@ -40,7 +45,7 @@ export default function SinglePostView() {
                 <input value={comment} type="text" name="comment" id="comment-input" onChange={e => setComment(e.target.value)} />
                 <Button onClick={addCurrentComment}>Add Comment</Button>
                 <div>
-                    {posts[0]?.comments && posts[0].comments.map((c: any) => <Comments key={c.id}  comment={c} setPosts={setPosts} />)}
+                    {posts[0]?.comments && posts[0].comments.map((c: any) => <Comments key={c.id}  comment={c} setPosts={setPosts} post={posts[0]} />)}
                 </div>
             </div>
         )

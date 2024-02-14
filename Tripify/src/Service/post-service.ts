@@ -3,7 +3,7 @@ import { db } from '../config/config-firebase';
 import { getAllUsers } from './user-service';
 
 //image: string
-export const addPost = async (author: string, title: string, content: string, image: any='') => {
+export const addPost = async (author: string, title: string, content: string, image: any = '') => {
     return push(ref(db, 'posts'), {
         author,
         title,
@@ -12,7 +12,7 @@ export const addPost = async (author: string, title: string, content: string, im
         likes: 0,
         dislikes: 0,
         createdOn: Date.now(),
-
+        commentsCount: 0,
 
     });
 };
@@ -30,6 +30,7 @@ export const getAllPosts = async (search: string) => {
         likedBy: snapshot.val()[key].likedBy ? Object.keys(snapshot.val()[key].likedBy) : [],
         imageUrl: snapshot.val().imageUrl,
         dislikesBy: snapshot.val()[key].dislikesBy ? Object.keys(snapshot.val()[key].dislikesBy) : [],
+        commentsCount: snapshot.val()[key].commentsCount,
     }))
         .filter(p => p.title?.toLowerCase().includes(search.toLowerCase()));
 
@@ -51,16 +52,18 @@ export const getPostById = async (id: string) => {
         likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
         imageUrl: snapshot.val().imageUrl,
         dislikesBy: snapshot.val().dislikesBy ? Object.keys(snapshot.val().dislikesBy) : [],
-        comments: snapshot.val().comments ? Object.keys(snapshot.val().comments).map(c=>{
+        commentsCount: snapshot.val().commentsCount,
+        comments: snapshot.val().comments ? Object.keys(snapshot.val().comments).map(c => {
             return {
-                id:c,
+                id: c,
                 ...snapshot.val().comments[c],
                 createdOn: new Date(snapshot.val().comments[c].createdOn).toString(),
+                replyCounter: snapshot.val().comments[c].replies ? Object.keys(snapshot.val().comments[c].replies).length : 0,
                 likedBy: snapshot.val().comments[c].likedBy ? Object.keys(snapshot.val().comments[c].likedBy) : [],
                 dislikesBy: snapshot.val().comments[c].dislikesBy ? Object.keys(snapshot.val().comments[c].dislikesBy) : [],
-                replies: snapshot.val().comments[c].replies ? Object.keys(snapshot.val().comments[c].replies).map(r=>{
+                replies: snapshot.val().comments[c].replies ? Object.keys(snapshot.val().comments[c].replies).map(r => {
                     return {
-                        id:r,
+                        id: r,
                         ...snapshot.val().comments[c].replies[r],
                         likedBy: snapshot.val().comments[c].replies[r].likedBy ? Object.keys(snapshot.val().comments[c].replies[r].likedBy) : [],
                         dislikesBy: snapshot.val().comments[c].replies[r].dislikesBy ? Object.keys(snapshot.val().comments[c].replies[r].dislikesBy) : [],
@@ -69,7 +72,7 @@ export const getPostById = async (id: string) => {
                 }) : [],
             }
         }) : [],
-       
+
     }];
 
     return post;
@@ -131,7 +134,7 @@ export const addLikeComment = (handle: string, postId: string, commentId: string
     const updateLikes: { [key: string]: any } = {};
     updateLikes[`/posts/${postId}/comments/${commentId}/likedBy/${handle}`] = true;
     updateLikes[`/posts/${postId}/comments/${commentId}/likes/`] = likesCount;
-   
+
     return update(ref(db), updateLikes);
 }
 
@@ -159,7 +162,7 @@ export const removeDislikeComment = (handle: string, postId: string, commentId: 
 
 export const addLikeReply = (handle: string, postId: string, commentId: string, replyId: string, likesCount: number) => {
     const updateLikes: { [key: string]: any } = {};
-    console.log(replyId,postId,commentId,likesCount,handle)
+    console.log(replyId, postId, commentId, likesCount, handle)
     updateLikes[`/posts/${postId}/comments/${commentId}/replies/${replyId}/likedBy/${handle}`] = true;
     updateLikes[`/posts/${postId}/comments/${commentId}/replies/${replyId}/likes/`] = likesCount;
     return update(ref(db), updateLikes);
@@ -186,44 +189,45 @@ export const removeDislikeReply = (handle: string, postId: string, commentId: st
     return update(ref(db), updateLikes);
 }
 
-export const addComment = async (postId: string, userData:{handle:string},content:string) => {
+export const addComment = async (postId: string, userData: { handle: string }, content: string) => {
     push(ref(db, `posts/${postId}/comments/`), {
         postId,
-        author:userData.handle,
+        author: userData.handle,
         content,
         createdOn: Date.now(),
-        replies:{},
-        likes:0,
-        dislikes:0,
+        replies: {},
+        likes: 0,
+        dislikes: 0,
+        replyCounter: 0,
     });
 };
-export const addReply = async (commentId: string, postId: string, author:string, content: string) => {
-   return push(ref(db, `posts/${postId}/comments/${commentId}/replies/`), {
+export const addReply = async (commentId: string, postId: string, author: string, content: string) => {
+    return push(ref(db, `posts/${postId}/comments/${commentId}/replies/`), {
         author,
         content,
         createdOn: Date.now(),
         postId,
         commentId,
-        likes:0,
-        dislikes:0,
+        likes: 0,
+        dislikes: 0,
     });
 }
 
 
 
 
-export const deletePost=async(postId:string)=>{
-    const user= await getAllUsers();
-    user.forEach(u=>{
-        if(u.likedPosts){
-            if(u.likedPosts.includes(postId)){
+export const deletePost = async (postId: string) => {
+    const user = await getAllUsers();
+    user.forEach(u => {
+        if (u.likedPosts) {
+            if (u.likedPosts.includes(postId)) {
                 const updateLikes: { [key: string]: any } = {};
                 updateLikes[`/users/${u.handle}/likedPosts/${postId}`] = null;
                 update(ref(db), updateLikes);
             }
         }
-        if(u.dislikedPosts){
-            if(u.dislikedPosts.includes(postId)){
+        if (u.dislikedPosts) {
+            if (u.dislikedPosts.includes(postId)) {
                 const updateLikes: { [key: string]: any } = {};
                 updateLikes[`/users/${u.handle}/dislikedPosts/${postId}`] = null;
                 update(ref(db), updateLikes);
@@ -231,18 +235,18 @@ export const deletePost=async(postId:string)=>{
         }
     })
     const deletePost: { [key: string]: any } = {};
-    deletePost[`posts/${postId}`]=null;
-    update(ref(db),deletePost)
+    deletePost[`posts/${postId}`] = null;
+    update(ref(db), deletePost)
 }
-export const deleteComment=async(postId:string,commentId:string)=>{
-   
+export const deleteComment = async (postId: string, commentId: string) => {
+
     const deleteComment: { [key: string]: any } = {};
-    deleteComment[`posts/${postId}/comments/${commentId}`]=null;
-    update(ref(db),deleteComment)
+    deleteComment[`posts/${postId}/comments/${commentId}`] = null;
+    update(ref(db), deleteComment)
 }
-export const deleteReply=async(postId:string,commentId:string,replyId:string)=>{
+export const deleteReply = async (postId: string, commentId: string, replyId: string) => {
     const deleteReply: { [key: string]: any } = {};
 
-    deleteReply[`posts/${postId}/comments/${commentId}/replies/${replyId}`]=null;
-    update(ref(db),deleteReply)
+    deleteReply[`posts/${postId}/comments/${commentId}/replies/${replyId}`] = null;
+    update(ref(db), deleteReply)
 }

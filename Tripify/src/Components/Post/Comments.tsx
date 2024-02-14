@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import Button from "../Button"
 import { addDislikeComment, addLikeComment, addReply, deleteComment, getPostById, removeDislikeComment, removeLikeComment } from "../../Service/post-service"
 import { useAppContext } from "../../Context/AppContext"
 import Reply from "./Reply"
-import { get, ref, update } from "firebase/database"
+import {  ref, update } from "firebase/database"
 import { db } from "../../config/config-firebase"
 
-export default function Comments(prop: any,) {
+export default function Comments(prop: any) {
 
   const [replyIsActive, setReplyIsActive] = useState(false)
   const [comments, setComments] = useState(prop.comment)
@@ -98,6 +98,10 @@ export default function Comments(prop: any,) {
   }
   const deleteWindowPop = () => {
     if (window.confirm('Are you sure you want to delete this comment?')) {
+      const updatePost: { [key: string]: any } = {};
+      updatePost[`/posts/${comments.postId}/commentsCount`] = prop.post.commentsCount - 1;
+      update(ref(db),updatePost);
+    
       deleteComment(comments.postId, comments.id);
       setReplyIsActive(false);
       setComments(null);
@@ -140,14 +144,14 @@ export default function Comments(prop: any,) {
         <p>{prop.comment.content}</p>
         <Button color={setLikeButtonColor()} onClick={toggleCommentLikes}>{comments?.likes}👍</Button>
         <Button color={setDislikeButtonColor()} onClick={toggleCommentDislikes}>{comments?.dislikes}👎</Button>
-        <Button onClick={toggleReply}>Reply</Button>
+        <Button onClick={toggleReply}>{comments.replyCounter} Reply</Button>
         {comments.author === userData?.handle && <Button onClick={isEditOn}>Edit</Button>}
         {comments.author === userData?.handle && <Button onClick={deleteWindowPop}>Delete</Button>}
         {replyIsActive && <div>
           <input value={reply} type="text" name="comment" id="comment-input" onChange={e => setReply(e.target.value)} />
           <Button onClick={addCurrentReply}>Add Reply</Button>
         </div>}
-        {replyIsActive && comments.replies && Object.values(comments.replies).map((r: any, index) => <Reply key={r.id ? r.id : index} reply={r} setCommends={setComments} />)}
+        {replyIsActive && comments.replies && Object.values(comments.replies).map((r: any, index) => <Reply key={r.id ? r.id : index} reply={r} setCommends={setComments} comment={comments}/>)}
       </div>
   )
 }

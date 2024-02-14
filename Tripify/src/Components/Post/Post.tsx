@@ -9,7 +9,7 @@ import { db } from '../../config/config-firebase';
 import { useNavigate } from 'react-router-dom';
 
 export default function Post({ post,setPosts }: {
-    post: { id: string, author: string, title: string, content: string, image: any, dislikes: number,
+    post: { id: string, commentsCount:number, author: string, title: string, content: string, image: any, dislikes: number,
     likes: number, createdOn: string, dislikesBy: string[], likedBy: string[] },
     setPosts:any
 }) {
@@ -144,7 +144,7 @@ export default function Post({ post,setPosts }: {
                 <Button color={setDislikeButtonColor()} onClick={toggleDislike}>{post.dislikes}👎</Button>
                 {post.author === userData?.handle && <Button onClick={isEditOn}>Edit</Button>}
                 {/* Comments */}
-                <button onClick={comments}>Comments</button>
+                <button onClick={comments}>{post.commentsCount} Comments</button>
                 {post.author === userData?.handle && <Button onClick={deleteWindowPop}>Delete</Button>}
                 
 

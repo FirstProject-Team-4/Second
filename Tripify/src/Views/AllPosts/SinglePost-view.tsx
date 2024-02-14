@@ -50,3 +50,4 @@ export default function SinglePostView() {
             </div>
         )
     }
+    console.log('SinglePostView.tsx')

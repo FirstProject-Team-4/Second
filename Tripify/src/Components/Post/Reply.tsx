@@ -7,7 +7,7 @@ import { addDislikeReply, addLikeReply, deleteReply, removeDislikeReply, removeL
 import { db } from "../../config/config-firebase";
 import { ref, update } from 'firebase/database';
 
-export default function Reply(prop: { reply: { content: string, likes: number, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string }, setCommends: any , comment: any}) {
+export default function Reply(prop: { reply: { content: string,author:string, createdOn:string, likes: number, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string }, setCommends: any , comment: any}) {
     const [reply, setReply] = useState(prop.reply);
     const { userData } = useAppContext();
     const [isEditing, setIsEditing] = useState(false);

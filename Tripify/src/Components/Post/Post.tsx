@@ -6,7 +6,7 @@ import { useAppContext } from '../../Context/AppContext';
 import { useState } from 'react';
 import { ref, update } from 'firebase/database';
 import { db } from '../../config/config-firebase';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 export default function Post({ post,setPosts }: {
     post: { id: string, commentsCount:number, author: string, title: string, content: string, image: any, dislikes: number,
@@ -136,6 +136,7 @@ export default function Post({ post,setPosts }: {
             </div>
             :
             <div className="post" style={{ border: '4px solid black' }}>
+                <NavLink to={`/profile/${post.author}`}>{post.author}</NavLink>
                 <h4>{post.title} </h4>
                 <p>{post.content}</p>
                 {post.image && <img src={post.image} alt="post" />}
@@ -144,7 +145,7 @@ export default function Post({ post,setPosts }: {
                 <Button color={setDislikeButtonColor()} onClick={toggleDislike}>{post.dislikes}👎</Button>
                 {post.author === userData?.handle && <Button onClick={isEditOn}>Edit</Button>}
                 {/* Comments */}
-                <button onClick={comments}>{post.commentsCount} Comments</button>
+                <NavLink to={`/posts/${post.id}`}>{post.commentsCount} Comments</NavLink>
                 {post.author === userData?.handle && <Button onClick={deleteWindowPop}>Delete</Button>}
                 
 

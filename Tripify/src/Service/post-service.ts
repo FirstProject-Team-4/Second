@@ -36,7 +36,24 @@ export const getAllPosts = async (search: string) => {
 
     return posts;
 };
+export const getAllPostsByUser = async (username: string) => {
+    const snapshot = await get(query(ref(db, 'posts'), orderByChild('createdOn')));
+    if (!snapshot.exists()) {
+        return [];
+    }
 
+    const posts = Object.keys(snapshot.val()).map(key => ({
+        id: key,
+        ...snapshot.val()[key],
+        createdOn: new Date(snapshot.val()[key].createdOn).toString(),
+        likedBy: snapshot.val()[key].likedBy ? Object.keys(snapshot.val()[key].likedBy) : [],
+        imageUrl: snapshot.val().imageUrl,
+        dislikesBy: snapshot.val()[key].dislikesBy ? Object.keys(snapshot.val()[key].dislikesBy) : [],
+        commentsCount: snapshot.val()[key].commentsCount,
+    }))
+
+    return posts.filter(p => p.author === username);
+};
 
 export const getPostById = async (id: string) => {
 

@@ -6,6 +6,9 @@ import { getAllPostsByUser } from "../../Service/post-service";
 import { PostType } from "../AllPosts/AllPosts";
 import Post from "../../Components/Post/Post";
 import { saveImage } from "../../Service/firebase-storage";
+import { ref, update } from "firebase/database";
+import { db } from "../../config/config-firebase";
+import { getUserByHandle } from "../../Service/user-service";
 
 
 const Profile = () => {
@@ -25,10 +28,13 @@ const Profile = () => {
     const handleFileSelect = (e: any) => {
         const file = e.target.files[0];
         saveImage(file).then((url) => {
-            console.log(url);
+            update(ref(db, `users/${userData.handle}`), { image: url });
    
-            console.log(userData.image);
-        });
+          getUserByHandle(userData.handle).then((snapshot) => {
+            if (snapshot.exists()) {
+                setContext({ ...user, userData: snapshot.val() });
+            }
+        });});
        
     }
 

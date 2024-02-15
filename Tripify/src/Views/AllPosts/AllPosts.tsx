@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllPosts } from "../../Service/post-service";
 import { useSearchParams } from "react-router-dom";
 import Post from "../../Components/Post/Post"; 
+import DropdownMenu from "../../Components/Button/DropdownMenu";
 
 export type PostType = {
     id: string;
@@ -39,8 +40,11 @@ export default function AllPosts() {
     return (
         <div>
         <h1>All posts</h1>
+
         <label htmlFor="search">Search </label>
         <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/>
+        
+       { posts&&<DropdownMenu array={posts} setArray={setPosts}></DropdownMenu>}
         {posts.length > 0 ? (
             posts.map((post) => (
                 <Post key={post.id} post={post} setPosts={setPosts}></Post>

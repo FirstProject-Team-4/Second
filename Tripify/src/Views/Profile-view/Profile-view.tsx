@@ -1,15 +1,14 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppContext } from "../../Context/AppContext";
 import { useEffect, useState } from "react";
-
 import { getAllPosts, getAllPostsByUser } from "../../Service/post-service";
 import { PostType } from "../AllPosts/AllPosts";
 import Post from "../../Components/Post/Post";
 import { saveImage } from "../../Service/firebase-storage";
-import { get, getDatabase, ref, set, update } from "firebase/database";
+import { ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { getUserByHandle } from "../../Service/user-service";
-import { getAuth } from "firebase/auth";
+
 
 
 const Profile = () => {
@@ -33,7 +32,7 @@ const Profile = () => {
                 if (snapshot.exists()) {
                     setCurrentUser(snapshot.val());
                 }
-                else{
+                else {
                     navigate('/home');
                 }
             });
@@ -98,27 +97,27 @@ const Profile = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-    
-            const updatePost: { [key: string]: any } = {};
-            updatePost[`/users/${userData.handle}/firstName`] = firstName;
-            updatePost[`/users/${userData.handle}/lastName`] = lastName;
-            updatePost[`/users/${userData.handle}/phoneNumber`] = phoneNumber;
-            updatePost[`/users/${userData.handle}/bio`] = bio;
-            update(ref(db), updatePost)
-            setCurrentUser({ ...currentUser, firstName, lastName, phoneNumber, bio });
-            setContext({ ...user, userData: { ...userData, firstName, lastName, phoneNumber, bio } })
-            
-            setShowEdit(false);
-            setErrorMessage('');
-        }
-        const loadUserProfile = () => {
-            setFirstName(currentUser.firstName);
-            setLastName(currentUser.lastName);
-            setPhoneNumber(currentUser.phoneNumber);
-            setBio(currentUser.bio);
-            
-            setShowEdit(!showEdit);
-        }
+
+        const updatePost: { [key: string]: any } = {};
+        updatePost[`/users/${userData.handle}/firstName`] = firstName;
+        updatePost[`/users/${userData.handle}/lastName`] = lastName;
+        updatePost[`/users/${userData.handle}/phoneNumber`] = phoneNumber;
+        updatePost[`/users/${userData.handle}/bio`] = bio;
+        update(ref(db), updatePost)
+        setCurrentUser({ ...currentUser, firstName, lastName, phoneNumber, bio });
+        setContext({ ...user, userData: { ...userData, firstName, lastName, phoneNumber, bio } })
+
+        setShowEdit(false);
+        setErrorMessage('');
+    }
+    const loadUserProfile = () => {
+        setFirstName(currentUser.firstName);
+        setLastName(currentUser.lastName);
+        setPhoneNumber(currentUser.phoneNumber);
+        setBio(currentUser.bio);
+
+        setShowEdit(!showEdit);
+    }
 
     return (
 
@@ -150,12 +149,12 @@ const Profile = () => {
                 </form>
             ) : null}
             <div>
-               
+
                 {post && <h2>{currentUser.handle}</h2>}
                 <p>First Name: {currentUser.firstName}</p>
-                 <p>Last Name: {currentUser.lastName}</p>
-               <p>Phone Number: {currentUser.phoneNumber}</p>
-               <p>Bio: {currentUser.bio}</p>
+                <p>Last Name: {currentUser.lastName}</p>
+                <p>Phone Number: {currentUser.phoneNumber}</p>
+                <p>Bio: {currentUser.bio}</p>
             </div>
             {post && post.map((post) => (
                 <Post key={post.id} post={post} setPosts={setPosts}></Post>))}

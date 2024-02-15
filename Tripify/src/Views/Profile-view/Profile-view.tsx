@@ -116,6 +116,7 @@ const Profile = () => {
             setLastName(currentUser.lastName);
             setPhoneNumber(currentUser.phoneNumber);
             setBio(currentUser.bio);
+            
             setShowEdit(!showEdit);
         }
 

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import { PostType } from "./AllPosts";
 import { addComment, getPostById } from "../../Service/post-service";
 import Post from "../../Components/Post/Post";
-import Button from "../../Components/Button";
+import Button from "../../Components/Button/Button";
 import { useAppContext } from "../../Context/AppContext";
 import Comments from "../../Components/Post/Comments";
 import { ref, update } from "firebase/database";

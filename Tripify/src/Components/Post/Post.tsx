@@ -1,5 +1,5 @@
 
-import Button from '../Button';
+import Button from '../Button/Button';
 import { removeLike, addLike, removeDislike, addDislike, deletePost } from '../../Service/post-service';
 // import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../Context/AppContext';

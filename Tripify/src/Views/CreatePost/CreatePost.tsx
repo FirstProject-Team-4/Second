@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import { AppContext } from "../../Context/AppContext";
-import Button from "../../Components/Button";
+import Button from "../../Components/Button/Button";
 import { addPost } from "../../Service/post-service";
 import { useAppContext } from "../../Context/AppContext";
 import { saveImage } from "../../Service/firebase-storage";

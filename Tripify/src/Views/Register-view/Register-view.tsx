@@ -1,6 +1,6 @@
 import './Register-view.css';
 import { useState } from 'react';
-import Button from '../../Components/Button';
+import Button from '../../Components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../../Service/auth-service';
 import { createUserHandle } from '../../Service/user-service';

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import './Header.css';
-import Button from "../Button";
+import Button from "../Button/Button";
 import { useAppContext } from "../../Context/AppContext";
 import { logoutUser } from "../../Service/auth-service";
 import { useNavigate } from "react-router-dom";

@@ -1,5 +1,5 @@
 import {  useState } from "react"
-import Button from "../Button"
+import Button from "../Button/Button"
 import { addDislikeComment, addLikeComment, addReply, deleteComment, getPostById, removeDislikeComment, removeLikeComment } from "../../Service/post-service"
 import { useAppContext } from "../../Context/AppContext"
 import Reply from "./Reply"

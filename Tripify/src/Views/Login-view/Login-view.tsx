@@ -1,4 +1,4 @@
-import Button from '../../Components/Button';
+import Button from '../../Components/Button/Button';
 import './Login-view.css';
 import { useState } from 'react';
 import { useAppContext } from '../../Context/AppContext';

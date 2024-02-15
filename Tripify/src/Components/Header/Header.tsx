@@ -3,15 +3,18 @@ import './Header.css';
 import Button from "../Button";
 import { useAppContext } from "../../Context/AppContext";
 import { logoutUser } from "../../Service/auth-service";
+import { useNavigate } from "react-router-dom";
 
 
 export const Header = () => {
-
+ const navigate=useNavigate();
     const { user,userData, setContext } = useAppContext();
 
     const logout = async() => {
         await logoutUser();
         setContext({user:null, userData:null});
+        navigate('/home');
+
     }
 
    

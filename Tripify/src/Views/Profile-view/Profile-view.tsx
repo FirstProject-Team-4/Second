@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppContext } from "../../Context/AppContext";
 import { useEffect, useState } from "react";
 
@@ -16,12 +16,16 @@ const Profile = () => {
     const [post, setPosts] = useState<PostType[]>([]);
     const [currentUser, setCurrentUser] = useState(null as any);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (id) {
             getUserByHandle(id).then((snapshot) => {
                 if (snapshot.exists()) {
                     setCurrentUser(snapshot.val());
+                }
+                else{
+                    navigate('/home');
                 }
             });
 

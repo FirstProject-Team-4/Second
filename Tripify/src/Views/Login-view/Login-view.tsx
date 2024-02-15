@@ -5,9 +5,11 @@ import { useAppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../Service/auth-service';
 
+
 export default function LoginView() {
   const navigate = useNavigate();
   const { setContext } = useAppContext();
+  const [error,setError] = useState(false);
   const [form, setForm] = useState({
     email: '',
     password: ''
@@ -15,11 +17,13 @@ export default function LoginView() {
   const login = async (): Promise<void> => {
     try {
       const response= await loginUser(form.email, form.password);
+      console.log(response);
 
     setContext({ user:response.user, userData: null });
     navigate('/home');
     } catch (error: any) {
       console.log(error.message);
+      setError(true);
     }
 
   }
@@ -33,7 +37,8 @@ export default function LoginView() {
         <label htmlFor="email">Email: </label><br />
         <input type="text" name='email' id='email' autoComplete='email' placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /><br />
         <label htmlFor="password">Password: : </label><br />
-        <input name='password' type="password" id='password' placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+        <input  name='password' type="password" id='password' placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+        {error && <p style={{color:'red'}}>Invalid email or password</p>}
         <Button onClick={login}>Login</Button>
 
       </div>

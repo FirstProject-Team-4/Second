@@ -13,33 +13,84 @@ export default function RegisterView() {
     email: '',
     password: ''
   });
+  const [error, setError] = useState({
+    username: '',
+    email: '',
+    password: ''
+  
+  });
 
   // o	Email must be a valid email and unique in the system.
 
   const submit = async (): Promise<void> => {
-      // Validate the input
+     let username=''
+      let email=''
+      let password=''
   if (form.username.length < 4 || form.username.length > 32) {
-    alert('Username must be between 4 and 32 symbols.');
-    return;
+    username='Username must be between 4 and 32 symbols.';
+  }
+  else{
+    username='valid';
   }
   if(!form.email.includes('@')){
-    alert('Email must be a valid email.');
+   email='Email must be a valid email.';
   }
-  if(form.email.length < 6 || form.email.length > 32){
-    alert('Email must be between 6 and 32 symbols.');
+  else{
+    email='valid';
+  }
+  
+  if(form.password.length < 6 || form.password.length > 32){
+    password='Password must be between 6 and 32 symbols.';
+  }
+  else{
+    password='valid';
+  }
+  if(username!=='valid' || email!=='valid' || password!=='valid'){
+    setError({username:username,email:email,password:password});
     return;
   }
-  if(form.password.length < 6 || form.password.length > 32){
-    alert('Password must be between 6 and 32 symbols.');
-  }
- 
+
+ try{
     const response = await registerUser(form.email, form.password);
     createUserHandle(form.username, response.user.uid, form.email);
     loginUser(form.email, form.password);
+    nav('/');
+ }catch(error:any){
+  setError({username:'valid',password:'valid',email:'Email is already in use'});
+  return;
+ }
+    
     
 
-    nav('/');
 
+
+  }
+  const usernameColor =():string=>{
+    if(error.username==='valid'){
+      return 'green';
+    }
+    if(error.username){
+      return 'red';
+    }
+    return 'black';
+  }
+  const emailColor =():string=>{
+    if(error.email==='valid'){
+      return 'green';
+    }
+    if(error.email){
+      return 'red';
+    }
+    return 'black';
+  }
+  const passwordColor =():string=>{
+    if(error.password==='valid'){
+      return 'green';
+    }
+    if(error.password){
+      return 'red';
+    }
+    return 'black';
   }
 
 
@@ -48,11 +99,14 @@ export default function RegisterView() {
       <div className="login-form">
         <h1>Register</h1>
         <label htmlFor="username">Username: </label><br />
-        <input type="text" name='username' id='username' placeholder="Username" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} /><br />
+        <input style={{border:`1px solid ${usernameColor()}`}} type="text" name='username' id='username' placeholder="Username" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} /><br />
+        {error.username &&error.username!=='valid' && <h5 style={{ color: 'red' }}>{error.username}</h5>}
         <label htmlFor="email">Email: </label><br />
-        <input type="text" name='email' id='email' placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /><br />
-        <label htmlFor="password">Password: : </label><br />
-        <input name='password' type="password" id='password' placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+        <input style={{border:`1px solid ${emailColor()}`}} type="text" name='email' id='email' placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /><br />
+        {error.email &&error.email!=='valid'&& <h5 style={{ color: 'red' }}>{error.email}</h5>}
+        <label htmlFor="password">Password: </label><br />
+        <input style={{border:`1px solid ${passwordColor()}`}} name='password' type="password" id='password' placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+        {error.password &&error.password!=='valid'&& <h5 style={{ color: 'red' }}>{error.password}</h5>}
         <Button onClick={submit}>Register</Button>
 
       </div>

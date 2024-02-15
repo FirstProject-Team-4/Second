@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Route, Routes, BrowserRouter } from 'react-router-dom'
+import { Route, Routes, BrowserRouter, useNavigate } from 'react-router-dom'
 import './App.css'
 import HomeView from './Views/Home-view/Home-view'
 import LoginView from './Views/Login-view/Login-view'
@@ -25,6 +25,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
+      console.log(user);
       getUserData(user.uid)
         .then(snapshot => {
           if (snapshot.exists()) {
@@ -32,7 +33,8 @@ function App() {
           }
         })
       }
-  }, [user,context]);
+
+  }, [user,context.user]);
 
 
   return (

@@ -38,13 +38,16 @@ export default function AllPosts() {
     
     return (
         <div>
-            <h1>All posts</h1>
-                <label htmlFor="search">Search </label>
-                <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/>
-                {posts.map((post) => (
-                    <Post key={post.id} post={post} setPosts={setPosts}
-                   ></Post>
-                ))}
-        </div>
+        <h1>All posts</h1>
+        <label htmlFor="search">Search </label>
+        <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/>
+        {posts.length > 0 ? (
+            posts.map((post) => (
+                <Post key={post.id} post={post} setPosts={setPosts}></Post>
+            ))
+        ) : (
+            <p>No posts found</p>
+        )}
+    </div>
     );
 }

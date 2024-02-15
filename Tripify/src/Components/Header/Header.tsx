@@ -28,7 +28,7 @@ export const Header = () => {
                {user&&<NavLink to={`/profile/${userData?.handle}`}>{userData?.handle}</NavLink>}
                 {user&&<Button onClick={logout}>Logout</Button>}
             </div>
-            <input type="text" placeholder="Search..." className="search"/>
+        
             {/* <div className="category">
                 <NavLink to="/category/1">1</NavLink>
                 <NavLink to="/category/2">2</NavLink>

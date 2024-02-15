@@ -6,15 +6,24 @@ import { getAllPosts, getAllPostsByUser } from "../../Service/post-service";
 import { PostType } from "../AllPosts/AllPosts";
 import Post from "../../Components/Post/Post";
 import { saveImage } from "../../Service/firebase-storage";
-import { ref, update } from "firebase/database";
+import { get, getDatabase, ref, set, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { getUserByHandle } from "../../Service/user-service";
+import { getAuth } from "firebase/auth";
 
 
 const Profile = () => {
     const { user, userData, setContext } = useAppContext();
     const [post, setPosts] = useState<PostType[]>([]);
     const [currentUser, setCurrentUser] = useState(null as any);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [bio, setBio] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [showEdit, setShowEdit] = useState(false);
+
+
     const { id } = useParams();
 
     useEffect(() => {
@@ -29,22 +38,23 @@ const Profile = () => {
         }
     }, [id, currentUser]);
 
-    const updatePictureEverywhere = async (url:any) => {
+
+    const updatePictureEverywhere = async (url: any) => {
         const updatePost: { [key: string]: any } = {};
         const posts = await getAllPosts('');
 
         posts.map((p: any) => {
-            if(p.comments){
+            if (p.comments) {
                 p.comments.map((c: any) => {
                     if (c.author === currentUser.handle) {
                         console.log('yes')
                         c.userImage = currentUser.userImage;
-                        updatePost[`/posts/${p.id}/comments/${c.id}/userImage`] = url; 
+                        updatePost[`/posts/${p.id}/comments/${c.id}/userImage`] = url;
                         update(ref(db), updatePost);
                     }
-                    if(c.replies){
+                    if (c.replies) {
                         c.replies.map((r: any) => {
-                          
+
                             if (r.author === currentUser.handle) {
                                 console.log('yes')
                                 r.userImage = currentUser.userImage;
@@ -81,7 +91,29 @@ const Profile = () => {
         updatePictureEverywhere(url);
 
     }
-  
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+    
+            const updatePost: { [key: string]: any } = {};
+            updatePost[`/users/${userData.handle}/firstName`] = firstName;
+            updatePost[`/users/${userData.handle}/lastName`] = lastName;
+            updatePost[`/users/${userData.handle}/phoneNumber`] = phoneNumber;
+            updatePost[`/users/${userData.handle}/bio`] = bio;
+            update(ref(db), updatePost)
+            setCurrentUser({ ...currentUser, firstName, lastName, phoneNumber, bio });
+            setContext({ ...user, userData: { ...userData, firstName, lastName, phoneNumber, bio } })
+            
+            setShowEdit(false);
+            setErrorMessage('');
+        }
+        const loadUserProfile = () => {
+            setFirstName(currentUser.firstName);
+            setLastName(currentUser.lastName);
+            setPhoneNumber(currentUser.phoneNumber);
+            setBio(currentUser.bio);
+            setShowEdit(!showEdit);
+        }
 
     return (
 
@@ -90,8 +122,35 @@ const Profile = () => {
             {currentUser.userImage && <img src={currentUser?.userImage} style={{ height: '200px', width: '300px' }} alt="profile" />}
             {!currentUser.userImage && <span>{currentUser.handle[0]}</span>}
             <input type="file" id="fileInput" accept="image/*" style={{ display: 'none' }} onChange={handleFileSelect} /><br></br>
-            {userData?.handle === id && <span onClick={handleUploadClick}>upload image</span>}
-            {post && <h2>{currentUser.handle}</h2>}
+            {userData?.handle === id && <button onClick={loadUserProfile}>Edit</button>}
+            {showEdit ? (
+                <form onSubmit={handleSubmit}>
+                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                    <label>
+                        First Name:
+                        <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} />
+                    </label><br></br>
+                    <label>
+                        Last Name:
+                        <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} />
+                    </label><br></br><br></br>
+                    <label>
+                        Phone Number:
+                        <input type="tel" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
+                    </label><br></br><br></br>
+                    <label> Bio:  <textarea value={bio} onChange={e => setBio(e.target.value)} />
+                    </label><br></br><br></br>
+                    <input type="submit" value="Submit" />
+                </form>
+            ) : null}
+            <div>
+                {userData?.handle === id && <span onClick={handleUploadClick}>upload image</span>}
+                {post && <h2>{currentUser.handle}</h2>}
+                <p>First Name: {currentUser.firstName}</p>
+                 <p>Last Name: {currentUser.lastName}</p>
+               <p>Phone Number: {currentUser.phoneNumber}</p>
+               <p>Bio: {currentUser.bio}</p>
+            </div>
             {post && post.map((post) => (
                 <Post key={post.id} post={post} setPosts={setPosts}></Post>))}
 

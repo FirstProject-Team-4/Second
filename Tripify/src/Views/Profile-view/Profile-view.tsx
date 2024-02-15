@@ -122,6 +122,7 @@ const Profile = () => {
             {currentUser.userImage && <img src={currentUser?.userImage} style={{ height: '200px', width: '300px' }} alt="profile" />}
             {!currentUser.userImage && <span>{currentUser.handle[0]}</span>}
             <input type="file" id="fileInput" accept="image/*" style={{ display: 'none' }} onChange={handleFileSelect} /><br></br>
+            {userData?.handle === id && <span onClick={handleUploadClick}>upload image</span>}
             {userData?.handle === id && <button onClick={loadUserProfile}>Edit</button>}
             {showEdit ? (
                 <form onSubmit={handleSubmit}>
@@ -144,7 +145,7 @@ const Profile = () => {
                 </form>
             ) : null}
             <div>
-                {userData?.handle === id && <span onClick={handleUploadClick}>upload image</span>}
+               
                 {post && <h2>{currentUser.handle}</h2>}
                 <p>First Name: {currentUser.firstName}</p>
                  <p>Last Name: {currentUser.lastName}</p>

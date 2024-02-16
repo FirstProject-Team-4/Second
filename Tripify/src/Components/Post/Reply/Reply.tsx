@@ -1,12 +1,11 @@
-import Button from "../Button/Button";
+import Button from "../../Button/Button";
 import { useState } from "react";
-import { useAppContext } from "../../Context/AppContext";
-import { addDislikeReply, addLikeReply, deleteReply, removeDislikeReply, removeLikeReply } from "../../Service/post-service";
-// import { update } from "firebase/database";
-// import { ref } from "firebase/storage";
-import { db } from "../../config/config-firebase";
+import { useAppContext } from "../../../Context/AppContext";
+import { addDislikeReply, addLikeReply, deleteReply, removeDislikeReply, removeLikeReply } from "../../../Service/post-service";
+import { db } from "../../../config/config-firebase";
 import { ref, update } from 'firebase/database';
 import { NavLink } from "react-router-dom";
+import './Reply.css';
 
 export default function Reply(prop: { reply: { content: string,author:string, createdOn:string, likes: number,userImage:string, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string }, setCommends: any , comment: any}) {
     const [reply, setReply] = useState(prop.reply);
@@ -138,14 +137,20 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
       :
         reply &&
         <div style={{ border: '1px solid red' }}>
-        {reply?.userImage?.length>1&&<img src={reply.userImage} style={{height:'50px',width:'30px'}} alt="profile" />}
+        <div className="comment-container">
+        <div className="header">
+        {reply?.userImage?.length>1&&<img src={reply.userImage} className="img" alt="profile" />}
+        <div className="information">
         <NavLink to={`/profile/${reply.author}`}>{reply.author}</NavLink>
         <span>{new Date(reply.createdOn).toLocaleString()}</span>
+        </div>
+        </div>
+        </div>
             <h1>{prop.reply.content}</h1>
             <Button color={setLikeButtonColor()} onClick={toggleReplyLikes}>{reply.likes}👍</Button>
             <Button color={setDislikeButtonColor()} onClick={toggleDisLikeReply}>{reply.dislikes}👎</Button>
-            <Button onClick={deleteCurrentReply}>Delete</Button>
-           <Button onClick={isEdinOn}>Edit</Button>
+            <Button onClick={deleteCurrentReply}>❌</Button>
+           <Button onClick={isEdinOn}>✎</Button>
             
 
         </div>

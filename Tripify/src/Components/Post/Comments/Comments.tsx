@@ -1,11 +1,12 @@
 import {  useState } from "react"
-import Button from "../Button/Button"
-import { addDislikeComment, addLikeComment, addReply, deleteComment, getPostById, removeDislikeComment, removeLikeComment } from "../../Service/post-service"
-import { useAppContext } from "../../Context/AppContext"
-import Reply from "./Reply"
+import Button from "../../Button/Button"
+import { addDislikeComment, addLikeComment, addReply, deleteComment, getPostById, removeDislikeComment, removeLikeComment } from "../../../Service/post-service"
+import { useAppContext } from "../../../Context/AppContext"
+import Reply from "../Reply/Reply"
 import {  ref, update } from "firebase/database"
-import { db } from "../../config/config-firebase"
+import { db } from "../../../config/config-firebase"
 import { NavLink } from "react-router-dom"
+import './Comments.css'
 
 export default function Comments(prop: any) {
 
@@ -140,15 +141,21 @@ export default function Comments(prop: any) {
       :
       comments &&
       <div style={{ border: '2px solid green' }}>
-      {comments?.userImage?.length>1&&<img src={comments.userImage} style={{height:'50px',width:'30px'}} alt="profile" />}
+      <div className="comment-container">
+      <div className="header">
+      {comments?.userImage?.length>1&&<img src={comments.userImage}  className="img" alt="profile" />}
+      <div className="information">
         <NavLink to={`/profile/${prop.comment.author}`}>{prop.comment.author}</NavLink>
         <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
+        </div>
+        </div>
+        </div>
         <p>{prop.comment.content}</p>
         <Button color={setLikeButtonColor()} onClick={toggleCommentLikes}>{comments?.likes}👍</Button>
         <Button color={setDislikeButtonColor()} onClick={toggleCommentDislikes}>{comments?.dislikes}👎</Button>
-        <Button onClick={toggleReply}>{comments.replyCounter} Reply</Button>
-        {comments.author === userData?.handle && <Button onClick={isEditOn}>Edit</Button>}
-        {comments.author === userData?.handle && <Button onClick={deleteWindowPop}>Delete</Button>}
+        <Button onClick={toggleReply}>{comments.replyCounter} 💬</Button>
+        {comments.author === userData?.handle && <Button onClick={isEditOn}>✎</Button>}
+        {comments.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
         {replyIsActive && <div>
           <input value={reply} type="text" name="comment" id="comment-input" onChange={e => setReply(e.target.value)} />
           <Button onClick={addCurrentReply}>Add Reply</Button>

@@ -5,6 +5,7 @@ import { addPost } from "../../Service/post-service";
 import { useAppContext } from "../../Context/AppContext";
 import { saveImage } from "../../Service/firebase-storage";
 // import { set } from "firebase/database";
+import Map from "../../Components/Map/Map";
 
 
 
@@ -96,6 +97,7 @@ export default function CreatePost() {
       <textarea value={post.content} onChange={e => updatePost(e.target.value, 'content')} name="input-content" id="input-content" cols={30} rows={10}></textarea><br /><br />
       <label htmlFor="input-image">Image:</label>
       <input id="input-image" type="file" accept="image/*" onChange={e => updateImage(e.target.files, 'image')} /><br />
+      {/* <Map/> */}
       <Button onClick={createPost}>Create</Button>
     </div>
   );

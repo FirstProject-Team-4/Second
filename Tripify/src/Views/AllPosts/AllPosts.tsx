@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllPosts } from "../../Service/post-service";
 import { useSearchParams } from "react-router-dom";
-import Post from "../../Components/Post/Post"; 
+import Post from "../../Components/Post/Post/Post"; 
 import DropdownMenu from "../../Components/Button/DropdownMenu";
 
 export type PostType = {

@@ -3,13 +3,12 @@ import { useAppContext } from "../../Context/AppContext";
 import { useEffect, useState } from "react";
 import { getAllPosts, getAllPostsByUser } from "../../Service/post-service";
 import { PostType } from "../AllPosts/AllPosts";
-import Post from "../../Components/Post/Post";
+import Post from "../../Components/Post/Post/Post";
 import { saveImage } from "../../Service/firebase-storage";
 import { ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { getUserByHandle } from "../../Service/user-service";
-
-
+import './Profile-view.css';
 
 const Profile = () => {
     const { user, userData, setContext } = useAppContext();
@@ -123,11 +122,14 @@ const Profile = () => {
 
         currentUser && <div>
             <h1>Profile</h1>
-            {currentUser.userImage && <img src={currentUser?.userImage} style={{ height: '200px', width: '300px' }} alt="profile" />}
+            <div className="prpfile-container">
+            <div className="img-container">
+            {currentUser.userImage && <img src={currentUser?.userImage}  className="img-view" alt="profile" />}
             {!currentUser.userImage && <span>{currentUser.handle[0]}</span>}
             <input type="file" id="fileInput" accept="image/*" style={{ display: 'none' }} onChange={handleFileSelect} /><br></br>
-            {userData?.handle === id && <span onClick={handleUploadClick}>upload image</span>}
-            {userData?.handle === id && <button onClick={loadUserProfile}>Edit</button>}
+            {userData?.handle === id && <span onClick={handleUploadClick} className="button-profile">upload image</span>}
+            {userData?.handle === id && <button onClick={loadUserProfile} className="button-profile">Edit✎</button>}
+        </div>
             {showEdit ? (
                 <form onSubmit={handleSubmit}>
                     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
@@ -148,7 +150,8 @@ const Profile = () => {
                     <input type="submit" value="Submit" />
                 </form>
             ) : null}
-            <div>
+            
+           <div className="profile-info">
 
                 {post && <h2>{currentUser.handle}</h2>}
                 <p>First Name: {currentUser.firstName}</p>
@@ -156,6 +159,7 @@ const Profile = () => {
                 <p>Phone Number: {currentUser.phoneNumber}</p>
                 <p>Bio: {currentUser.bio}</p>
             </div>
+            </div> 
             {post && post.map((post) => (
                 <Post key={post.id} post={post} setPosts={setPosts}></Post>))}
 

@@ -156,7 +156,7 @@ export default function Post({ post, setPosts }: {
                 {post.author === userData?.handle && <Button onClick={isEditOn}>✎</Button>}
                 {/* Comments */}
                 <NavLink to={`/posts/${post.id}`}>{post.commentsCount} 💬</NavLink>
-                {post.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
+                {userData?.isAdmin===true? <Button onClick={deleteWindowPop}>❌</Button>:post.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
 
 
             </div>

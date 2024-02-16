@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Button from '../../Components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../../Service/auth-service';
-import { createUserHandle } from '../../Service/user-service';
+import { createUserHandle, getUserByHandle } from '../../Service/user-service';
 export default function RegisterView() {
 
   const nav = useNavigate();
@@ -26,12 +26,20 @@ export default function RegisterView() {
      let username=''
       let email=''
       let password=''
-  if (form.username.length < 4 || form.username.length > 32) {
+try {
+  const checkUser=await getUserByHandle(form.username)
+  if(checkUser.exists()){
+    username='Username is already taken';
+  }
+  else if(form.username.length < 4 || form.username.length > 32){
     username='Username must be between 4 and 32 symbols.';
   }
   else{
     username='valid';
   }
+} catch (error) {
+  console.log(error);
+}
   if(!form.email.includes('@')){
    email='Email must be a valid email.';
   }

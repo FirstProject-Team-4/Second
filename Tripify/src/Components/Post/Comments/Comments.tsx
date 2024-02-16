@@ -125,7 +125,7 @@ export default function Comments(prop: any) {
 
 
   }
-
+console.log(userData?.isAdmin)
   return (
     isEditing ?
 
@@ -155,7 +155,7 @@ export default function Comments(prop: any) {
         <Button color={setDislikeButtonColor()} onClick={toggleCommentDislikes}>{comments?.dislikes}👎</Button>
         <Button onClick={toggleReply}>{comments.replyCounter} 💬</Button>
         {comments.author === userData?.handle && <Button onClick={isEditOn}>✎</Button>}
-        {comments.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
+        {userData?.isAdmin===true? <Button onClick={deleteWindowPop}>❌</Button>:comments.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
         {replyIsActive && <div>
           <input value={reply} type="text" name="comment" id="comment-input" onChange={e => setReply(e.target.value)} />
           <Button onClick={addCurrentReply}>Add Reply</Button>

@@ -36,10 +36,10 @@ export default function AllPosts() {
     useEffect(() => {
         getAllPosts(search).then(setPosts);
     },[search] );
-    
     return (
         <div>
         <h1>All posts</h1>
+        
 
         <label htmlFor="search">Search </label>
         <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/>

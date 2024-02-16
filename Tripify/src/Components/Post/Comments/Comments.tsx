@@ -1,4 +1,4 @@
-import {  useState } from "react"
+import {  useEffect, useState } from "react"
 import Button from "../../Button/Button"
 import { addDislikeComment, addLikeComment, addReply, deleteComment, getPostById, removeDislikeComment, removeLikeComment } from "../../../Service/post-service"
 import { useAppContext } from "../../../Context/AppContext"
@@ -15,6 +15,8 @@ export default function Comments(prop: any) {
   const [isEditing, setIsEditing] = useState(false)
   const { userData } = useAppContext();
   const [editedComment, setEditedComment] = useState(comments?.content)
+ 
+
 
   const [reply, setReply] = useState('')
   const toggleReply = () => {
@@ -123,8 +125,6 @@ export default function Comments(prop: any) {
     setIsEditing(!isEditing)
   }
   const confirmEdit = () => {
-
-
     setIsEditing(false)
     const updatePost: { [key: string]: any } = {};
     updatePost[`/posts/${comments.postId}/comments/${comments.id}/content`] = editedComment;
@@ -159,7 +159,7 @@ console.log(userData?.isAdmin)
         </div>
         </div>
         </div>
-        <p>{prop.comment.content}</p>
+        <p>{comments.content}</p>
         <Button color={setLikeButtonColor()} onClick={toggleCommentLikes}>{comments?.likes}👍</Button>
         <Button color={setDislikeButtonColor()} onClick={toggleCommentDislikes}>{comments?.dislikes}👎</Button>
         <Button onClick={toggleReply}>{comments.replyCounter} 💬</Button>

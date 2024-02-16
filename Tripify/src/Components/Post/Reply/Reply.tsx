@@ -139,7 +139,7 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
         <div style={{ border: '1px solid red' }}>
         <div className="comment-container">
         <div className="header">
-        {reply?.userImage?.length>1&&<img src={reply.userImage} className="img" alt="profile" />}
+        {reply?.userImage?.length>1&&<img src={reply.userImage} className="img" alt="profile" />||<span>{reply?.author[0]}</span>}
         <div className="information">
         <NavLink to={`/profile/${reply.author}`}>{reply.author}</NavLink>
         <span>{new Date(reply.createdOn).toLocaleString()}</span>

@@ -149,8 +149,8 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
             <h1>{prop.reply.content}</h1>
             <Button color={setLikeButtonColor()} onClick={toggleReplyLikes}>{reply.likes}👍</Button>
             <Button color={setDislikeButtonColor()} onClick={toggleDisLikeReply}>{reply.dislikes}👎</Button>
-            <Button onClick={deleteCurrentReply}>❌</Button>
-           <Button onClick={isEdinOn}>✎</Button>
+            {userData?.isAdmin===true? <Button onClick={deleteCurrentReply}>❌</Button>:reply.author === userData?.handle && <Button onClick={deleteCurrentReply}>❌</Button>}
+           {reply.author===userData.handle&&<Button onClick={isEdinOn}>✎</Button>}
             
 
         </div>

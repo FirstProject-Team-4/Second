@@ -143,7 +143,7 @@ export default function Comments(prop: any) {
       <div style={{ border: '2px solid green' }}>
       <div className="comment-container">
       <div className="header">
-      {comments?.userImage?.length>1&&<img src={comments.userImage}  className="img" alt="profile" />||<span>{comments?.author[0]}</span>}
+      {comments?.userImage?.length>1&&<img src={comments.userImage}  className="img" alt="profile" />||<span className="letter">{comments?.author[0]}</span>}
       <div className="information">
         <NavLink to={`/profile/${prop.comment.author}`}>{prop.comment.author}</NavLink>
         <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>

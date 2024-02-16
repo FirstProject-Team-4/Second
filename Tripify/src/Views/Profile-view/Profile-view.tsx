@@ -125,7 +125,7 @@ const Profile = () => {
             <div className="prpfile-container">
             <div className="img-container">
             {currentUser.userImage && <img src={currentUser?.userImage}  className="img-view" alt="profile" />}
-            {!currentUser.userImage && <span className="word-view">{currentUser.handle[0]}</span>}
+            {!currentUser.userImage && <span className="letter-view">{currentUser.handle[0]}</span>}
             <input type="file" id="fileInput" accept="image/*" style={{ display: 'none' }} onChange={handleFileSelect} /><br></br>
             {userData?.handle === id && <span onClick={handleUploadClick} className="button-profile">upload image</span>}
             {userData?.handle === id && <button onClick={loadUserProfile} className="button-profile">Edit✎</button>}

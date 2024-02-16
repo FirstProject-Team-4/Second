@@ -141,7 +141,7 @@ export default function Post({ post, setPosts }: {
                 <div className="post-container">
                     <div className="header">
                         {post?.userImage?.length > 1 && <img src={post.userImage} className='img' alt="profile" />}
-                        {post?.userImage?.length === 1 && <span>{post.userImage}</span>}
+                        {post?.userImage?.length === 1 && <span className='letter'>{post.userImage}</span>}
                         <div className="information">
                             <NavLink to={`/profile/${post.author}`}>{post.author}</NavLink>
                         </div>

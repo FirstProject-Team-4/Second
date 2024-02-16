@@ -26,3 +26,16 @@
     align-items: center;
     /* optional, aligns items vertically in the center */
 }
+
+.letter {
+    font-family: "Gloria Hallelujah", cursive;
+    font-style: normal;
+    margin-top: 5px;
+    font-size: 30px;
+    border-radius: 50%;
+    border: solid 2px #000000;
+    padding: 17px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    background-color: aliceblue;
+}

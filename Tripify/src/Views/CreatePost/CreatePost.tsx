@@ -5,7 +5,7 @@ import { addPost } from "../../Service/post-service";
 import { useAppContext } from "../../Context/AppContext";
 import { saveImage } from "../../Service/firebase-storage";
 // import { set } from "firebase/database";
-import Map from "../../Components/Map/Map";
+
 
 
 

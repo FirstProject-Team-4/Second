@@ -122,12 +122,12 @@ const Profile = () => {
    const handelBlock = () => {
         if(currentUser?.isBlock){
             const updatePost: { [key: string]: any } = {};
-            updatePost[`/users/${userData.handle}/isBlock`] = false;
+            updatePost[`/users/${currentUser.handle}/isBlock`] = false;
             update(ref(db), updatePost)
             // setCurrentUser({ ...currentUser, isBlock: false });
         }else{
             const updatePost: { [key: string]: any } = {};
-            updatePost[`/users/${userData.handle}/isBlock`] = true;
+            updatePost[`/users/${currentUser.handle}/isBlock`] = true;
             update(ref(db), updatePost)
             // setCurrentUser({ ...currentUser, isBlock: true });
         }

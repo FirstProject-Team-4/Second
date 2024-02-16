@@ -39,9 +39,9 @@ const Profile = () => {
 
             getAllPostsByUser(id).then(setPosts);
         }
-    }, [id, currentUser]);
+    }, [id]);
 
-
+console.log(currentUser);
     const updatePictureEverywhere = async (url: any) => {
         const updatePost: { [key: string]: any } = {};
         const posts = await getAllPosts('');
@@ -124,12 +124,12 @@ const Profile = () => {
             const updatePost: { [key: string]: any } = {};
             updatePost[`/users/${currentUser.handle}/isBlock`] = false;
             update(ref(db), updatePost)
-            // setCurrentUser({ ...currentUser, isBlock: false });
+            setCurrentUser({ ...currentUser, isBlock: false });
         }else{
             const updatePost: { [key: string]: any } = {};
             updatePost[`/users/${currentUser.handle}/isBlock`] = true;
             update(ref(db), updatePost)
-            // setCurrentUser({ ...currentUser, isBlock: true });
+            setCurrentUser({ ...currentUser, isBlock: true });
         }
     }
 

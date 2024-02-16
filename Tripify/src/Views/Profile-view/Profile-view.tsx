@@ -9,6 +9,7 @@ import { ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { getUserByHandle } from "../../Service/user-service";
 import './Profile-view.css';
+import Button from "../../Components/Button/Button";
 
 const Profile = () => {
     const { user, userData, setContext } = useAppContext();
@@ -118,6 +119,27 @@ const Profile = () => {
         setShowEdit(!showEdit);
     }
 
+   const handelBlock = () => {
+        if(currentUser?.isBlock){
+            const updatePost: { [key: string]: any } = {};
+            updatePost[`/users/${userData.handle}/isBlock`] = false;
+            update(ref(db), updatePost)
+            // setCurrentUser({ ...currentUser, isBlock: false });
+        }else{
+            const updatePost: { [key: string]: any } = {};
+            updatePost[`/users/${userData.handle}/isBlock`] = true;
+            update(ref(db), updatePost)
+            // setCurrentUser({ ...currentUser, isBlock: true });
+        }
+    }
+
+    const toggleBlock=()=>{
+        if(currentUser?.isBlock){
+            return 'Unblock';
+        }else{
+            return 'Block';
+        }
+    }
     return (
 
         currentUser && <div>
@@ -154,6 +176,7 @@ const Profile = () => {
            <div className="profile-info">
 
                 {post && <h2>{currentUser.handle}</h2>}
+               {userData?.isAdmin && <Button onClick={handelBlock}>{toggleBlock()}</Button>}
                 <p>First Name: {currentUser.firstName}</p>
                 <p>Last Name: {currentUser.lastName}</p>
                 <p>Phone Number: {currentUser.phoneNumber}</p>

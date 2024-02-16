@@ -17,7 +17,7 @@ export default function CreatePost() {
     content: '',
     user: '',
     comments: '',
-    image:'',
+    image: '',
     userImage: '',
   });
 
@@ -35,7 +35,7 @@ export default function CreatePost() {
     if (!value) {
       setPost({
         ...post,
-        [key]: value?value:'',
+        [key]: value ? value : '',
       });
       return;
     }
@@ -54,19 +54,23 @@ export default function CreatePost() {
   //    setPost()
   // };
   const createPost = async () => {
+    console.log(userData.isBlock);
+    if (userData.isBlock) {
+      return alert('You are blocked');
+    }
     if (post.title.length < 16 || post.title.length > 64) {
       return alert('The title must be between 16 and 64 symbols.');
     }
     if (post.content.length < 32 || post.content.length > 8192) {
       return alert('The content must be between 32 symbols and 8192 symbols.');
     }
-  let currentUserImage;
-  if(userData.userImage){
-    currentUserImage=userData.userImage;
-  }
-  else{
-    currentUserImage=userData.handle[0];
-  }
+    let currentUserImage;
+    if (userData.userImage) {
+      currentUserImage = userData.userImage;
+    }
+    else {
+      currentUserImage = userData.handle[0];
+    }
 
     // if (post.user === null || post.user === undefined || post.user === '') {
     //     return alert('The post must have a user who created it.');
@@ -75,7 +79,7 @@ export default function CreatePost() {
     //     return alert('Other users must be able to post replies.');
     // }
     //post.comments, image
-    await addPost(userData.handle, post.title, post.content, post.image,currentUserImage); // Pass the image to the service function
+    await addPost(userData.handle, post.title, post.content, post.image, currentUserImage); // Pass the image to the service function
 
     setPost({
       title: '',
@@ -89,6 +93,9 @@ export default function CreatePost() {
   };
 
   return (
+    userData.isBlock?
+    <div>You are blocked</div>:
+
     <div>
       <h1>Create post</h1>
       <label htmlFor="input-title">Title:</label>
@@ -97,7 +104,6 @@ export default function CreatePost() {
       <textarea value={post.content} onChange={e => updatePost(e.target.value, 'content')} name="input-content" id="input-content" cols={30} rows={10}></textarea><br /><br />
       <label htmlFor="input-image">Image:</label>
       <input id="input-image" type="file" accept="image/*" onChange={e => updateImage(e.target.files, 'image')} /><br />
-      {/* <Map/> */}
       <Button onClick={createPost}>Create</Button>
     </div>
   );

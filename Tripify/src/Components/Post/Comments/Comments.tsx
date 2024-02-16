@@ -21,6 +21,9 @@ export default function Comments(prop: any) {
     setReplyIsActive(!replyIsActive)
   }
   const addCurrentReply = async () => {
+    if (userData.isBlock) {
+      return alert('You are blocked');
+    }
     await addReply(comments.id, comments.postId, userData.handle, reply,userData);
 
     getPostById(prop.comment.postId).then((value: any) => {
@@ -33,7 +36,9 @@ export default function Comments(prop: any) {
   };
 
   const toggleCommentLikes = async () => {
-
+    if (userData.isBlock) {
+      return alert('You are blocked');
+    }
     if (comments.dislikesBy?.includes(userData.handle)) {
       await removeDislikeComment(userData.handle, comments.postId, comments.id, comments.dislikes - 1);
     }
@@ -60,6 +65,9 @@ export default function Comments(prop: any) {
   }
 
   const toggleCommentDislikes = async () => {
+    if (userData.isBlock) {
+      return alert('You are blocked');
+    }
     if (comments.likedBy.includes(userData.handle)) {
       await removeLikeComment(userData.handle, comments.postId, comments.id, comments.likes - 1);
     }
@@ -70,6 +78,7 @@ export default function Comments(prop: any) {
     }
 
     setComments((comments: any) => {
+
       let updatedPost = { ...comments };
       if (updatedPost.likedBy.includes(userData.handle)) {
         updatedPost.likedBy = updatedPost.likedBy.filter((u: string) => u !== userData.handle);

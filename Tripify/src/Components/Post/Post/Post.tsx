@@ -24,6 +24,7 @@ export default function Post({ post, setPosts }: {
 
 
     const isEditOn = () => {
+ 
         setIsEditing(!isEditing);
     }
     const confirmEdit = () => {
@@ -44,6 +45,9 @@ export default function Post({ post, setPosts }: {
         setIsEditing(false);
     }
     const toggleLike = async () => {
+        if (userData.isBlock) {
+            return alert('You are blocked');
+          }
         if (post.dislikesBy?.includes(userData.handle)) {
             await removeDislike(userData.handle, post.id, post.dislikes - 1);
         }
@@ -86,6 +90,9 @@ export default function Post({ post, setPosts }: {
     }
 
     const toggleDislike = async () => {
+        if (userData.isBlock) {
+            return alert('You are blocked');
+          }
         if (post.likedBy?.includes(userData.handle)) {
             await removeLike(userData.handle, post.id, post.likes - 1);
         }

@@ -15,6 +15,9 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
 
 
     const toggleReplyLikes = async () => {
+        if (userData.isBlock) {
+            return alert('You are blocked');
+          }
         if (reply.dislikesBy?.includes(userData.handle)) {
             await removeDislikeReply(userData.handle, reply.postId, reply.commentId, reply.id, reply.dislikes - 1);
         }
@@ -42,7 +45,9 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
 
     const toggleDisLikeReply = async () => {
 
-
+        if (userData.isBlock) {
+            return alert('You are blocked');
+          }
         if (reply.likedBy?.includes(userData.handle)) {
             await removeLikeReply(userData.handle, reply.postId, reply.commentId, reply.id, reply.likes - 1);
         }

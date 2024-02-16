@@ -34,6 +34,9 @@ export default function SinglePostView() {
     
 
     const addCurrentComment = async() => {
+        if (userData.isBlock) {
+            return alert('You are blocked');
+          }
         if (comment.length < 1) {
             return;
         }

@@ -17,6 +17,7 @@ export default function SinglePostView() {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('')
     const { userData } = useAppContext();
+    const [fak, setFak] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -29,7 +30,7 @@ export default function SinglePostView() {
                 }
             })();
         }
-    }, [comment]);
+    }, [comment,fak]);
     
     
 
@@ -66,7 +67,7 @@ export default function SinglePostView() {
                 <Button onClick={addCurrentComment}>Add Comment</Button>
                 {posts[0]  && <DropdownMenu array={comments} setArray={setComments}></DropdownMenu>}
                 <div>
-                    {comments && comments.map((c: any) => <Comments key={c.id}  comment={c} setPosts={setPosts} post={posts[0]} />)}
+                    {comments && comments.map((c: any) => <Comments key={c.id}  comment={c} fak={fak} setFak={setFak} post={posts[0]} />)}
                 </div>
             </div>
         )

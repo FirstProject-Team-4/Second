@@ -64,6 +64,7 @@ export default function Comments(prop: any) {
       }
       return updatedPost;
     });
+    prop.setFak(!prop.fak)
   }
 
   const toggleCommentDislikes = async () => {
@@ -95,6 +96,7 @@ export default function Comments(prop: any) {
       }
       return updatedPost;
     });
+    prop.setFak(!prop.fak)
   }
 
   const setLikeButtonColor = () => {
@@ -118,6 +120,7 @@ export default function Comments(prop: any) {
       deleteComment(comments.postId, comments.id);
       setReplyIsActive(false);
       setComments(null);
+      prop.setFak(!prop.fak)
 
     }
   }
@@ -134,7 +137,6 @@ export default function Comments(prop: any) {
 
 
   }
-console.log(userData?.isAdmin)
   return (
     isEditing ?
 

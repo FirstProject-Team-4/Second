@@ -119,7 +119,14 @@ setCategory('');
       <select name="category" onChange={handleSubmit}>
         <option value="">Select a category</option>
         <option value="hotels">Hotels</option>
-        <option value="category2">Category 2</option>
+        <option value="restaurants">Restaurants</option>
+        <option value="food&drink">Food and Drink</option>
+        <option value="cruises">Cruises</option>
+        <option value="mountain">Mountain</option>
+        <option value="sea">Sea</option>
+        <option value="stories">Travel Stories</option>
+
+
         {/* Add more options as needed */}
       </select>
     </form>

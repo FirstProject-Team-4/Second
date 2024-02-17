@@ -10,6 +10,7 @@ import { db } from "../../config/config-firebase";
 import { getUserByHandle } from "../../Service/user-service";
 import './Profile-view.css';
 import Button from "../../Components/Button/Button";
+import DropdownMenu from "../../Components/Button/DropdownMenu";
 
 const Profile = () => {
     const { user, userData, setContext } = useAppContext();
@@ -183,6 +184,7 @@ console.log(currentUser);
                 <p>Bio: {currentUser.bio}</p>
             </div>
             </div> 
+            <DropdownMenu array={post} setArray={setPosts}></DropdownMenu>
             {post && post.map((post) => (
                 <Post key={post.id} post={post} setPosts={setPosts}></Post>))}
 

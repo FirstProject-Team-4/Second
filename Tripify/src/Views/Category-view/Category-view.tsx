@@ -4,6 +4,7 @@ import { PostType } from "../AllPosts/AllPosts";
 import { useEffect, useState } from "react";
 import { getPostsByCategory } from "../../Service/post-service";
 import Post from "../../Components/Post/Post/Post";
+import DropdownMenu from "../../Components/Button/DropdownMenu";
 
 export default function CategoryView() {
     const { categoryName } = useParams()
@@ -13,7 +14,9 @@ useEffect(() => {
         getPostsByCategory(categoryName).then(setPosts);
     }},[categoryName]);
     return (
+      
       posts&&<div>
+        <DropdownMenu array={posts} setArray={setPosts} />
         {posts.map((post: any) => (
           <Post key={post.id} post={post} setPosts={setPosts}></Post>
         ))}

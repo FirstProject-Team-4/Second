@@ -15,6 +15,7 @@ import { auth } from './config/config-firebase'
 import { getUserData } from './Service/user-service'
 import SinglePostView from './Views/AllPosts/SinglePost-view'
 import Profile from './Views/Profile-view/Profile-view'
+import AllUsers from './Views/AllUsers/AllUsers'
 
 function App() {
   const [context, setContext] = useState({
@@ -45,6 +46,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeView />} />
           <Route path="/home" element={<HomeView />} />
+          <Route path="/allUsers" element={<AllUsers />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/register" element={<RegisterView />} />
           <Route path='/profile/:id' element={<Profile/>}/>

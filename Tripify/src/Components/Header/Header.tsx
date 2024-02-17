@@ -22,6 +22,7 @@ export const Header = () => {
         <header>
             <div className="header-class" >
                 <NavLink to='/home' className='home'>Home</NavLink>
+                {user&&userData?.isAdmin&&<NavLink to="/allUsers" className='admin'>Check Users</NavLink>}
                 {!user&&<NavLink to="/register" className='register'>Register</NavLink>}
                 {!user&&<NavLink to="/login" className='login'>Login</NavLink>}
                 {user&&<NavLink to="/posts-create" className='create-post'>Create Post</NavLink>}

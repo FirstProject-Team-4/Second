@@ -27,14 +27,23 @@ font-size: large;
 }
 
 
-.category {
-    display: inline-flex;
+ */
+  /* .category {
+    display: flex;
     flex-direction: column;
-    background-color: aqua;
+    gap: 10px;
+  } */
+
+  .category {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    background-color: rgb(252, 252, 252);
     position: absolute;
     left: 10px;
     top: 100px;
     bottom: 0;
     padding: 30px;
     margin-top: 20px;
-  } */
+  }

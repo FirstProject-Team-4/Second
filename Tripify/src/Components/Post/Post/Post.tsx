@@ -20,6 +20,7 @@ export default function Post({ post, setPosts }: {
     const { userData } = useAppContext();
     const [isEditing, setIsEditing] = useState(false);
     const [editedPost, setEditedPost] = useState({ title: post.title, content: post.content });
+    const { user } = useAppContext();
 
 
 
@@ -45,6 +46,9 @@ export default function Post({ post, setPosts }: {
         setIsEditing(false);
     }
     const toggleLike = async () => {
+        if (!user) {
+            return alert('Login to count your opinions');
+          }
         if (userData.isBlock) {
             return alert('You are blocked');
           }
@@ -90,6 +94,9 @@ export default function Post({ post, setPosts }: {
     }
 
     const toggleDislike = async () => {
+        if (!user) {
+            return alert('Login to count your opinions');
+          }
         if (userData.isBlock) {
             return alert('You are blocked');
           }

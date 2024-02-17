@@ -15,6 +15,7 @@ export default function Comments(prop: any) {
   const [isEditing, setIsEditing] = useState(false)
   const { userData } = useAppContext();
   const [editedComment, setEditedComment] = useState(comments?.content)
+  const { user } = useAppContext();
  
 
 
@@ -38,6 +39,9 @@ export default function Comments(prop: any) {
   };
 
   const toggleCommentLikes = async () => {
+    if (!user) {
+      return alert('Login to count your opinions');
+    }
     if (userData.isBlock) {
       return alert('You are blocked');
     }
@@ -68,6 +72,9 @@ export default function Comments(prop: any) {
   }
 
   const toggleCommentDislikes = async () => {
+    if (!user) {
+      return alert('Login to count your opinions');
+    }
     if (userData.isBlock) {
       return alert('You are blocked');
     }

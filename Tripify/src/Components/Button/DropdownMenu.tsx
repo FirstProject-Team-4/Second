@@ -11,8 +11,6 @@ function DropdownMenu(props: any) {
   };
 
   const filter = (option: string) => {
-    console.log(props);
-    console.log('array', props.array);
     if (option === 'createdOn Ascending') {
       return props.setArray([...props.array].sort((a: any, b: any) => new Date(a.createdOn).getTime() - new Date(b.createdOn).getTime()));
     }

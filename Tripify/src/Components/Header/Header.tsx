@@ -29,10 +29,14 @@ export const Header = () => {
                 {user&&<Button onClick={logout}>Logout</Button>}
             </div>
         
-            {/* <div className="category">
-                <NavLink to="/category/1">1</NavLink>
-                <NavLink to="/category/2">2</NavLink>
-                <NavLink to="/category/3">3</NavLink>
-            </div> */}
+            <div className="category">
+                <NavLink to="/category/hotels">Hotels</NavLink>
+                <NavLink to="/category/restaurants">Restaurants</NavLink>
+                <NavLink to="/category/food&drink">Food and Drink</NavLink>
+                <NavLink to="/category/cruises">Cruises</NavLink>
+                <NavLink to="/category/mountain">Mountain</NavLink>
+                <NavLink to="/category/sea">Sea</NavLink>
+                <NavLink to="/category/stories">Travel Stories</NavLink>
+            </div>
         </header>);
 }

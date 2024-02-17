@@ -70,8 +70,6 @@ try {
     
     
 
-
-
   }
   const usernameColor =():string=>{
     if(error.username==='valid'){

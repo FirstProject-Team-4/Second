@@ -50,7 +50,7 @@ function App() {
           <Route path='/profile/:id' element={<Profile/>}/>
           <Route path="/posts" element={<AllPosts />}/>
           <Route path="/posts/:id" element={<SinglePostView />}/>
-          <Route path="/category/:id" element={<Category/>} />
+          <Route path="/category/:categoryName" element={<Category/>} />
           <Route path="/posts-create" element={<CreatePost />} />
           <Route path="/posts-create" element={<CreatePost />} />
           <Route path="*" element={<h1> 404 Not Found</h1>} />

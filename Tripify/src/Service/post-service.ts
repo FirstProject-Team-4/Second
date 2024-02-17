@@ -3,7 +3,7 @@ import { db } from '../config/config-firebase';
 import { getAllUsers } from './user-service';
 
 //image: string
-export const addPost = async (author: string, title: string, content: string, image: any = '',userImage:string) => {
+export const addPost = async (author: string, title: string, content: string, image: any = '',userImage:string, category:string) => {
     return push(ref(db, 'posts'), {
         author,
         title,
@@ -13,8 +13,8 @@ export const addPost = async (author: string, title: string, content: string, im
         dislikes: 0,
         createdOn: Date.now(),
         commentsCount: 0,
-        userImage
-
+        userImage,
+        category,
     });
 };
 //Todo:

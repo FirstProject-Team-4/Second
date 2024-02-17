@@ -4,8 +4,10 @@ import Button from "../../Components/Button/Button";
 import { addPost } from "../../Service/post-service";
 import { useAppContext } from "../../Context/AppContext";
 import { saveImage } from "../../Service/firebase-storage";
+
 // import { set } from "firebase/database";
 
+// import { useHistory } from 'react-router-dom';
 
 
 
@@ -20,7 +22,13 @@ export default function CreatePost() {
     image: '',
     userImage: '',
   });
+const [category, setCategory] = useState('');
 
+  const handleSubmit = (event:any) => {
+  setCategory(event.target.value);
+
+
+  };
 
   // const [image, setImage] = useState(null); // New state variable for the image
 
@@ -54,7 +62,7 @@ export default function CreatePost() {
   //    setPost()
   // };
   const createPost = async () => {
-    console.log(userData.isBlock);
+    // console.log(userData.isBlock);
     if (userData.isBlock) {
       return alert('You are blocked');
     }
@@ -76,10 +84,11 @@ export default function CreatePost() {
     //     return alert('The post must have a user who created it.');
     // }
     // if (post.comments === null || post.comments === undefined || post.comments === '') {
-    //     return alert('Other users must be able to post replies.');
-    // }
-    //post.comments, image
-    await addPost(userData.handle, post.title, post.content, post.image, currentUserImage); // Pass the image to the service function
+      //     return alert('Other users must be able to post replies.');
+      // }
+      //post.comments, image
+      console.log(category);
+    await addPost(userData.handle, post.title, post.content, post.image, currentUserImage, category); // Pass the image to the service function
 
     setPost({
       title: '',
@@ -88,8 +97,9 @@ export default function CreatePost() {
       image: '',
       comments: '',
       userImage: '',
+  
     });
-
+setCategory('');
   };
 
   return (
@@ -104,6 +114,15 @@ export default function CreatePost() {
       <textarea value={post.content} onChange={e => updatePost(e.target.value, 'content')} name="input-content" id="input-content" cols={30} rows={10}></textarea><br /><br />
       <label htmlFor="input-image">Image:</label>
       <input id="input-image" type="file" accept="image/*" onChange={e => updateImage(e.target.files, 'image')} /><br />
+      <form >
+      {/* Other form fields go here */}
+      <select name="category" onChange={handleSubmit}>
+        <option value="">Select a category</option>
+        <option value="hotels">Hotels</option>
+        <option value="category2">Category 2</option>
+        {/* Add more options as needed */}
+      </select>
+    </form>
       <Button onClick={createPost}>Create</Button>
     </div>
   );

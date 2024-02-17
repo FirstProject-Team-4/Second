@@ -1,4 +1,4 @@
-import { ref, push, get, query, orderByChild, update } from 'firebase/database';
+import { ref, push, get, query, orderByChild, update, equalTo } from 'firebase/database';
 import { db } from '../config/config-firebase';
 import { getAllUsers } from './user-service';
 
@@ -312,4 +312,19 @@ export const deleteReply = async (postId: string, commentId: string, replyId: st
 
     deleteReply[`posts/${postId}/comments/${commentId}/replies/${replyId}`] = null;
     update(ref(db), deleteReply)
+}
+export const getPostsByCategory = async (category: string) => {
+    const snapshot=await get(query(ref(db, 'posts'), orderByChild('category'),equalTo(category)));
+    if (!snapshot.exists()) {
+        return [];
+    }
+ return Object.keys(snapshot.val()).map(key => ({
+        id: key,
+        ...snapshot.val()[key],
+        createdOn: new Date(snapshot.val()[key].createdOn).toString(),
+        likedBy: snapshot.val()[key].likedBy ? Object.keys(snapshot.val()[key].likedBy) : [],
+        imageUrl: snapshot.val().imageUrl,
+        dislikesBy: snapshot.val()[key].dislikesBy ? Object.keys(snapshot.val()[key].dislikesBy) : [],
+        commentsCount: snapshot.val()[key].commentsCount,
+    }))
 }

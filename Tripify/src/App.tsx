@@ -26,7 +26,6 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      console.log(user);
       getUserData(user.uid)
         .then(snapshot => {
           if (snapshot.exists()) {
@@ -41,28 +40,30 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <AppContext.Provider value={{ ...context, setContext }}>
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomeView />} />
-          <Route path="/home" element={<HomeView />} />
-          <Route path="/allUsers" element={<AllUsers />} />
-          <Route path="/login" element={<LoginView />} />
-          <Route path="/register" element={<RegisterView />} />
-          <Route path='/profile/:id' element={<Profile/>}/>
-          <Route path="/posts" element={<AllPosts />}/>
-          <Route path="/posts/:id" element={<SinglePostView />}/>
-          <Route path="/category/:categoryName" element={<Category/>} />
-          <Route path="/posts-create" element={<CreatePost />} />
-          <Route path="/posts-create" element={<CreatePost />} />
-          <Route path="*" element={<h1> 404 Not Found</h1>} />
-        </Routes>
-        <Footer />
-      </AppContext.Provider>
+        <AppContext.Provider value={{ ...context, setContext }}>
+          <Header />
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<HomeView />} />
+              <Route path="/home" element={<HomeView />} />
+              <Route path="/allUsers" element={<AllUsers />} />
+              <Route path="/login" element={<LoginView />} />
+              <Route path="/register" element={<RegisterView />} />
+              <Route path='/profile/:id' element={<Profile/>}/>
+              <Route path="/posts" element={<AllPosts />}/>
+              <Route path="/posts/:id" element={<SinglePostView />}/>
+              <Route path="/category/:categoryName" element={<Category/>} />
+              <Route path="/posts-create" element={<CreatePost />} />
+              <Route path="/posts-create" element={<CreatePost />} />
+              <Route path="*" element={<h1> 404 Not Found</h1>} />
+            </Routes>
+          </div>
+          <Footer />
+        </AppContext.Provider>
       </BrowserRouter>
-
     </>
-  )
+  );
 }
+
 
 export default App

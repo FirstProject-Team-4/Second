@@ -3,10 +3,12 @@ import Button from '../../Button/Button';
 import { removeLike, addLike, removeDislike, addDislike, deletePost } from '../../../Service/post-service';
 // import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../../Context/AppContext';
-import { useState } from 'react';
-import { ref, update } from 'firebase/database';
+import { useEffect, useState } from 'react';
+import { ref, set, update } from 'firebase/database';
 import { db } from '../../../config/config-firebase';
 import { NavLink } from 'react-router-dom';
+import UserImage from '../UserImage/UserImage';
+import { getUserByHandle } from '../../../Service/user-service';
 
 
 export default function Post({ post, setPosts }: {
@@ -17,10 +19,12 @@ export default function Post({ post, setPosts }: {
     setPosts: any
 }) {
 
-    const { userData } = useAppContext();
+    const {user, userData } = useAppContext();
     const [isEditing, setIsEditing] = useState(false);
     const [editedPost, setEditedPost] = useState({ title: post.title, content: post.content });
-    const { user } = useAppContext();
+
+
+
 
 
 
@@ -154,8 +158,7 @@ export default function Post({ post, setPosts }: {
             <div className="post" style={{ border: '4px solid black' }}>
                 <div className="post-container">
                     <div className="header">
-                        {post?.userImage?.length > 1 && <img src={post.userImage} className='img' alt="profile" />}
-                        {post?.userImage?.length === 1 && <span className='letter'>{post.userImage}</span>}
+                    <UserImage author={post.author}></UserImage>
                         <div className="information">
                             <NavLink to={`/profile/${post.author}`}>{post.author}</NavLink>
                         </div>

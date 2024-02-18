@@ -1,9 +1,10 @@
 import Button from '../../Components/Button/Button';
 import './Login-view.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../Service/auth-service';
+import { doc } from 'firebase/firestore';
 
 
 export default function LoginView() {
@@ -14,6 +15,12 @@ export default function LoginView() {
     email: '',
     password: ''
   });
+  useEffect(() => {
+    document.body.style.backgroundImage='url(https://images.squarespace-cdn.com/content/v1/5ad3c92c12b13fb122e90d3c/1566025164525-SF6MXDK5SDTFFGGAAYQV/IMG_5616.JPG)';
+  return () =>{ document.body.style.backgroundImage='none';
+  }
+  },[] );
+
   const login = async (): Promise<void> => {
     try {
       const response= await loginUser(form.email, form.password);

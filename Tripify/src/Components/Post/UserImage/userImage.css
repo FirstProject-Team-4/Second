@@ -1,0 +1,21 @@
+.letter {
+    font-family: "Gloria Hallelujah", cursive;
+    font-style: normal;
+    margin-top: 5px;
+    font-size: 30px;
+    border-radius: 50%;
+    border: solid 2px #000000;
+    padding: 17px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    background-color: aliceblue;
+    color: black;
+}
+.img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

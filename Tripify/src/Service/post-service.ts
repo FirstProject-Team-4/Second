@@ -18,25 +18,6 @@ export const addPost = async (author: string, title: string, content: string, im
     });
 };
 //Todo:
-// export const getAllPosts = async (search: string) => {
-//     const snapshot = await get(query(ref(db, 'posts'), orderByChild('createdOn')));
-//     if (!snapshot.exists()) {
-//         return [];
-//     }
-
-//     const posts = Object.keys(snapshot.val()).map(key => ({
-//         id: key,
-//         ...snapshot.val()[key],
-//         createdOn: new Date(snapshot.val()[key].createdOn).toString(),
-//         likedBy: snapshot.val()[key].likedBy ? Object.keys(snapshot.val()[key].likedBy) : [],
-//         imageUrl: snapshot.val().imageUrl,
-//         dislikesBy: snapshot.val()[key].dislikesBy ? Object.keys(snapshot.val()[key].dislikesBy) : [],
-//         commentsCount: snapshot.val()[key].commentsCount,
-//     }))
-//         .filter(p => p.title?.toLowerCase().includes(search.toLowerCase()));
-
-//     return posts;
-// }; 
 export const getAllPosts = async (search: string) => {
     const snapshot = await get(query(ref(db, 'posts'), orderByChild('createdOn')));
     if (!snapshot.exists()) {
@@ -51,30 +32,49 @@ export const getAllPosts = async (search: string) => {
         imageUrl: snapshot.val().imageUrl,
         dislikesBy: snapshot.val()[key].dislikesBy ? Object.keys(snapshot.val()[key].dislikesBy) : [],
         commentsCount: snapshot.val()[key].commentsCount,
-        comments: snapshot.val()[key].comments ? Object.keys(snapshot.val()[key].comments).map(c => {
-            return {
-                id: c,
-                ...snapshot.val()[key].comments[c],
-                createdOn: new Date(snapshot.val()[key].comments[c].createdOn).toString(),
-                replyCounter: snapshot.val()[key].comments[c].replies ? Object.keys(snapshot.val()[key].comments[c].replies).length : 0,
-                likedBy: snapshot.val()[key].comments[c].likedBy ? Object.keys(snapshot.val()[key].comments[c].likedBy) : [],
-                dislikesBy: snapshot.val()[key].comments[c].dislikesBy ? Object.keys(snapshot.val()[key].comments[c].dislikesBy) : [],
-                replies: snapshot.val()[key].comments[c].replies ? Object.keys(snapshot.val()[key].comments[c].replies).map(r => {
-                    return {
-                        id: r,
-                        ...snapshot.val()[key].comments[c].replies[r],
-                        likedBy: snapshot.val()[key].comments[c].replies[r].likedBy ? Object.keys(snapshot.val()[key].comments[c].replies[r].likedBy) : [],
-                        dislikesBy: snapshot.val()[key].comments[c].replies[r].dislikesBy ? Object.keys(snapshot.val()[key].comments[c].replies[r].dislikesBy) : [],
-                        createdOn: new Date(snapshot.val()[key].comments[c].replies[r].createdOn).toString(),
-                    }
-                }) : [],
-            }
-        }) : [],
     }))
         .filter(p => p.title?.toLowerCase().includes(search.toLowerCase()));
 
     return posts;
-};
+}; 
+// export const getAllPosts = async (search: string) => {
+//     const snapshot = await get(query(ref(db, 'posts'), orderByChild('createdOn')));
+//     if (!snapshot.exists()) {
+//         return [];
+//     }
+
+//     const posts = Object.keys(snapshot.val()).map(key => ({
+//         id: key,
+//         ...snapshot.val()[key],
+//         createdOn: new Date(snapshot.val()[key].createdOn).toString(),
+//         likedBy: snapshot.val()[key].likedBy ? Object.keys(snapshot.val()[key].likedBy) : [],
+//         imageUrl: snapshot.val().imageUrl,
+//         dislikesBy: snapshot.val()[key].dislikesBy ? Object.keys(snapshot.val()[key].dislikesBy) : [],
+//         commentsCount: snapshot.val()[key].commentsCount,
+//         comments: snapshot.val()[key].comments ? Object.keys(snapshot.val()[key].comments).map(c => {
+//             return {
+//                 id: c,
+//                 ...snapshot.val()[key].comments[c],
+//                 createdOn: new Date(snapshot.val()[key].comments[c].createdOn).toString(),
+//                 replyCounter: snapshot.val()[key].comments[c].replies ? Object.keys(snapshot.val()[key].comments[c].replies).length : 0,
+//                 likedBy: snapshot.val()[key].comments[c].likedBy ? Object.keys(snapshot.val()[key].comments[c].likedBy) : [],
+//                 dislikesBy: snapshot.val()[key].comments[c].dislikesBy ? Object.keys(snapshot.val()[key].comments[c].dislikesBy) : [],
+//                 replies: snapshot.val()[key].comments[c].replies ? Object.keys(snapshot.val()[key].comments[c].replies).map(r => {
+//                     return {
+//                         id: r,
+//                         ...snapshot.val()[key].comments[c].replies[r],
+//                         likedBy: snapshot.val()[key].comments[c].replies[r].likedBy ? Object.keys(snapshot.val()[key].comments[c].replies[r].likedBy) : [],
+//                         dislikesBy: snapshot.val()[key].comments[c].replies[r].dislikesBy ? Object.keys(snapshot.val()[key].comments[c].replies[r].dislikesBy) : [],
+//                         createdOn: new Date(snapshot.val()[key].comments[c].replies[r].createdOn).toString(),
+//                     }
+//                 }) : [],
+//             }
+//         }) : [],
+//     }))
+//         .filter(p => p.title?.toLowerCase().includes(search.toLowerCase()));
+
+//     return posts;
+// };
 export const getAllPostsByUser = async (username: string) => {
     const snapshot = await get(query(ref(db, 'posts'), orderByChild('createdOn')));
     if (!snapshot.exists()) {

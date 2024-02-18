@@ -6,6 +6,7 @@ import { db } from "../../../config/config-firebase";
 import { ref, update } from 'firebase/database';
 import { NavLink } from "react-router-dom";
 import './Reply.css';
+import UserImage from "../UserImage/UserImage";
 
 export default function Reply(prop: { reply: { content: string,author:string, createdOn:string, likes: number,userImage:string, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string }, setCommends: any , comment: any}) {
     const [reply, setReply] = useState(prop.reply);
@@ -151,7 +152,7 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
         <div style={{ border: '1px solid red' }}>
         <div className="comment-container">
         <div className="header">
-        {reply?.userImage?.length>1&&<img src={reply.userImage} className="img" alt="profile" />||<span className="letter">{reply?.author[0]}</span>}
+       <UserImage author={reply.author}></UserImage>
         <div className="information">
         <NavLink to={`/profile/${reply.author}`}>{reply.author}</NavLink>
         <span>{new Date(reply.createdOn).toLocaleString()}</span>

@@ -35,12 +35,12 @@ font-size: large;
   } */
 
   .category {
-    display: flex;
+    display:inline-flex;
     flex-direction: column;
     gap: 10px;
 
     background-color: rgb(252, 252, 252);
-    position: absolute;
+    position: fixed;
     left: 10px;
     top: 100px;
     bottom: 0;

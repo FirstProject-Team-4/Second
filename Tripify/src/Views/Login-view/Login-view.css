@@ -1,0 +1,52 @@
+#login-h1 {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    /* font-style: normal; */
+    font-size: 80px;
+    color: white;
+
+}
+
+.login-view {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.671);
+  }
+.label {
+    margin: 5px;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Pacifico", cursive;
+    color: white;
+}
+
+#email {
+    margin: 5px;
+    border-radius: 10%;
+    font-size: 20px;
+}
+
+#password {
+    margin: 5px;
+    border-radius: 10%;
+    font-size: 20px;
+}
+
+#login-btn {
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+
+
+.login-view {
+    display: flex;
+    color: white;
+    position: absolute;
+    margin-right: 270px;
+    margin-bottom: 80px;
+}

@@ -6,7 +6,7 @@ import { useAppContext } from '../../../Context/AppContext';
 import { useState } from 'react';
 import { ref, update } from 'firebase/database';
 import { db } from '../../../config/config-firebase';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 
 
 export default function Post({ post, setPosts }: {
@@ -21,6 +21,7 @@ export default function Post({ post, setPosts }: {
     const [isEditing, setIsEditing] = useState(false);
     const [editedPost, setEditedPost] = useState({ title: post.title, content: post.content });
 // const location=useLocation()
+    const { user } = useAppContext();
 
 
 const handleShare = () => {
@@ -53,6 +54,9 @@ const handleShare = () => {
         setIsEditing(false);
     }
     const toggleLike = async () => {
+        if (!user) {
+            return alert('Login to count your opinions');
+          }
         if (userData.isBlock) {
             return alert('You are blocked');
           }
@@ -98,6 +102,9 @@ const handleShare = () => {
     }
 
     const toggleDislike = async () => {
+        if (!user) {
+            return alert('Login to count your opinions');
+          }
         if (userData.isBlock) {
             return alert('You are blocked');
           }

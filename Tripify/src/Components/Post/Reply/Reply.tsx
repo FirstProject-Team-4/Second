@@ -12,9 +12,13 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
     const { userData } = useAppContext();
     const [isEditing, setIsEditing] = useState(false);
     const [editedReply, setEditedReply] = useState(reply.content);
+    const { user } = useAppContext();
 
 
     const toggleReplyLikes = async () => {
+        if (!user) {
+            return alert('Login to count your opinions');
+          }
         if (userData.isBlock) {
             return alert('You are blocked');
           }
@@ -44,6 +48,9 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
     }
 
     const toggleDisLikeReply = async () => {
+        if (!user) {
+            return alert('Login to count your opinions');
+          }
 
         if (userData.isBlock) {
             return alert('You are blocked');

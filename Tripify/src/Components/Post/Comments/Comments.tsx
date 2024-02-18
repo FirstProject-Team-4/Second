@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react"
+import {  useState } from "react"
 import Button from "../../Button/Button"
 import { addDislikeComment, addLikeComment, addReply, deleteComment, getPostById, removeDislikeComment, removeLikeComment } from "../../../Service/post-service"
 import { useAppContext } from "../../../Context/AppContext"
@@ -147,7 +147,8 @@ export default function Comments(prop: any) {
   return (
     isEditing ?
 
-      <div style={{ border: '2px solid green' }}>
+     
+      <div className="border">
         <h3>{prop.comment.author}</h3>
         <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
         <input value={editedComment} type="text" name="comment" id="comment-input" onChange={(e) => {
@@ -158,7 +159,7 @@ export default function Comments(prop: any) {
       </div>
       :
       comments &&
-      <div style={{ border: '2px solid green' }}>
+      <div className="border">
       <div className="comment-container">
       <div className="header">
       {comments?.userImage?.length>1&&<img src={comments.userImage}  className="img" alt="profile" />||<span className="letter">{comments?.author[0]}</span>}

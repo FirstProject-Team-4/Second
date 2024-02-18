@@ -137,7 +137,8 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
       };
     return (
         isEditing ?
-        <div style={{ border: '2px solid green' }}>
+        // <div style={{ border: '2px solid green' }}>
+        <div className="border-reply">
           <NavLink to={`/profile/${reply.author}`}>{reply.author}</NavLink>
         <span>{new Date(reply.createdOn).toLocaleString()}</span>
         <input value={editedReply} type="text" name="comment" id="comment-input" onChange={(e) => {
@@ -148,7 +149,8 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
       </div>
       :
         reply &&
-        <div style={{ border: '1px solid red' }}>
+        // <div style={{ border: '1px solid red' }}>
+        <div className="border-reply">
         <div className="comment-container">
         <div className="header">
         {reply?.userImage?.length>1&&<img src={reply.userImage} className="img" alt="profile" />||<span className="letter">{reply?.author[0]}</span>}
@@ -158,7 +160,7 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
         </div>
         </div>
         </div>
-            <h1>{prop.reply.content}</h1>
+            <p>{prop.reply.content}</p>
             <Button color={setLikeButtonColor()} onClick={toggleReplyLikes}>{reply.likes}👍</Button>
             <Button color={setDislikeButtonColor()} onClick={toggleDisLikeReply}>{reply.dislikes}👎</Button>
             {userData?.isAdmin===true? <Button onClick={deleteCurrentReply}>❌</Button>:reply.author === userData?.handle && <Button onClick={deleteCurrentReply}>❌</Button>}

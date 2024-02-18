@@ -40,3 +40,14 @@
     background-color: aliceblue;
     color: black;
 }
+
+.border {
+    color: black;
+    background-color: #f8f8f8d3; /* Light grey background */
+    border: 1px solid #ddd; /* Grey border */
+    padding: 10px; /* Some padding */
+    margin-bottom: 10px; /* Some margin to separate comments */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 14px; /* Font size */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.404); /* Shadow effect */
+  }

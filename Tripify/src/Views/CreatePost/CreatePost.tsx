@@ -4,10 +4,7 @@ import Button from "../../Components/Button/Button";
 import { addPost } from "../../Service/post-service";
 import { useAppContext } from "../../Context/AppContext";
 import { saveImage } from "../../Service/firebase-storage";
-
-// import { set } from "firebase/database";
-
-// import { useHistory } from 'react-router-dom';
+import './CreatePost.css';
 
 
 
@@ -107,16 +104,16 @@ setCategory('');
     <div>You are blocked</div>:
 
     <div>
-      <h1>Create post</h1>
-      <label htmlFor="input-title">Title:</label>
+      <h1 >Create post</h1>
+      <label htmlFor="input-title" id='input-title'>Title:</label>
       <input value={post.title} onChange={e => updatePost(e.target.value, 'title')} type="text" name="input-title" id="input-title" /><br />
-      <label htmlFor="input-content">Content:</label><br />
+      <label htmlFor="input-content" id='input-content'>Content:</label><br />
       <textarea value={post.content} onChange={e => updatePost(e.target.value, 'content')} name="input-content" id="input-content" cols={30} rows={10}></textarea><br /><br />
-      <label htmlFor="input-image">Image:</label>
+      <label htmlFor="input-image" id='input-image'>Image:</label>
       <input id="input-image" type="file" accept="image/*" onChange={e => updateImage(e.target.files, 'image')} /><br />
       <form >
       {/* Other form fields go here */}
-      <select name="category" onChange={handleSubmit}>
+      <select name="category" id="category-select" onChange={handleSubmit}>
         <option value="">Select a category</option>
         <option value="hotels">Hotels</option>
         <option value="restaurants">Restaurants</option>
@@ -130,7 +127,7 @@ setCategory('');
         {/* Add more options as needed */}
       </select>
     </form>
-      <Button onClick={createPost}>Create</Button>
+      <Button id='btn-create' onClick={createPost}>Create</Button>
     </div>
   );
 }

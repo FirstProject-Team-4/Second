@@ -180,7 +180,7 @@ console.log(currentUser);
                {userData?.isAdmin && <Button onClick={handelBlock}>{toggleBlock()}</Button>}
                 <p>First Name: {currentUser.firstName}</p>
                 <p>Last Name: {currentUser.lastName}</p>
-                <p>Phone Number: {currentUser.phoneNumber}</p>
+                <p>Phone Number ☏: {currentUser.phoneNumber}</p>
                 <p>Bio: {currentUser.bio}</p>
             </div>
             </div> 

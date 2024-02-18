@@ -1,49 +1,91 @@
-/* .header-class{
+ /* .header-class{
    padding-top: 60px;
   font-size: 27px;
   background-color: aquamarine;
-}
+} */
 
-.home{
-position: relative;
-left: 10px;
+ .home {
 
-}
+   position: relative;
+   left: 70px;
+   top: 10px;
+   font-size: large;
 
-.register{
-position: relative;
-left: 1340px;
-}
+ }
 
-.login{
-    position: relative;
-left: 1170px;
-}
+ .register {
+   position: relative;
+   left: 1100px;
+   top: 10px;
+   font-size: large;
+   border: 2px solid black;
+   padding: 10px;
+ }
 
-.search{
-    position: relative;
-left: 600px;
-font-size: large;
-}
+ .login {
+   position: relative;
+   left: 1115px;
+   top: 10px;
+   font-size: large;
+   border: 2px solid black;
+   padding: 10px;
+ }
+
+ .admin {
+   position: relative;
+   left: 100px;
+   top: 10px;
+   font-size: large;
+ }
+
+ .create-post {
+   position: relative;
+   left: 130px;
+   top: 10px;
+   font-size: large;
+
+ }
 
 
- */
-  /* .category {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  } */
+ .user {
+   position: relative;
+   top: 10px;
+   left: 920px;
+   font-size: large;
+ }
 
-  .category {
-    display:inline-flex;
-    flex-direction: column;
-    gap: 10px;
+ #logout-button {
+   position: relative;
+   left: 960px;
+   font-size: large;
+   top: 10px;
+ }
 
-    background-color: rgb(252, 252, 252);
-    position: fixed;
-    left: 10px;
-    top: 100px;
-    bottom: 0;
-    padding: 30px;
-    margin-top: 20px;
-  }
+ .category {
+   display: inline-flex;
+   flex-direction: column;
+   gap: 10px;
+
+   background-color: rgb(252, 252, 252);
+   position: fixed;
+   left: 10px;
+   top: 100px;
+   bottom: 0;
+   padding: 30px;
+   margin-top: 20px;
+
+ }
+
+ .category {
+   display: inline-flex;
+   flex-direction: column;
+   gap: 10px;
+
+   background-color: rgb(252, 252, 252);
+   position: fixed;
+   left: 10px;
+   top: 100px;
+   bottom: 0;
+   padding: 30px;
+   margin-top: 20px;
+ }

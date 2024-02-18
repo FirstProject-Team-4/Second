@@ -3,6 +3,7 @@ import { getAllPosts } from "../../Service/post-service";
 import { useSearchParams } from "react-router-dom";
 import Post from "../../Components/Post/Post/Post"; 
 import DropdownMenu from "../../Components/Button/DropdownMenu";
+import "./AllPosts.css";
 
 export type PostType = {
     id: string;
@@ -41,8 +42,8 @@ export default function AllPosts() {
         <h1>All posts</h1>
         
 
-        <label htmlFor="search">Search </label>
-        <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/>
+        <label htmlFor="search" id="search-label" >Search </label>
+        <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search-view" placeholder="⌕ search... " /><br/>
         
        { posts&&<DropdownMenu array={posts} setArray={setPosts}></DropdownMenu>}
         {posts.length > 0 ? (

@@ -20,7 +20,7 @@ function DropdownMenu(props: any) {
     props.setArray([...props.array].sort((a: any, b: any) => b[option] - a[option]));
   };
   return (
-    <select value={selectedOption} onChange={handleChange}>
+    <select value={selectedOption} onChange={handleChange} id='drop-down'>
       <option value="">Filter</option>
       <option  value="likes">Likes</option>
       <option value="dislikes">Dislikes</option>

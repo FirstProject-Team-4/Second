@@ -105,20 +105,21 @@ try {
 
 
   return (
-    <div className="login-view">
-      <div className="login-form">
-        <h1>Register</h1>
+    <div className="register-view">
+      <div className="register-form">
+        <h1 id='register'>Register</h1>
         <label htmlFor="username">Username: </label><br />
-        <input style={{border:`1px solid ${usernameColor()}`}} type="text" name='username' id='username' placeholder="Username" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} /><br />
+        <input style={{border:`1px solid ${usernameColor()}`}} type="text" name='username' id='username' placeholder="☺ Username" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} /><br />
         {error.username &&error.username!=='valid' && <h5 style={{ color: 'red' }}>{error.username}</h5>}
         <label htmlFor="email">Email: </label><br />
-        <input style={{border:`1px solid ${emailColor()}`}} type="text" name='email' id='email' placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /><br />
+        <input style={{border:`1px solid ${emailColor()}`}} type="text" name='email' id='email' placeholder="✉ email..." value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /><br />
         {error.email &&error.email!=='valid'&& <h5 style={{ color: 'red' }}>{error.email}</h5>}
         <label htmlFor="password">Password: </label><br />
-        <input style={{border:`1px solid ${passwordColor()}`}} name='password' type="password" id='password' placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+        <input style={{border:`1px solid ${passwordColor()}`}} name='password' type="password" id='password' placeholder="🗝 password..." value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
         {error.password &&error.password!=='valid'&& <h5 style={{ color: 'red' }}>{error.password}</h5>}
-        <Button onClick={submit}>Register</Button>
-
+        <div className='register-btn'>
+        <Button onClick={submit} >Register</Button>
+        </div>
       </div>
     </div>
   )

@@ -8,7 +8,7 @@ import { ref, set, update } from 'firebase/database';
 import { db } from '../../../config/config-firebase';
 import { NavLink } from 'react-router-dom';
 import UserImage from '../UserImage/UserImage';
-import { getUserByHandle } from '../../../Service/user-service';
+
 
 
 export default function Post({ post, setPosts }: {
@@ -22,10 +22,16 @@ export default function Post({ post, setPosts }: {
     const {user, userData } = useAppContext();
     const [isEditing, setIsEditing] = useState(false);
     const [editedPost, setEditedPost] = useState({ title: post.title, content: post.content });
+// const location=useLocation()
 
 
 
-
+const handleShare = () => {
+    const url = `${window.location.origin}/posts/${post.id}`
+    navigator.clipboard.writeText(url)
+      .then(() => alert('Link copied to clipboard'))
+      .catch(err => console.error('Could not copy text: ', err));
+  };
 
 
     const isEditOn = () => {
@@ -172,6 +178,7 @@ export default function Post({ post, setPosts }: {
                 <Button color={setDislikeButtonColor()} onClick={toggleDislike}>{post.dislikes}👎</Button>
                 {post.author === userData?.handle && <Button onClick={isEditOn}>✎</Button>}
                 {/* Comments */}
+                <Button onClick={handleShare}>🔗</Button>
                 <NavLink to={`/posts/${post.id}`}>{post.commentsCount} 💬</NavLink>
                 {userData?.isAdmin===true? <Button onClick={deleteWindowPop}>❌</Button>:post.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
 

@@ -1,0 +1,58 @@
+#input-title{
+border-radius: 10px;
+font-size: large;
+font-family: "Pacifico", cursive;
+font-weight: 400;
+}
+#input-description{
+border-radius: 10px;
+}
+#input-title{
+    margin: 5px;
+    border-radius: 10%;
+    font-size: 15px;
+    font-family: "Pacifico", cursive;  
+}
+#input-image{
+    margin: 5px;
+    border-radius: 10%;
+    font-size: 15px;
+    font-family: "Pacifico", cursive;  
+    background-color: white;
+
+}
+#input-content{
+    margin: 7px;
+    border-radius: 10%;
+    border-color: black;
+    font-size: 15px;
+    font-family: "Pacifico", cursive;  
+}
+#category-select{
+    margin: 5px;
+  margin-left: 230px;
+    border-radius: 10%;
+    font-size: 15px;
+    font-family: "Pacifico", cursive;  
+}
+
+h1{
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-size: 80px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+#btn-create{
+    /* margin: 20px; */
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Pacifico", cursive;
+    background-color: #646cffaa;
+    border-radius: 10%;
+    color: white;
+    border-color: #646cffaa;
+}

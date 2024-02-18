@@ -4,12 +4,12 @@ import Button from "../Button/Button";
 import { useAppContext } from "../../Context/AppContext";
 import { logoutUser } from "../../Service/auth-service";
 import { useNavigate } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 
 export const Header = () => {
  const navigate=useNavigate();
     const { user,userData, setContext } = useAppContext();
-
+    const location = useLocation();
     const logout = async() => {
         await logoutUser();
         setContext({user:null, userData:null});
@@ -26,10 +26,12 @@ export const Header = () => {
                 {!user&&<NavLink to="/register" className='register'>Register</NavLink>}
                 {!user&&<NavLink to="/login" className='login'>Login</NavLink>}
                 {user&&<NavLink to="/posts-create" className='create-post'>Create Post</NavLink>}
-               {user&&<NavLink to={`/profile/${userData?.handle}`}>{userData?.handle}</NavLink>}
-                {user&&<Button onClick={logout}>Logout</Button>}
+               {user&&<NavLink to={`/profile/${userData?.handle}`} className='user'>{userData?.handle}</NavLink>}
+           
+                {user&&<Button id="logout-button" onClick={logout} >Logout</Button>}
+            
             </div>
-        
+        {location.pathname !=='/login' && location.pathname !=='/register' && location.pathname!=='/allUsers'&&(
             <div className="category">
                 <NavLink to="/category/hotels">Hotels</NavLink>
                 <NavLink to="/category/restaurants">Restaurants</NavLink>
@@ -39,5 +41,6 @@ export const Header = () => {
                 <NavLink to="/category/sea">Sea</NavLink>
                 <NavLink to="/category/stories">Travel Stories</NavLink>
             </div>
+        )}
         </header>);
 }

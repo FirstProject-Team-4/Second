@@ -16,3 +16,23 @@
     display: flex;
     align-items: center; /* optional, aligns items vertically in the center */
   }
+
+.img-post{
+width: 500px;
+height: 500px;
+margin-left: 50px;
+
+}
+
+
+.border{
+    color: black;
+    background-color: #fffffff7; /* Light grey background */
+    border: 2px solid #0e0e0e; /* Grey border */
+    padding: 10px; /* Some padding */
+    margin-bottom: 10px; /* Some margin to separate comments */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 20px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.498); /* Shadow effect */
+
+  }

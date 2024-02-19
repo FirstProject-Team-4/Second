@@ -148,7 +148,7 @@ export default function Comments(prop: any) {
     isEditing ?
 
      
-      <div className="border">
+      <div className="border-comment">
         <h3>{prop.comment.author}</h3>
         <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
         <input value={editedComment} type="text" name="comment" id="comment-input" onChange={(e) => {
@@ -159,7 +159,7 @@ export default function Comments(prop: any) {
       </div>
       :
       comments &&
-      <div className="border">
+      <div className="border-comment">
       <div className="comment-container">
       <div className="header">
       {comments?.userImage?.length>1&&<img src={comments.userImage}  className="img" alt="profile" />||<span className="letter">{comments?.author[0]}</span>}

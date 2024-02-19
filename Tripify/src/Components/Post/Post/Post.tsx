@@ -7,8 +7,7 @@ import { useState } from 'react';
 import { ref, update } from 'firebase/database';
 import { db } from '../../../config/config-firebase';
 import { NavLink} from 'react-router-dom';
-
-
+import './Post.css';
 export default function Post({ post, setPosts }: {
     post: {
         id: string, userImage: string, commentsCount: number, author: string, title: string, content: string, image: any, dislikes: number,
@@ -150,7 +149,7 @@ const handleShare = () => {
 
     return (
         isEditing ?
-            <div className="post" style={{ border: '4px solid black' }}>
+        <div className="border">
                 <label htmlFor="input-title">Title:</label>
                 <input value={editedPost.title} onChange={e => setEditedPost({ ...editedPost, title: e.target.value })} type="text" name="input-title" id="input-title" /><br />
                 <label htmlFor="input-content">Content:</label><br />
@@ -159,7 +158,8 @@ const handleShare = () => {
                 <Button onClick={cancelEdit}>Cancel</Button>
             </div>
             :
-            <div className="post" style={{ border: '4px solid black' }}>
+            // <div className="post" style={{ border: '4px solid black' }}>
+            <div className="border">
                 <div className="post-container">
                     <div className="header">
                         {post?.userImage?.length > 1 && <img src={post.userImage} className='img' alt="profile" />}
@@ -169,9 +169,10 @@ const handleShare = () => {
                         </div>
                     </div>
                 </div>
+                {userData?.isAdmin===true? <Button id='delete' onClick={deleteWindowPop}>❌</Button>:post.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
                 <h4>{post.title} </h4>
                 <p>{post.content}</p>
-                {post.image && <img src={post.image} alt="post" />}
+                {post.image && <img  src={post.image} alt="post"  className='img-post'/>}
                 <p>{new Date(post.createdOn).toLocaleDateString('bg-BG')}</p>
                 <Button color={setLikeButtonColor()} onClick={toggleLike}>{post.likes}👍</Button>
                 <Button color={setDislikeButtonColor()} onClick={toggleDislike}>{post.dislikes}👎</Button>
@@ -179,7 +180,6 @@ const handleShare = () => {
                 {/* Comments */}
                 <Button onClick={handleShare}>🔗</Button>
                 <NavLink to={`/posts/${post.id}`}>{post.commentsCount} 💬</NavLink>
-                {userData?.isAdmin===true? <Button onClick={deleteWindowPop}>❌</Button>:post.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
 
 
             </div>

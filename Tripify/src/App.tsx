@@ -17,6 +17,7 @@ import SinglePostView from './Views/AllPosts/SinglePost-view'
 import Profile from './Views/Profile-view/Profile-view'
 import AllUsers from './Views/AllUsers/AllUsers'
 import Authentication from './Hoc/Authentication'
+import FriendsView from './Views/Friends-view/Friends-view'
 
 function App() {
   const [context, setContext] = useState({
@@ -47,6 +48,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomeView />} />
               <Route path="/home" element={<HomeView />} />
+              <Route path="/friends" element={<Authentication>{<FriendsView />}</Authentication>} />
               <Route path="/allUsers" element={<Authentication>{<AllUsers />}</Authentication> }/>
               <Route path="/login" element={<LoginView />} />
               <Route path="/register" element={<RegisterView />} />

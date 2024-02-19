@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // import { AppContext } from "../../Context/AppContext";
 import Button from "../../Components/Button/Button";
 import { addPost } from "../../Service/post-service";

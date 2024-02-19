@@ -9,7 +9,7 @@ export const getUserByHandle = (handle:string) => {
 export const createUserHandle = (handle:string, uid:string, email:string) => {
 const isAdmin=false;
 
-  return set(ref(db, `users/${handle}`), { handle, uid, email,firstName:'None',lastName:'None',phoneNumber:'None',bio:'None', createdOn: new Date().valueOf(),isAdmin,isBlock:false, likedPosts: {} })
+  return set(ref(db, `users/${handle}`), { handle, uid, email,firstName:'None',lastName:'None',phoneNumber:'None',bio:'None', createdOn: new Date().valueOf(),isAdmin,isBlock:false, likedPosts: {} , friendsRequest:{}})
 };
 
 export const getUserData = (uid:string) => {

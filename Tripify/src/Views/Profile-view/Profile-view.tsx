@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppContext } from "../../Context/AppContext";
 import { useEffect, useState } from "react";
-import { getAllPosts, getAllPostsByUser } from "../../Service/post-service";
+import { getAllPostsByUser } from "../../Service/post-service";
 import { PostType } from "../AllPosts/AllPosts";
 import Post from "../../Components/Post/Post/Post";
 import { saveImage } from "../../Service/firebase-storage";
-import { ref, set, update } from "firebase/database";
+import { push, ref, set, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { getUserByHandle } from "../../Service/user-service";
 import './Profile-view.css';
@@ -48,7 +48,7 @@ const Profile = () => {
     const handleUploadClick = async () => {
         document.getElementById('fileInput')?.click();
     }
-/////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////
     const handleFileSelect = async (e: any) => {
         const file = e.target.files[0];
         const url = await saveImage(file)
@@ -56,8 +56,8 @@ const Profile = () => {
         updatePost[`/users/${userData.handle}/userImage`] = url;
         await update(ref(db), updatePost)
 
-     setContext({ ...user, userData: { ...userData, userImage: url } })
-   
+        setContext({ ...user, userData: { ...userData, userImage: url } })
+
     }
     ///////////////////////////////////////////////////////
 
@@ -109,6 +109,17 @@ const Profile = () => {
             return 'Block';
         }
     }
+
+    const friendsRequest = () => {
+        const updatePost: { [key: string]: any } = {};
+        updatePost[`/users/${currentUser.handle}/friendsRequest/`] = {
+            handle: userData.handle,
+            id: userData.id,
+            userImage: userData.userImage,
+        };
+        push(ref(db), updatePost)
+
+    }
     return (
 
         currentUser && <div>
@@ -146,6 +157,7 @@ const Profile = () => {
 
                     {post && <h2>{currentUser.handle}</h2>}
                     {userData?.isAdmin && <Button onClick={handelBlock}>{toggleBlock()}</Button>}
+                    <Button onClick={friendsRequest}>Add Friend</Button>
                     <p>First Name: {currentUser.firstName}</p>
                     <p>Last Name: {currentUser.lastName}</p>
                     <p>Phone Number: {currentUser.phoneNumber}</p>

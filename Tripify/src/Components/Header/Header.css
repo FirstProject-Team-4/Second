@@ -46,6 +46,26 @@
 
  }
 
+.friends{
+  position: relative;
+  left: 160px;
+  top: 10px;
+  font-size: large;
+}
+
+ .user {
+   position: relative;
+   top: 10px;
+   left: 920px;
+   font-size: large;
+ }
+
+ #logout-button {
+   position: relative;
+   left: 960px;
+   font-size: large;
+   top: 10px;
+ }
 
  .user {
    position: relative;

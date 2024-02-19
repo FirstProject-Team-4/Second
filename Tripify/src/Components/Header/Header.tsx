@@ -26,7 +26,7 @@ export const Header = () => {
                 {!user&&<NavLink to="/register" className='register'>Register</NavLink>}
                 {!user&&<NavLink to="/login" className='login'>Login</NavLink>}
                 {user&&<NavLink to="/posts-create" className='create-post'>Create Post</NavLink>}
-               
+        {user&&<NavLink to='/friends' className='friends'>Friends</NavLink>}
                {user&&<NavLink to={`/profile/${userData?.handle}`} className='user'>{userData?.handle}</NavLink>}
                 {user&&<Button id="logout-button"  onClick={logout} >Logout</Button>}
             

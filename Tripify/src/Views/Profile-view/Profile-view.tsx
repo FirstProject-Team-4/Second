@@ -111,15 +111,16 @@ const Profile = () => {
     }
 
     const friendsRequest = () => {
-        const updatePost: { [key: string]: any } = {};
-        updatePost[`/users/${currentUser.handle}/friendsRequest/`] = {
-            handle: userData.handle,
-            id: userData.id,
-            userImage: userData.userImage,
-        };
-        push(ref(db), updatePost)
-
+        // const updatePost: { [key: string]: any } = {};
+       const  path=`/users/${currentUser.handle}/friendsRequest/`
+           const newRequest={
+             handle: userData.handle,
+            uid: userData.uid,
+           }
+        push(ref(db, path),newRequest) 
     }
+
+    
     return (
 
         currentUser && <div>

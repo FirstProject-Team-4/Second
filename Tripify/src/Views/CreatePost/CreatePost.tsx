@@ -5,22 +5,12 @@ import { addPost } from "../../Service/post-service";
 import { useAppContext } from "../../Context/AppContext";
 import { saveImage } from "../../Service/firebase-storage";
 import './CreatePost.css';
-import { onChildAdded, onValue, ref } from "firebase/database";
-import { db } from "../../config/config-firebase";
+
 
 
 
 export default function CreatePost() {
-  useEffect(() => {
-const listenner = ref(db, 'posts');
-const fak = onValue(listenner, () => {
-  console.log('Zdrasti');
-  const date = new Date();
-  console.log(date);
 
- 
-});
-},[]);
 
 const { userData } = useAppContext();
 const [post, setPost] = useState({

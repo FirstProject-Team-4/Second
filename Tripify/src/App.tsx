@@ -48,7 +48,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomeView />} />
               <Route path="/home" element={<HomeView />} />
-              <Route path="/friends" element={<Authentication>{<FriendsView />}</Authentication>} />
+              <Route path="/friends" element={<FriendsView />} />
               <Route path="/allUsers" element={<Authentication>{<AllUsers />}</Authentication> }/>
               <Route path="/login" element={<LoginView />} />
               <Route path="/register" element={<RegisterView />} />

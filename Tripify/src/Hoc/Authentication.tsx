@@ -7,13 +7,13 @@ export default function Authentication(prop:any) {
     const navigate = useNavigate();
     const { userData } = useAppContext();
 
-console.log(userData);
+
     useEffect(() => {
       
     }, [userData]);
-
+console.log(userData)
     return (
     <>
-    {userData?.isAdmin ? prop.children : <h1>404 Page not found</h1>}
+    {userData?.isAdmin && prop.children }
     </>);
 }

@@ -5,8 +5,8 @@ import { db } from "../config/config-firebase"
 
 export const addFriend = (currentUser:{handle:string,uid:string,},friendUser:{handle:string,uid:string,id:string}) => {
     const updateCurrentUser: { [key: string]: any } = {};
-    console.log(currentUser)
-    console.log(friendUser)
+    // console.log(currentUser)
+    // console.log(friendUser)
     updateCurrentUser[`/users/${currentUser.handle}/friendsRequest/${friendUser.id}`] = null;
      update(ref(db), updateCurrentUser);
 

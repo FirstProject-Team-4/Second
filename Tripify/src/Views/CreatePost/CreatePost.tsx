@@ -1,24 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { AppContext } from "../../Context/AppContext";
 import Button from "../../Components/Button/Button";
 import { addPost } from "../../Service/post-service";
 import { useAppContext } from "../../Context/AppContext";
 import { saveImage } from "../../Service/firebase-storage";
 import './CreatePost.css';
+import { onChildAdded, onValue, ref } from "firebase/database";
+import { db } from "../../config/config-firebase";
 
 
 
 export default function CreatePost() {
+  useEffect(() => {
+const listenner = ref(db, 'posts');
+const fak = onValue(listenner, () => {
+  console.log('Zdrasti');
+  const date = new Date();
+  console.log(date);
 
-  const { userData } = useAppContext();
-  const [post, setPost] = useState({
-    title: '',
-    content: '',
-    user: '',
-    comments: '',
-    image: '',
-    userImage: '',
-  });
+ 
+});
+},[]);
+
+const { userData } = useAppContext();
+const [post, setPost] = useState({
+  title: '',
+  content: '',
+  user: '',
+  comments: '',
+  image: '',
+  userImage: '',
+});
 const [category, setCategory] = useState('');
 
   const handleSubmit = (event:any) => {
@@ -55,11 +67,9 @@ const [category, setCategory] = useState('');
     }
   }
 
-  // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => { // New handler for image upload
-  //    setPost()
-  // };
+ 
   const createPost = async () => {
-    // console.log(userData.isBlock);
+
     if (userData.isBlock) {
       return alert('You are blocked');
     }
@@ -77,13 +87,6 @@ const [category, setCategory] = useState('');
       currentUserImage = userData.handle[0];
     }
 
-    // if (post.user === null || post.user === undefined || post.user === '') {
-    //     return alert('The post must have a user who created it.');
-    // }
-    // if (post.comments === null || post.comments === undefined || post.comments === '') {
-      //     return alert('Other users must be able to post replies.');
-      // }
-      //post.comments, image
       console.log(category);
     await addPost(userData.handle, post.title, post.content, post.image, currentUserImage, category); // Pass the image to the service function
 
@@ -100,7 +103,7 @@ setCategory('');
   };
 
   return (
-    userData.isBlock?
+    userData?.isBlock?
     <div>You are blocked</div>:
 
     <div>

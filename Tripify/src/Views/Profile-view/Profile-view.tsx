@@ -23,6 +23,8 @@ const Profile = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showEdit, setShowEdit] = useState(false);
     const [requestFriends, setFriendsRequest] = useState([] as any | undefined);
+    const [friends, setFriends] = useState([] as any | undefined);
+
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -46,6 +48,11 @@ const Profile = () => {
 
             )
             setFriendsRequest(currentValue);
+        }
+        if (currentUser?.friends) {
+            const currentValue = Object.values(currentUser.friends).map((value: any) => { return value.handle }
+            )
+            setFriends(currentValue);
         }
     }, [id, userData]);
 
@@ -127,7 +134,10 @@ const Profile = () => {
         push(ref(db, path), newRequest)
         setFriendsRequest([...requestFriends, userData.handle]);
     }
-
+const removeFriend = () => {
+    const updateFriend: { [key: string]: any } = {};
+updateFriend[`/users/${currentUser.handle}/friends/${userData.id}`] = null;
+}
 
     return (
 
@@ -166,7 +176,8 @@ const Profile = () => {
 
                     {post && <h2>{currentUser.handle}</h2>}
                     {userData?.isAdmin && <Button onClick={handelBlock}>{toggleBlock()}</Button>}
-                    {!requestFriends?.includes(currentUser.handle) && <Button onClick={friendsRequest}>Add Friend</Button>}
+                    {!requestFriends?.includes(userData?.handle) && friends?.includes(userData?.handel) && <Button onClick={friendsRequest}>Add Friend</Button>}
+                    {!friends?.includes(userData?.handel) && <Button onClick={removeFriend}>Remove friend</Button>}
                     <p>First Name: {currentUser.firstName}</p>
                     <p>Last Name: {currentUser.lastName}</p>
                     <p>Phone Number: {currentUser.phoneNumber}</p>

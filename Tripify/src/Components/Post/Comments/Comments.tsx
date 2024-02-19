@@ -151,7 +151,7 @@ export default function Comments(prop: any) {
   return (
     isEditing ?
 
-     
+   
       <div className="border-comment">
         <h3>{prop.comment.author}</h3>
         <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>
@@ -163,6 +163,7 @@ export default function Comments(prop: any) {
       </div>
       :
       comments &&
+     
       <div className="border-comment">
       <div className="comment-container">
       <div className="header">
@@ -185,6 +186,8 @@ export default function Comments(prop: any) {
         </div>}
         {replyIsActive && comments.replies && Object.values(comments.replies).map((r: any, index) => <Reply key={r.id ? r.id : index} reply={r} setCommends={setComments} comment={comments}/>)}
       </div>
+  
+
   )
 }
 

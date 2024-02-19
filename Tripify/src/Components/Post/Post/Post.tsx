@@ -4,7 +4,7 @@ import { removeLike, addLike, removeDislike, addDislike, deletePost } from '../.
 // import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../../Context/AppContext';
 import {  useState } from 'react';
-import { ref, set, update } from 'firebase/database';
+import { ref, update } from 'firebase/database';
 import { db } from '../../../config/config-firebase';
 import { NavLink} from 'react-router-dom';
 import './Post.css';

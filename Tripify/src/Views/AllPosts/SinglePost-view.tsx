@@ -64,7 +64,7 @@ export default function SinglePostView() {
 
                 {posts[0] && <Post key={posts[0].id} post={posts[0]} setPosts={setPosts} ></Post>}
                 <input value={comment} type="text" name="comment" id="comment-input" onChange={e => setComment(e.target.value)} />
-                <Button onClick={addCurrentComment}>Add Comment</Button>
+                <Button onClick={addCurrentComment} id="add-comments">Add Comment</Button>
                 {posts[0]  && <DropdownMenu array={comments} setArray={setComments}></DropdownMenu>}
                 <div>
                     {comments && comments.map((c: any) => <Comments key={c.id}  comment={c} fak={fak} setFak={setFak} post={posts[0]} />)}

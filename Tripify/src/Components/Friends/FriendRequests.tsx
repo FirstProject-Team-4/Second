@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import { addFriend } from "../../Service/friends-service"
+import { addFriend, rejectFriend } from "../../Service/friends-service"
 import { useAppContext } from "../../Context/AppContext"
 import Button from "../Button/Button"
+import { set } from "firebase/database"
 
 export default function friendsRequest({friendsRequest}:any){
 
@@ -20,9 +21,11 @@ export default function friendsRequest({friendsRequest}:any){
     },[])
     const acceptRequest= (singlyRequest:{handle:string,uid:string,id:string})=>{
      addFriend({handle:userData.handle,uid:userData.uid},singlyRequest)
+     setRequest(request.filter((request:any)=>request.id!==singlyRequest.id))
     }
-    const rejectRequest=()=>{
-        //reject request
+    const rejectRequest=(singlyRequest:{handle:string,uid:string,id:string})=>{
+        rejectFriend({handle:userData.handle,uid:userData.uid},singlyRequest)
+        setRequest(request.filter((request:any)=>request.id!==singlyRequest.id))
     }
         
     
@@ -34,7 +37,7 @@ export default function friendsRequest({friendsRequest}:any){
                     <div key={index}>
                         <p>{request.handle}</p>
                         <button onClick={()=>acceptRequest(request)}>Accept</button>
-                        <button onClick={() => rejectRequest}>Reject</button>
+                        <button onClick={() => rejectRequest(request)}>Reject</button>
                     </div>
                 )
             })}

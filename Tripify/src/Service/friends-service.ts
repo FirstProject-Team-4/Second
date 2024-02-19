@@ -13,5 +13,8 @@ export const addFriend = (currentUser:{handle:string,uid:string,},friendUser:{ha
      push(ref(db, `/users/${currentUser.handle}/friends`),friendUser)
      push(ref(db, `/users/${friendUser.handle}/friends`),currentUser)
 }
-export const rejectFriend = (currentUser:{handle:string,uid:string,},friendUser:{handle:string,uid:string}) => {
+export const rejectFriend = (currentUser:{handle:string,uid:string,},friendUser:{handle:string,uid:string,id:string}) => {
+    const updateCurrentUser: { [key: string]: any } = {};
+    updateCurrentUser[`/users/${currentUser.handle}/friendsRequest/${friendUser.id}`] = null;
+    update(ref(db), updateCurrentUser);
 }

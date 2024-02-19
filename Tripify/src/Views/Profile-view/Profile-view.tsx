@@ -135,11 +135,12 @@ const Profile = () => {
         push(ref(db, path), newRequest)
         setFriendsRequest([...requestFriends, userData.handle]);
     }
-const removeCurrentFriend = () => {
-    removeFriend(currentUser.handle, userData.handle);
-    setFriends(friends?.filter((friend: any) => friend !== userData.handle));
-    
-}
+    const removeCurrentFriend = () => {
+        removeFriend(currentUser.handle, userData.handle);
+        setFriends(friends?.filter((friend: any) => friend !== userData.handle));
+
+    }
+
 
     return (
 
@@ -178,8 +179,8 @@ const removeCurrentFriend = () => {
 
                     {post && <h2>{currentUser.handle}</h2>}
                     {userData?.isAdmin && <Button onClick={handelBlock}>{toggleBlock()}</Button>}
-                    {userData?.handle!==currentUser?.handle&&!requestFriends?.includes(userData?.handle) && friends?.includes(userData?.handel) && <Button onClick={friendsRequest}>Add Friend</Button>}
-                    {userData?.handle!==currentUser?.handle&&!friends?.includes(userData?.handel) && <Button onClick={removeCurrentFriend}>Remove friend</Button>}
+                    {userData?.handle !== currentUser?.handle && !requestFriends?.includes(userData?.handle) && !friends?.includes(userData?.handle) && <Button onClick={friendsRequest}>Add Friend</Button>}
+                    {userData?.handle !== currentUser?.handle && friends.includes(userData?.handle) && <Button onClick={removeCurrentFriend}>Remove friend</Button>}
                     <p>First Name: {currentUser.firstName}</p>
                     <p>Last Name: {currentUser.lastName}</p>
                     <p>Phone Number: {currentUser.phoneNumber}</p>

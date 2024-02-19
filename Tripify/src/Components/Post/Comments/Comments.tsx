@@ -7,6 +7,7 @@ import {  ref, update } from "firebase/database"
 import { db } from "../../../config/config-firebase"
 import { NavLink } from "react-router-dom"
 import './Comments.css'
+import UserImage from "../UserImage/UserImage"
 
 export default function Comments(prop: any) {
 
@@ -24,6 +25,9 @@ export default function Comments(prop: any) {
     setReplyIsActive(!replyIsActive)
   }
   const addCurrentReply = async () => {
+    if (!user) {
+      return alert('Login to reply');
+    }
     if (userData.isBlock) {
       return alert('You are blocked');
     }
@@ -162,7 +166,7 @@ export default function Comments(prop: any) {
       <div className="border-comment">
       <div className="comment-container">
       <div className="header">
-      {comments?.userImage?.length>1&&<img src={comments.userImage}  className="img" alt="profile" />||<span className="letter">{comments?.author[0]}</span>}
+      <UserImage author={prop.comment.author}></UserImage>
       <div className="information">
         <NavLink to={`/profile/${prop.comment.author}`}>{prop.comment.author}</NavLink>
         <span>{new Date(prop.comment.createdOn).toLocaleString()}</span>

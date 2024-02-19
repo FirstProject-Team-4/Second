@@ -1,10 +1,11 @@
 import Button from '../../Components/Button/Button';
 import './Login-view.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../Service/auth-service';
-import { useEffect } from 'react';
+import { doc } from 'firebase/firestore';
+
 
 export default function LoginView() {
   const navigate = useNavigate();

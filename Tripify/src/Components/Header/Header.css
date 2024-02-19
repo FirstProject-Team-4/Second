@@ -146,3 +146,16 @@
   -webkit-transform: translate3d(0, 0, -1em);
   transform: translate3d(0, 0, -1em);
  }
+ .category {
+   display: inline-flex;
+   flex-direction: column;
+   gap: 10px;
+
+   background-color: rgb(252, 252, 252);
+   position: fixed;
+   left: 10px;
+   top: 100px;
+   bottom: 0;
+   padding: 30px;
+   margin-top: 20px;
+ }

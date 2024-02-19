@@ -21,7 +21,11 @@ export default function RegisterView() {
 
   });
 
-  // o	Email must be a valid email and unique in the system.
+useEffect(() => {
+  document.body.style.backgroundImage='url(https://images.squarespace-cdn.com/content/v1/5ad3c92c12b13fb122e90d3c/1566025164525-SF6MXDK5SDTFFGGAAYQV/IMG_5616.JPG)';
+return () =>{ document.body.style.backgroundImage='none';
+}
+},[] );
 
   const submit = async (): Promise<void> => {
     let username = ''

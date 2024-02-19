@@ -18,3 +18,9 @@ export const rejectFriend = (currentUser:{handle:string,uid:string,},friendUser:
     updateCurrentUser[`/users/${currentUser.handle}/friendsRequest/${friendUser.id}`] = null;
     update(ref(db), updateCurrentUser);
 }
+export const removeFriend = (currentUserHandle:string,friendsUserHandle:string) => {
+    const updateCurrentUser: { [key: string]: any } = {};
+    updateCurrentUser[`/users/${currentUserHandle}/friends/${friendsUserHandle}`] = null;
+    updateCurrentUser[`/users/${friendsUserHandle}/friends/${currentUserHandle}`] = null;
+    update(ref(db), updateCurrentUser);
+}

@@ -5,12 +5,13 @@ import { getAllPostsByUser } from "../../Service/post-service";
 import { PostType } from "../AllPosts/AllPosts";
 import Post from "../../Components/Post/Post/Post";
 import { saveImage } from "../../Service/firebase-storage";
-import { push, ref, set, update } from "firebase/database";
+import { push, ref, remove, set, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { getUserByHandle } from "../../Service/user-service";
 import './Profile-view.css';
 import Button from "../../Components/Button/Button";
 import DropdownMenu from "../../Components/Button/DropdownMenu";
+import { removeFriend } from "../../Service/friends-service";
 
 const Profile = () => {
     const { user, userData, setContext } = useAppContext();
@@ -134,9 +135,10 @@ const Profile = () => {
         push(ref(db, path), newRequest)
         setFriendsRequest([...requestFriends, userData.handle]);
     }
-const removeFriend = () => {
-    const updateFriend: { [key: string]: any } = {};
-updateFriend[`/users/${currentUser.handle}/friends/${userData.id}`] = null;
+const removeCurrentFriend = () => {
+    removeFriend(currentUser.handle, userData.handle);
+    setFriends(friends?.filter((friend: any) => friend !== userData.handle));
+    
 }
 
     return (
@@ -176,8 +178,8 @@ updateFriend[`/users/${currentUser.handle}/friends/${userData.id}`] = null;
 
                     {post && <h2>{currentUser.handle}</h2>}
                     {userData?.isAdmin && <Button onClick={handelBlock}>{toggleBlock()}</Button>}
-                    {!requestFriends?.includes(userData?.handle) && friends?.includes(userData?.handel) && <Button onClick={friendsRequest}>Add Friend</Button>}
-                    {!friends?.includes(userData?.handel) && <Button onClick={removeFriend}>Remove friend</Button>}
+                    {userData?.handle!==currentUser?.handle&&!requestFriends?.includes(userData?.handle) && friends?.includes(userData?.handel) && <Button onClick={friendsRequest}>Add Friend</Button>}
+                    {userData?.handle!==currentUser?.handle&&!friends?.includes(userData?.handel) && <Button onClick={removeCurrentFriend}>Remove friend</Button>}
                     <p>First Name: {currentUser.firstName}</p>
                     <p>Last Name: {currentUser.lastName}</p>
                     <p>Phone Number: {currentUser.phoneNumber}</p>

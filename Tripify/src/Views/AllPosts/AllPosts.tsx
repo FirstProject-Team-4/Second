@@ -42,8 +42,8 @@ export default function AllPosts() {
         <h1>All posts</h1>
         
 
-        <label htmlFor="search" id="search-label" >Search </label>
-        <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search-view" placeholder="⌕ search... " /><br/>
+        <label htmlFor="search" className="search-label" >Search </label>
+        <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" className="search-view" placeholder="⌕ search... " /><br/>
         
        { posts&&<DropdownMenu array={posts} setArray={setPosts}></DropdownMenu>}
         {posts.length > 0 ? (

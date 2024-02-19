@@ -54,3 +54,6 @@
     /* Add additional styling for your main content component */
   }
   
+  body{
+    background-image: url(img/blue-background.avif);
+  }

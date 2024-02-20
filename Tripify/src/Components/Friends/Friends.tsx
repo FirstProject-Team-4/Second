@@ -29,6 +29,7 @@ const navigateToChat=(friendUID:string)=>{
 }
     return (
         <>
+            <h4>Friends</h4>
             {friendList && friendList.map((friend: any, index: number) => {
                 return (
                     <div key={index} className="friend-info">

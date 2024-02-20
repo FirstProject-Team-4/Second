@@ -6,6 +6,7 @@ import { logoutUser } from "../../Service/auth-service";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import FriendsView from "../../Views/Friends-view/Friends-view";
+import logo from '/img/Tripify-forum.png';
 
 export const Header = () => {
     const navigate = useNavigate();
@@ -17,13 +18,14 @@ export const Header = () => {
         navigate('/home');
 
     }
+ 
 
 
     return (
         <header>
             <div className="header-class" >
                 <NavLink to='/home'  className='logo'>
-                    <img src="img/Tripify-forum.png" alt="Logo"  />
+                    <img src={logo} alt="Logo"  />
                 </NavLink>
                 {user && userData?.isAdmin && <NavLink to="/allUsers" className='admin' >Check Users</NavLink>}
                 {!user && <NavLink to="/register" className='register'>Register</NavLink>}

@@ -96,8 +96,8 @@ setCategory('');
     userData?.isBlock?
     <div>You are blocked</div>:
 
-    <div>
-      <h1 >Create post</h1>
+    <div className="create-view">
+      <h2 id='create-h2'>Create post</h2>
       <label htmlFor="input-title" id='input-title'>Title:</label>
       <input value={post.title} onChange={e => updatePost(e.target.value, 'title')} type="text" name="input-title" id="input-title" /><br />
       <label htmlFor="input-content" id='input-content'>Content:</label><br />

@@ -5,7 +5,7 @@ import { getAllPostsByUser } from "../../Service/post-service";
 import { PostType } from "../AllPosts/AllPosts";
 import Post from "../../Components/Post/Post/Post";
 import { saveImage } from "../../Service/firebase-storage";
-import { push, ref, remove, set, update } from "firebase/database";
+import { push, ref, update } from "firebase/database";
 import { db } from "../../config/config-firebase";
 import { getUserByHandle } from "../../Service/user-service";
 import './Profile-view.css';
@@ -140,6 +140,7 @@ const Profile = () => {
         setFriends(friends?.filter((friend: any) => friend !== userData.handle));
 
     }
+
 
 
     return (

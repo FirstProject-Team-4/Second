@@ -50,11 +50,11 @@ export default function LoginView() {
 
     <div className="login-view">
       <div className="login-form">
-        <h1 id='login-h1'>Login</h1>
+        <h2 id='login-h1'>Login</h2>
 
         <label htmlFor="email" className='label'>Email: </label><br />
         <input type="text" name='email' id='email' autoComplete='email' placeholder="✉ email..." value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /><br />
-        <label htmlFor="password" className='label'>Password: : </label><br />
+        <label htmlFor="password" className='label'>Password: </label><br />
         <input name='password' type="password" id='password' placeholder="🗝 password..." value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
         {error && <p style={{ color: 'red' }}>Invalid email or password</p>}
         <div id='login-btn'>

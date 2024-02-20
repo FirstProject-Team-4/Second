@@ -16,7 +16,7 @@ useEffect(() => {
     return (
       
       posts&&<div>
-        <DropdownMenu array={posts} setArray={setPosts} />
+        {posts.length>=1 && <DropdownMenu array={posts} setArray={setPosts} />}
         {posts.map((post: any) => (
           <Post key={post.id} post={post} setPosts={setPosts}></Post>
         ))}

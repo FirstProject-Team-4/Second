@@ -32,18 +32,18 @@ export default function friendsRequest({friendsRequest}:any){
         
     
     return (
-        request && <div>
-            <h1>Friend Requests</h1>
+        request && <>
+            <h4>Friend Requests</h4>
             {request.map((request:any, index:number) => {
                 return (
-                    <div key={index}>
+                    <div key={index} id="fr-id">
                         <p>{request.handle}</p>
                         <button onClick={()=>acceptRequest(request)}>Accept</button>
                         <button onClick={() => rejectRequest(request)}>Reject</button>
                     </div>
                 )
             })}
-            </div>
+            </>
         
     )
 

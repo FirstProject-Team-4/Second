@@ -68,3 +68,7 @@ h1{
     color: rgb(0, 0, 0);
   
 }
+body {
+    background-image: url(C:\Users\dani5\OneDrive\Desktop\Second\Tripify\images\pexels-recal-media-60217.jpg);
+    background-size: cover;
+}

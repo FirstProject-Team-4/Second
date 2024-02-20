@@ -17,8 +17,8 @@ export default function ChatView() {
  useEffect(()=>{
     
     if(id){
-        const messegeRef=ref(db,`/chat/${id}/messages`);
-        const unsubscribe=onValue(messegeRef,(snapshot)=>{
+        const messageRef=ref(db,`/chat/${id}/messages`);
+        const unsubscribe=onValue(messageRef,(snapshot)=>{
             if(snapshot.exists()){
                 const messages = Object.keys(snapshot.val()).map(key => ({
                     id: key,
@@ -40,7 +40,7 @@ export default function ChatView() {
         })
         return ()=>unsubscribe()
     }
- },[])
+ },[id])
    
   console.log({friend})
   const sendCurrentMessage=()=>{

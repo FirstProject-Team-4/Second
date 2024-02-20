@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { PostType } from "./AllPosts";
-import { addComment, getPostById } from "../../Service/post-service";
-import Post from "../../Components/Post/Post/Post";
-import Button from "../../Components/Button/Button";
-import { useAppContext } from "../../Context/AppContext";
-import Comments from "../../Components/Post/Comments/Comments";
+import { PostType } from "../AllPosts-view/AllPosts";
+import { addComment, getPostById } from "../../../Service/post-service";
+import Post from "../../../Components/Post/Post/Post";
+import Button from "../../../Components/Button/Button";
+import { useAppContext } from "../../../Context/AppContext";
+import Comments from "../../../Components/Post/Comments/Comments";
 import { ref, update } from "firebase/database";
-import { db } from "../../config/config-firebase";
-import DropdownMenu from "../../Components/Button/DropdownMenu";
+import { db } from "../../../config/config-firebase";
+import DropdownMenu from "../../../Components/Button/DropdownMenu";
 import './SinglePost-view.css'
 
 export default function SinglePostView() {
@@ -26,7 +26,6 @@ export default function SinglePostView() {
                 setPosts(post || []);
                 if(post){
                      setComments(post[0].comments);
-                    console.log(post[0].comments);
                 }
             })();
         }

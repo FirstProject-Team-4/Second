@@ -16,7 +16,7 @@
     font-family: "Gloria Hallelujah", cursive;
     font-weight: 400;
     font-style: normal;
-    font-size: 20px;
+    font-size: 25px;
 
 
 }
@@ -43,23 +43,20 @@
 
 .border-comment {
     color: black;
-    background-color: #f8f8f8d3; /* Light grey background */
-    border: 1px solid #ddd; /* Grey border */
-    padding: 10px; /* Some padding */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 17px; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.404); /* Shadow effect */
-    margin-left: 200px;
+    background-color: #f8f8f8d3;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 17px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.404);
+    margin-left: 50px;
     margin-top: 15px;
     margin-bottom: 5px;
-  }
+    width: 900px;
+    flex-wrap: wrap;
+}
 
-  #comment-input{
-    margin-left: 800px;
-    margin-top: 10px;
-  }
-
-  #reply{
+#reply {
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -70,4 +67,4 @@
     padding: 5px;
     font-size: 20px;
 
-  }
+}

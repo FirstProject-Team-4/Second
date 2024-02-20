@@ -1,12 +1,10 @@
-
 import Button from '../../Button/Button';
 import { removeLike, addLike, removeDislike, addDislike, deletePost } from '../../../Service/post-service';
-// import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../../Context/AppContext';
-import {  useState } from 'react';
+import { useState } from 'react';
 import { ref, update } from 'firebase/database';
 import { db } from '../../../config/config-firebase';
-import { NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Post.css';
 import UserImage from '../UserImage/UserImage';
 
@@ -20,23 +18,23 @@ export default function Post({ post, setPosts }: {
     setPosts: any
 }) {
 
-    const {user, userData } = useAppContext();
+    const { user, userData } = useAppContext();
     const [isEditing, setIsEditing] = useState(false);
     const [editedPost, setEditedPost] = useState({ title: post.title, content: post.content });
-// const location=useLocation()
+    // const location=useLocation()
 
 
 
-const handleShare = () => {
-    const url = `${window.location.origin}/posts/${post.id}`
-    navigator.clipboard.writeText(url)
-      .then(() => alert('Link copied to clipboard'))
-      .catch(err => console.error('Could not copy text: ', err));
-  };
+    const handleShare = () => {
+        const url = `${window.location.origin}/posts/${post.id}`
+        navigator.clipboard.writeText(url)
+            .then(() => alert('Link copied to clipboard'))
+            .catch(err => console.error('Could not copy text: ', err));
+    };
 
 
     const isEditOn = () => {
- 
+
         setIsEditing(!isEditing);
     }
     const confirmEdit = () => {
@@ -59,10 +57,10 @@ const handleShare = () => {
     const toggleLike = async () => {
         if (!user) {
             return alert('Login to count your opinions');
-          }
+        }
         if (userData.isBlock) {
             return alert('You are blocked');
-          }
+        }
         if (post.dislikesBy?.includes(userData.handle)) {
             await removeDislike(userData.handle, post.id, post.dislikes - 1);
         }
@@ -107,10 +105,10 @@ const handleShare = () => {
     const toggleDislike = async () => {
         if (!user) {
             return alert('Login to count your opinions');
-          }
+        }
         if (userData.isBlock) {
             return alert('You are blocked');
-          }
+        }
         if (post.likedBy?.includes(userData.handle)) {
             await removeLike(userData.handle, post.id, post.likes - 1);
         }
@@ -153,7 +151,7 @@ const handleShare = () => {
 
     return (
         isEditing ?
-        <div className="border">
+            <div className="border">
                 <label htmlFor="input-title">Title:</label>
                 <input value={editedPost.title} onChange={e => setEditedPost({ ...editedPost, title: e.target.value })} type="text" name="input-title" id="input-title" /><br />
                 <label htmlFor="input-content">Content:</label><br />
@@ -162,27 +160,26 @@ const handleShare = () => {
                 <Button onClick={cancelEdit}>Cancel</Button>
             </div>
             :
-            // <div className="post" style={{ border: '4px solid black' }}>
+
             <div className="border">
                 <div className="post-container">
                     <div className="header">
-                    <UserImage author={post.author}></UserImage>
+                        <UserImage author={post.author}></UserImage>
                         <div className="information">
                             <NavLink to={`/profile/${post.author}`}>{post.author}</NavLink>
                         </div>
                     </div>
                 </div>
                 <h4>{post.title} </h4>
-                <p>{post.content}</p>
-                {post.image && <img  src={post.image} alt="post"  className='img-post'/>}
-                <p>{new Date(post.createdOn).toLocaleDateString('bg-BG')}</p>
+                <p className='content'>{post.content}</p>
+                {post.image && <img src={post.image} alt="post" className='img-post' />}
+                <p className='date'>{new Date(post.createdOn).toLocaleDateString('bg-BG')}</p>
                 <Button color={setLikeButtonColor()} onClick={toggleLike} id='like-button'>{post.likes}👍</Button>
                 <Button color={setDislikeButtonColor()} onClick={toggleDislike} id='dislike-button'>{post.dislikes}👎</Button>
                 {post.author === userData?.handle && <Button onClick={isEditOn} id='edit-button'>✎</Button>}
-                {/* Comments */}
                 <Button onClick={handleShare} id='link'>🔗</Button>
                 <NavLink to={`/posts/${post.id}`}>{post.commentsCount} 💬</NavLink>
-                {userData?.isAdmin===true? <Button id='delete' onClick={deleteWindowPop}>❌</Button>:post.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
+                {userData?.isAdmin === true ? <Button id='delete' onClick={deleteWindowPop}>❌</Button> : post.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
 
 
             </div>

@@ -3,7 +3,7 @@ import { useState } from 'react';
 function DropdownMenu(props: any) {
   const [selectedOption, setSelectedOption] = useState('');
 
-  
+
 
   const handleChange = (event: any) => {
     setSelectedOption(event.target.value);
@@ -22,7 +22,7 @@ function DropdownMenu(props: any) {
   return (
     <select value={selectedOption} onChange={handleChange} id='drop-down'>
       <option value="">Filter</option>
-      <option  value="likes">Likes</option>
+      <option value="likes">Likes</option>
       <option value="dislikes">Dislikes</option>
       <option value="createdOn Descending">Date ↑</option>
       <option value="createdOn Ascending">Date ↓</option>

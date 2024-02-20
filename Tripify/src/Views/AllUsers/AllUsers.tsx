@@ -12,6 +12,15 @@ export default function AllUsers() {
         searchUser();
     }, [search])
 
+    useEffect(() => {
+        document.body.style.backgroundImage = 'url(https://img.freepik.com/free-vector/winter-landscape-with-frozen-lake-clouds_107791-1861.jpg?w=1380&t=st=1708300170~exp=1708300770~hmac=7f64d83fc68ab8082c106577bb1b910260a6e8acd782af2c01196102db24bb43)';
+        document.body.style.backgroundSize = 'contain';
+        document.body.style.backgroundRepeat = 'no-repeat';
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundAttachment = 'fixed';
+        document.body.style.backgroundPosition = 'center';
+    }, []);
+
     const handleSearch = (value: string) => {
         setSearch(value);
         searchUser();
@@ -28,18 +37,17 @@ export default function AllUsers() {
     return (
         <div>
             <h1>Users</h1>
-            {/* <label className="label-search">Search by Username</label><br></br> */}
             <input type="text" value={search} className="search" placeholder="Search by Username..." onChange={e => handleSearch(e.target.value)} />
             <Button onClick={searchUser} id='btn-search'>Search</Button>
             <div className="inf">
                 {users.map((user: any) => {
                     return <div className="border-users" key={user.id}>
-                          <div className="header">
-                          {user?.userImage?.length > 1 && <img src={user.userImage} className='img' alt="profile" />}
-                          {!user.userImage && <span className="letter">{user.handle[0]}</span>}
-                          <div className="information">
-                        <NavLink to={`/profile/${user.handle}`}>{user.handle}</NavLink>
-                        </div>
+                        <div className="header">
+                            {user?.userImage?.length > 1 && <img src={user.userImage} className='img' alt="profile" />}
+                            {!user.userImage && <span className="letter">{user.handle[0]}</span>}
+                            <div className="information">
+                                <NavLink to={`/profile/${user.handle}`}>{user.handle}</NavLink>
+                            </div>
                         </div>
 
                         <p>✉ Email: {user.email}</p>

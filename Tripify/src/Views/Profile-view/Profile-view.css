@@ -1,7 +1,6 @@
 .prpfile-container {
     display: flex;
     flex-direction: row;
-    /* changed from column to row */
     justify-content: center;
     align-items: center;
 }

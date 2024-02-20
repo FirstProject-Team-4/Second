@@ -1,5 +1,5 @@
 #comment-input{
- margin-left: 770px;
+ margin-left: 490px;
  border-radius: 15%;
  font-size: 25px;
 }
@@ -13,7 +13,7 @@
 }
 
 #reply-input{
-    margin-left: 600px;
+    margin-left: 400px;
     border-radius: 15%;
     font-size: 25px;
    }
@@ -26,4 +26,3 @@
        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.801);
    }
 
-   

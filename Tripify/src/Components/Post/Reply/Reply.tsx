@@ -84,7 +84,6 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
     const deleteCurrentReply = () => {
         if (window.confirm('Are you sure you want to delete this comment?')) {
 
-            console.log(prop.comment.replyCounter);
             const updatePost: { [key: string]: any } = {};
             updatePost[`/posts/${reply.postId}/comments/${reply.commentId}/replyCounter`] = prop.comment.replyCounter - 1;
     
@@ -150,7 +149,6 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
       </div>
       :
         reply &&
-        // <div style={{ border: '1px solid red' }}>
         <div className="border-reply">
         <div className="comment-container">
         <div className="header">

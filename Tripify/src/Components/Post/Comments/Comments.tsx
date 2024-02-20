@@ -177,12 +177,12 @@ export default function Comments(prop: any) {
         <p>{comments.content}</p>
         <Button color={setLikeButtonColor()} onClick={toggleCommentLikes}>{comments?.likes}👍</Button>
         <Button color={setDislikeButtonColor()} onClick={toggleCommentDislikes}>{comments?.dislikes}👎</Button>
-        <Button onClick={toggleReply}>{comments.replyCounter} 💬</Button>
+        <Button  id='reply' onClick={toggleReply}>{comments.replyCounter} ↩</Button>
         {comments.author === userData?.handle && <Button onClick={isEditOn}>✎</Button>}
         {userData?.isAdmin===true? <Button onClick={deleteWindowPop}>❌</Button>:comments.author === userData?.handle && <Button onClick={deleteWindowPop}>❌</Button>}
         {replyIsActive && <div>
-          <input value={reply} type="text" name="comment" id="comment-input" onChange={e => setReply(e.target.value)} />
-          <Button onClick={addCurrentReply}>Add Reply</Button>
+          <input value={reply} type="text" name="comment" id="reply-input" onChange={e => setReply(e.target.value)}  />
+          <Button onClick={addCurrentReply} id="add-reply">Add Reply</Button>
         </div>}
         {replyIsActive && comments.replies && Object.values(comments.replies).map((r: any, index) => <Reply key={r.id ? r.id : index} reply={r} setCommends={setComments} comment={comments}/>)}
       </div>

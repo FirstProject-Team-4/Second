@@ -33,13 +33,14 @@ export const Header = () => {
             </div>
         {location.pathname !=='/login' && location.pathname !=='/register' && location.pathname!=='/allUsers'&&(
             <div className="category">
-                <NavLink to="/category/hotels">Hotels</NavLink>
-                <NavLink to="/category/restaurants">Restaurants</NavLink>
-                <NavLink to="/category/food&drink">Food and Drink</NavLink>
-                <NavLink to="/category/cruises">Cruises</NavLink>
-                <NavLink to="/category/mountain">Mountain</NavLink>
-                <NavLink to="/category/sea">Sea</NavLink>
-                <NavLink to="/category/stories">Travel Stories</NavLink>
+                <h2 id="categories-h2" >Categories</h2>
+                <NavLink to="/category/hotels" className="nav-link">Hotels</NavLink>
+                <NavLink to="/category/restaurants" className="nav-link">Restaurants</NavLink>
+                <NavLink to="/category/food&drink" className="nav-link">Food and Drink</NavLink>
+                <NavLink to="/category/cruises" className="nav-link">Cruises</NavLink>
+                <NavLink to="/category/mountain" className="nav-link">Mountain</NavLink>
+                <NavLink to="/category/sea" className="nav-link">Sea</NavLink>
+                <NavLink to="/category/stories" className="nav-link">Travel Stories</NavLink>
             </div>
         )}
         </header>);

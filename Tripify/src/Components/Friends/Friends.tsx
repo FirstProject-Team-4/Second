@@ -31,10 +31,10 @@ const navigateToChat=(friendUID:string)=>{
         <>
             {friendList && friendList.map((friend: any, index: number) => {
                 return (
-                    <div key={index}>
+                    <div key={index} className="friend-info">
                         <NavLink to={`/profile/${friend.handle}`}>{friend.handle}</NavLink>
-                        <button onClick={()=>{navigateToChat(friend.uid)}}>Send message</button>
-                        <button onClick={()=>{deleteFriend(friend)}}>Delete friend</button>
+                        <button  className='btn' onClick={()=>{navigateToChat(friend.uid)}}>Chat</button>
+                        <button className='btn' onClick={()=>{deleteFriend(friend)}}>Delete</button>
                     </div>
                 )
             })}

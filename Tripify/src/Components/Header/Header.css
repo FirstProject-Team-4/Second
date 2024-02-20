@@ -1,37 +1,30 @@
- /* .header-class{
- border-bottom:#ffffff 5px solid;
- padding-bottom: 15px;
-} */
 
- .home {
 
-   position: relative;
-   right: 70px;
-   bottom: 50px;
-   /* font-size: large; */
-
- }
+.header-class{
+  display: block;
+}
 
  .logo img{
   height: 90px;
   width: 90px;
-  position: relative;
-  right: 110px;
+  position: fixed;
+  right: 100%;
+  bottom: 25%;
  border: #382b22 2px solid;
 }
  .register {
-   position: relative;
+  position: fixed;
    left: 950px;
-   bottom: 50px;
+   bottom: 38px;
    font-size: large;
    border: 2px solid black;
    padding: 10px;
  }
 
  .login {
-   position: relative;
+  position: fixed;
    left: 960px;
-   bottom: 50px;
+   bottom: 38px;
    font-size: large;
    border: 2px solid black;
    padding: 10px;
@@ -39,37 +32,37 @@
  }
 
  .admin {
-   position: relative;
-   left: 217px;
-   bottom: 50px;
+  position: fixed;
+   left: 31%;
+   bottom: 38px;
    font-size: large;
  }
 
  .create-post {
-   position: relative;
-   right: 250px;
-   bottom: 50px;
+  position: fixed;
+   right: 50px;
+   bottom: 38px;
    /* font-size: large; */
 
  }
 
 .friends{
-  position: relative;
-  right: 250px;
-  bottom: 50px;
+  position: fixed;
+  right: -1%;
+  bottom: 38px;
   /* font-size: large; */
 }
 
  .user {
-   position: relative;
-   bottom: 50px;
+  position: fixed;
+   bottom: 38px;
    left:490px ;
    /* font-size: large; */
  }
 
  #logout-button {
    position: relative;
-   bottom: 50px;
+   bottom: 38px;
    left:500px ;
  }
 
@@ -686,28 +679,41 @@
   transform: translate3d(0, 0, -1em);
  }
  #friend-view{
-  position:absolute;
-  display: flex;
+  position: fixed;
+  display: inline-flex;
   justify-content: right;
   flex-direction: column;
   align-items: flex-end;
   right:30px;
   border: 2px solid black;
 
-  width: 20%;
+  width: 15%;
   height: 80%;
   padding: 10px;
+  padding-left: 5px;
   background-color: rgba(199, 236, 255, 0.598);
   border-radius: 20px;
   overflow: auto;
 
+
  }
+
+ .friend-info{
+ 
+ padding-right: 40px;
+
+ }
+ .btn{
+  font-size: 13px;
+  margin: 2px;
+    }
  .friend-request-id{
   
   display: flex;
   justify-content: right;
   flex-direction: column;
   align-items: center;
+
  }
  #fr-id{
   display: flex;
@@ -721,3 +727,4 @@
     margin-right: 25px;
    height: 40px;
   }
+

@@ -34,7 +34,7 @@ h1{
 
 
 #drop-down{
-  
+  display: flex;
     font-family: Pacifico, cursive;
     border-radius: 5px;
     padding: 5px;

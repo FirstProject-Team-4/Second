@@ -120,7 +120,7 @@ return () =>{ document.body.style.backgroundImage='none';
   return (
     <div className="register-view">
       <div className="register-form">
-        <h1 id='register-h1'>Register</h1>
+        <h2 id='register-h1'>Register</h2>
         <label htmlFor="username">Username: </label><br />
         <input style={{ border: `1px solid ${usernameColor()}` }} type="text" name='username' id='username' placeholder="☺ Username" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} /><br />
         {error.username && error.username !== 'valid' && <h5 style={{ color: 'red' }}>{error.username}</h5>}

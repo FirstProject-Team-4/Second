@@ -25,11 +25,8 @@ export type PostType = {
 
 export default function AllPosts() {
     const [posts, setPosts] = useState<PostType[]>([]);
-
     const [searchParams, setSearchParams] = useSearchParams();
-
     const search = searchParams.get('search') || '';
-
     const setSearch = (value: string) => {
         setSearchParams({ search: value });
     };

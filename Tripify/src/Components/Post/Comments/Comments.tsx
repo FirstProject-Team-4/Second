@@ -31,6 +31,9 @@ export default function Comments(prop: any) {
     if (userData.isBlock) {
       return alert('You are blocked');
     }
+    if (reply.length < 1) {
+      return;
+    }
     await addReply(comments.id, comments.postId, userData.handle, reply, userData);
 
     getPostById(prop.comment.postId).then((value: any) => {

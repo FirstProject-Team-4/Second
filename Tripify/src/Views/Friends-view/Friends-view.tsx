@@ -17,11 +17,14 @@ export default function FriendsView() {
                 { <FriendRequests friendsRequest={userData.friendsRequest} />}
             </div>
             :<div>no requests</div>}
-            {userData?.friends?<div>
-                {<Friends friends={userData.friends}/>}:<div>no friends</div>
-            </div>
-            :<div>no friends</div>}
-            </>
-        );
-    
-}
+                        {userData?.friends?<div>
+                            {<Friends friends={userData.friends}/>}
+                        </div>
+                        :<div>no friends</div>}
+                        
+                        
+                        
+                        </>
+                    );
+                            }
+

@@ -18,6 +18,7 @@ import Profile from './Views/Profile-view/Profile-view'
 import AllUsers from './Views/AllUsers/AllUsers'
 import Authentication from './Hoc/Authentication'
 import FriendsView from './Views/Friends-view/Friends-view'
+import ChatView from './Views/Friends-view/Chat-view'
 
 function App() {
   const [context, setContext] = useState({
@@ -49,6 +50,7 @@ function App() {
               <Route path="/" element={<HomeView />} />
               <Route path="/home" element={<HomeView />} />
               <Route path="/friends" element={<FriendsView />} />
+              <Route path="/chat/:id" element={<ChatView/>} /> {/*TODO: add authentication*/}
               <Route path="/allUsers" element={<Authentication>{<AllUsers />}</Authentication> }/>
               <Route path="/login" element={<LoginView />} />
               <Route path="/register" element={<RegisterView />} />

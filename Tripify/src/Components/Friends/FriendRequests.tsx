@@ -7,7 +7,7 @@ import { set } from "firebase/database"
 export default function friendsRequest({friendsRequest}:any){
 
     const[request,setRequest]=useState([] as any)
-    const{userData}=useAppContext()
+    const{userData,setContext}=useAppContext()
     useEffect(()=>{
         const currentRequests = Object.keys(friendsRequest).map((key:any) => {
             return {
@@ -22,10 +22,12 @@ export default function friendsRequest({friendsRequest}:any){
     const acceptRequest= (singlyRequest:{handle:string,uid:string,id:string})=>{
      addFriend({handle:userData.handle,uid:userData.uid},singlyRequest)
      setRequest(request.filter((request:any)=>request.id!==singlyRequest.id))
+     setContext({...userData,friends:{...userData.friends,[singlyRequest.uid]:{singlyRequest}}})
     }
     const rejectRequest=(singlyRequest:{handle:string,uid:string,id:string})=>{
         rejectFriend({handle:userData.handle,uid:userData.uid},singlyRequest)
         setRequest(request.filter((request:any)=>request.id!==singlyRequest.id))
+        setContext({...userData,friendsRequest:{...userData.friendsRequest,[singlyRequest.uid]:null}})
     }
         
     

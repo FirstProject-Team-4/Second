@@ -49,7 +49,6 @@ function App() {
             <Routes>
               <Route path="/" element={<HomeView />} />
               <Route path="/home" element={<HomeView />} />
-              <Route path="/friends" element={<FriendsView />} />
               <Route path="/chat/:id" element={<ChatView/>} /> {/*TODO: add authentication*/}
               <Route path="/allUsers" element={<Authentication>{<AllUsers />}</Authentication> }/>
               <Route path="/login" element={<LoginView />} />

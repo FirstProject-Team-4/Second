@@ -173,9 +173,9 @@ const handleShare = () => {
                     </div>
                 </div>
                 <h4>{post.title} </h4>
-                <p>{post.content}</p>
+                <p className='content'>{post.content}</p>
                 {post.image && <img  src={post.image} alt="post"  className='img-post'/>}
-                <p>{new Date(post.createdOn).toLocaleDateString('bg-BG')}</p>
+                <p className='date'>{new Date(post.createdOn).toLocaleDateString('bg-BG')}</p>
                 <Button color={setLikeButtonColor()} onClick={toggleLike} id='like-button'>{post.likes}👍</Button>
                 <Button color={setDislikeButtonColor()} onClick={toggleDislike} id='dislike-button'>{post.dislikes}👎</Button>
                 {post.author === userData?.handle && <Button onClick={isEditOn} id='edit-button'>✎</Button>}

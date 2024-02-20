@@ -18,6 +18,15 @@
     align-items: center; /* optional, aligns items vertically in the center */
   }
 
+  span{
+    font-family: "Gloria Hallelujah", cursive;
+    font-style: normal;
+    margin-top: 5px;
+    font-size: 17px;
+    margin-left: 15px;
+  
+  }
+
   .border-reply{
         color: black;
         background-color: #f8f8f830; 
@@ -30,5 +39,6 @@
         margin-right: 30px;
         font-size: 17px; 
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.801); /* Shadow effect */
-
+        flex-wrap: wrap;
+       
   }

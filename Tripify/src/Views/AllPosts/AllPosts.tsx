@@ -48,7 +48,7 @@ export default function AllPosts() {
        { posts&&<DropdownMenu array={posts} setArray={setPosts}></DropdownMenu>}
         {posts.length > 0 ? (
             posts.map((post) => (
-                <Post key={post.id} post={post} setPosts={setPosts}></Post>
+                <Post  key={post.id} post={post} setPosts={setPosts}></Post>
             ))
         ) : (
             <p>No posts found</p>

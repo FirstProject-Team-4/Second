@@ -7,41 +7,44 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export const Header = () => {
- const navigate=useNavigate();
-    const { user,userData, setContext } = useAppContext();
+    const navigate = useNavigate();
+    const { user, userData, setContext } = useAppContext();
     const location = useLocation();
-    const logout = async() => {
+    const logout = async () => {
         await logoutUser();
-        setContext({user:null, userData:null});
+        setContext({ user: null, userData: null });
         navigate('/home');
 
     }
 
-   
+
     return (
         <header>
             <div className="header-class" >
+                <NavLink to='/home'  className='logo'>
+                    <img src="img/Tripify-forum.png" alt="Logo"  />
+                </NavLink>
                 <NavLink to='/home' className='home'>Home</NavLink>
-                {user&&userData?.isAdmin&&<NavLink to="/allUsers" className='admin' >Check Users</NavLink>}
-                {!user&&<NavLink to="/register" className='register'>Register</NavLink>}
-                {!user&&<NavLink to="/login" className='login'>Login</NavLink>}
-                {user&&<NavLink to="/posts-create" className='create-post'>Create Post</NavLink>}
-        {user&&<NavLink to='/friends' className='friends'>Friends</NavLink>}
-               {user&&<NavLink to={`/profile/${userData?.handle}`} className='user'>{userData?.handle}</NavLink>}
-                {user&&<Button id="logout-button"  onClick={logout} >Logout</Button>}
-            
+                {user && userData?.isAdmin && <NavLink to="/allUsers" className='admin' >Check Users</NavLink>}
+                {!user && <NavLink to="/register" className='register'>Register</NavLink>}
+                {!user && <NavLink to="/login" className='login'>Login</NavLink>}
+                {user && <NavLink to="/posts-create" className='create-post'>Create Post</NavLink>}
+                {user && <NavLink to='/friends' className='friends'>Friends</NavLink>}
+                {user && <NavLink to={`/profile/${userData?.handle}`} className='user'>{userData?.handle}</NavLink>}
+                {user && <Button id="logout-button" onClick={logout} >Logout</Button>}
+
             </div>
-        {location.pathname !=='/login' && location.pathname !=='/register' && location.pathname!=='/allUsers'&&(
-            <div className="category">
-                <h2 id="categories-h2" >Categories</h2>
-                <NavLink to="/category/hotels" className="nav-link">Hotels</NavLink>
-                <NavLink to="/category/restaurants" className="nav-link">Restaurants</NavLink>
-                <NavLink to="/category/food&drink" className="nav-link">Food and Drink</NavLink>
-                <NavLink to="/category/cruises" className="nav-link">Cruises</NavLink>
-                <NavLink to="/category/mountain" className="nav-link">Mountain</NavLink>
-                <NavLink to="/category/sea" className="nav-link">Sea</NavLink>
-                <NavLink to="/category/stories" className="nav-link">Travel Stories</NavLink>
-            </div>
-        )}
+            {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/allUsers' && (
+                <div className="category">
+                    <h2 id="categories-h2" >Categories</h2>
+                    <NavLink to="/category/hotels" className="nav-link">Hotels</NavLink>
+                    <NavLink to="/category/restaurants" className="nav-link">Restaurants</NavLink>
+                    <NavLink to="/category/food&drink" className="nav-link">Food and Drink</NavLink>
+                    <NavLink to="/category/cruises" className="nav-link">Cruises</NavLink>
+                    <NavLink to="/category/mountain" className="nav-link">Mountain</NavLink>
+                    <NavLink to="/category/sea" className="nav-link">Sea</NavLink>
+                    <NavLink to="/category/stories" className="nav-link">Travel Stories</NavLink>
+                </div>
+            )}
         </header>);
 }

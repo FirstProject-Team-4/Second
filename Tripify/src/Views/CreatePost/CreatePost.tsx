@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { AppContext } from "../../Context/AppContext";
 import Button from "../../Components/Button/Button";
 import { addPost } from "../../Service/post-service";
@@ -12,24 +12,30 @@ import './CreatePost.css';
 export default function CreatePost() {
 
 
-const { userData } = useAppContext();
-const [post, setPost] = useState({
-  title: '',
-  content: '',
-  user: '',
-  comments: '',
-  image: '',
-  userImage: '',
-});
-const [category, setCategory] = useState('');
+  const { userData } = useAppContext();
+  const [post, setPost] = useState({
+    title: '',
+    content: '',
+    user: '',
+    comments: '',
+    image: '',
+    userImage: '',
+  });
+  const [category, setCategory] = useState('');
 
-  const handleSubmit = (event:any) => {
-  setCategory(event.target.value);
-
-
+  useEffect(() => {
+    document.body.style.backgroundImage = 'url(https://img.freepik.com/free-vector/winter-landscape-with-frozen-lake-clouds_107791-1861.jpg?w=1380&t=st=1708300170~exp=1708300770~hmac=7f64d83fc68ab8082c106577bb1b910260a6e8acd782af2c01196102db24bb43)';
+    document.body.style.backgroundSize = 'contain';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundPosition = 'center';
+  }, []);
+  
+  const handleSubmit = (event: any) => {
+    setCategory(event.target.value);
   };
 
-  // const [image, setImage] = useState(null); // New state variable for the image
 
   const updatePost = (value: string, key: string) => {
     setPost({
@@ -57,7 +63,7 @@ const [category, setCategory] = useState('');
     }
   }
 
- 
+
   const createPost = async () => {
 
     if (userData.isBlock) {
@@ -77,7 +83,7 @@ const [category, setCategory] = useState('');
       currentUserImage = userData.handle[0];
     }
 
-      console.log(category);
+    console.log(category);
     await addPost(userData.handle, post.title, post.content, post.image, currentUserImage, category); // Pass the image to the service function
 
     setPost({
@@ -87,40 +93,36 @@ const [category, setCategory] = useState('');
       image: '',
       comments: '',
       userImage: '',
-  
+
     });
-setCategory('');
+    setCategory('');
   };
 
   return (
-    userData?.isBlock?
-    <div>You are blocked</div>:
+    userData?.isBlock ?
+      <div>You are blocked</div> :
 
-    <div className="create-view">
-      <h2 id='create-h2'>Create post</h2>
-      <label htmlFor="input-title" id='input-title'>Title:</label>
-      <input value={post.title} onChange={e => updatePost(e.target.value, 'title')} type="text" name="input-title" id="input-title" /><br />
-      <label htmlFor="input-content" id='input-content'>Content:</label><br />
-      <textarea value={post.content} onChange={e => updatePost(e.target.value, 'content')} name="input-content" id="input-content" cols={30} rows={10}></textarea><br /><br />
-      <label htmlFor="input-image" id='input-image'>Image:</label>
-      <input id="input-image" type="file" accept="image/*" onChange={e => updateImage(e.target.files, 'image')} /><br />
-      <form >
-      {/* Other form fields go here */}
-      <select name="category" id="category-select" onChange={handleSubmit}>
-        <option value="">Select a category</option>
-        <option value="hotels">Hotels</option>
-        <option value="restaurants">Restaurants</option>
-        <option value="food&drink">Food and Drink</option>
-        <option value="cruises">Cruises</option>
-        <option value="mountain">Mountain</option>
-        <option value="sea">Sea</option>
-        <option value="stories">Travel Stories</option>
-
-
-        {/* Add more options as needed */}
-      </select>
-    </form>
-      <Button id='btn-create' onClick={createPost}>Create</Button>
-    </div>
+      <div className="create-view">
+        <h2 id='create-h2'>Create post</h2>
+        <label htmlFor="input-title" id='input-title'>Title:</label>
+        <input value={post.title} onChange={e => updatePost(e.target.value, 'title')} type="text" name="input-title" id="input-title" /><br />
+        <label htmlFor="input-content" id='input-content'>Content:</label><br />
+        <textarea value={post.content} onChange={e => updatePost(e.target.value, 'content')} name="input-content" id="input-content" cols={30} rows={10}></textarea><br /><br />
+        <label htmlFor="input-image" id='input-image'>Image:</label>
+        <input id="input-image" type="file" accept="image/*" onChange={e => updateImage(e.target.files, 'image')} /><br />
+        <form >
+          <select name="category" id="category-select" onChange={handleSubmit}>
+            <option value="">Select a category</option>
+            <option value="hotels">Hotels</option>
+            <option value="restaurants">Restaurants</option>
+            <option value="food&drink">Food and Drink</option>
+            <option value="cruises">Cruises</option>
+            <option value="mountain">Mountain</option>
+            <option value="sea">Sea</option>
+            <option value="stories">Travel Stories</option>
+          </select>
+        </form>
+        <Button id='btn-create' onClick={createPost}>Create</Button>
+      </div>
   );
 }

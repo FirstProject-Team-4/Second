@@ -22,8 +22,8 @@ export const Header = () => {
     return (
         <header>
             <div className="header-class" >
-                <NavLink to='/home'  className='logo'>
-                    <img src="img/Tripify-forum.png" alt="Logo"  />
+                <NavLink to='/home' className='logo'>
+                    <img src="img/Tripify-forum.png" alt="Logo" />
                 </NavLink>
                 {user && userData?.isAdmin && <NavLink to="/allUsers" className='admin' >Check Users</NavLink>}
                 {!user && <NavLink to="/register" className='register'>Register</NavLink>}
@@ -45,8 +45,8 @@ export const Header = () => {
                     <NavLink to="/category/stories" className="nav-link">Travel Stories</NavLink>
                 </div>
             )}
-            {location.pathname!==`/login`&&location.pathname!=='/register'&&location.pathname!=='/allUsers'&&<div id="friend-view" >
+            {location.pathname !== `/login` && location.pathname !== '/register' && location.pathname !== '/allUsers' && <div id="friend-view" >
                 <FriendsView />
-                </div>}
+            </div>}
         </header>);
 }

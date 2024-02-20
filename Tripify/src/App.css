@@ -44,7 +44,6 @@
   color: #888;
 }
 
-/* edit post */
 .main-content {
   display: flex;
   justify-content: center;
@@ -54,15 +53,8 @@
 
 .Category {
   flex: 1;
-  /* Add additional styling for your categories component */
 }
 
 .Routes {
   flex: 3;
-  /* Add additional styling for your main content component */
 }
-
-/* body {
-    background-image: url(C:\Users\dani5\OneDrive\Desktop\Second\Tripify\images\pexels-recal-media-60217.jpg);
-    background-size: cover;
-} */

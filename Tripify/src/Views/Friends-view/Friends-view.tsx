@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import FriendRequests from "../../Components/Friends/FriendRequests";
 import { useAppContext } from "../../Context/AppContext"
 import Friends from "../../Components/Friends/Friends";
@@ -6,11 +6,9 @@ import Friends from "../../Components/Friends/Friends";
 export default function FriendsView() {
 
     const { userData } = useAppContext();
-    console.log(userData);
     useEffect(() => {
 
     }, [userData]);
-    console.log(userData?.friendsRequest);
     return (
         <>
             {userData?.friendsRequest ? <div className='friend-request-id'>
@@ -22,8 +20,6 @@ export default function FriendsView() {
                 {<Friends friends={userData.friends} />}
             </div>
                 : <div className="friends-container-id">no friends</div>}
-
-
 
         </>
     );

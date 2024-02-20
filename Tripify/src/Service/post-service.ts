@@ -3,7 +3,7 @@ import { db } from '../config/config-firebase';
 import { getAllUsers } from './user-service';
 
 //image: string
-export const addPost = async (author: string, title: string, content: string, image: any = '',userImage:string, category:string) => {
+export const addPost = async (author: string, title: string, content: string, image: any = '', userImage: string, category: string) => {
     return push(ref(db, 'posts'), {
         author,
         title,
@@ -36,45 +36,8 @@ export const getAllPosts = async (search: string) => {
         .filter(p => p.title?.toLowerCase().includes(search.toLowerCase()));
 
     return posts;
-}; 
-// export const getAllPosts = async (search: string) => {
-//     const snapshot = await get(query(ref(db, 'posts'), orderByChild('createdOn')));
-//     if (!snapshot.exists()) {
-//         return [];
-//     }
+};
 
-//     const posts = Object.keys(snapshot.val()).map(key => ({
-//         id: key,
-//         ...snapshot.val()[key],
-//         createdOn: new Date(snapshot.val()[key].createdOn).toString(),
-//         likedBy: snapshot.val()[key].likedBy ? Object.keys(snapshot.val()[key].likedBy) : [],
-//         imageUrl: snapshot.val().imageUrl,
-//         dislikesBy: snapshot.val()[key].dislikesBy ? Object.keys(snapshot.val()[key].dislikesBy) : [],
-//         commentsCount: snapshot.val()[key].commentsCount,
-//         comments: snapshot.val()[key].comments ? Object.keys(snapshot.val()[key].comments).map(c => {
-//             return {
-//                 id: c,
-//                 ...snapshot.val()[key].comments[c],
-//                 createdOn: new Date(snapshot.val()[key].comments[c].createdOn).toString(),
-//                 replyCounter: snapshot.val()[key].comments[c].replies ? Object.keys(snapshot.val()[key].comments[c].replies).length : 0,
-//                 likedBy: snapshot.val()[key].comments[c].likedBy ? Object.keys(snapshot.val()[key].comments[c].likedBy) : [],
-//                 dislikesBy: snapshot.val()[key].comments[c].dislikesBy ? Object.keys(snapshot.val()[key].comments[c].dislikesBy) : [],
-//                 replies: snapshot.val()[key].comments[c].replies ? Object.keys(snapshot.val()[key].comments[c].replies).map(r => {
-//                     return {
-//                         id: r,
-//                         ...snapshot.val()[key].comments[c].replies[r],
-//                         likedBy: snapshot.val()[key].comments[c].replies[r].likedBy ? Object.keys(snapshot.val()[key].comments[c].replies[r].likedBy) : [],
-//                         dislikesBy: snapshot.val()[key].comments[c].replies[r].dislikesBy ? Object.keys(snapshot.val()[key].comments[c].replies[r].dislikesBy) : [],
-//                         createdOn: new Date(snapshot.val()[key].comments[c].replies[r].createdOn).toString(),
-//                     }
-//                 }) : [],
-//             }
-//         }) : [],
-//     }))
-//         .filter(p => p.title?.toLowerCase().includes(search.toLowerCase()));
-
-//     return posts;
-// };
 export const getAllPostsByUser = async (username: string) => {
     const snapshot = await get(query(ref(db, 'posts'), orderByChild('createdOn')));
     if (!snapshot.exists()) {
@@ -133,22 +96,6 @@ export const getPostById = async (id: string) => {
 
     return post;
 };
-// export const getPostById = async (id: string) => {
-//     const snapshot = await get(ref(db, `posts/${id}`));
-//     if (!snapshot.exists()) {
-//       return null;
-//     }
-
-//     const post = {
-//       id,
-//       ...snapshot.val(),
-//       createdOn: new Date(snapshot.val().createdOn).toString(),
-//       likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
-//       imageUrl: snapshot.val().imageUrl, // Include imageUrl 
-//     };
-
-//     return post;
-//   };
 
 export const addLike = (handle: string, postId: string, likesCount: number) => {
     const updateLikes: { [key: string]: any } = {};
@@ -218,7 +165,6 @@ export const removeDislikeComment = (handle: string, postId: string, commentId: 
 
 export const addLikeReply = (handle: string, postId: string, commentId: string, replyId: string, likesCount: number) => {
     const updateLikes: { [key: string]: any } = {};
-    console.log(replyId, postId, commentId, likesCount, handle)
     updateLikes[`/posts/${postId}/comments/${commentId}/replies/${replyId}/likedBy/${handle}`] = true;
     updateLikes[`/posts/${postId}/comments/${commentId}/replies/${replyId}/likes/`] = likesCount;
     return update(ref(db), updateLikes);
@@ -245,10 +191,9 @@ export const removeDislikeReply = (handle: string, postId: string, commentId: st
     return update(ref(db), updateLikes);
 }
 
-export const addComment = async (postId: string, userData: { handle: string , userImage:string}, content: string) => {
-   console.log(userData);
-   userData.userImage = userData.userImage ? userData.userImage : '';
-   
+export const addComment = async (postId: string, userData: { handle: string, userImage: string }, content: string) => {
+    userData.userImage = userData.userImage ? userData.userImage : '';
+
     push(ref(db, `posts/${postId}/comments/`), {
         postId,
         author: userData.handle,
@@ -258,12 +203,11 @@ export const addComment = async (postId: string, userData: { handle: string , us
         likes: 0,
         dislikes: 0,
         replyCounter: 0,
-        userImage:userData.userImage,
+        userImage: userData.userImage,
     });
 };
-export const addReply = async (commentId: string, postId: string, author: string, content: string, userData: { userImage:string}) => {
-   console.log(userData);
-   userData.userImage = userData.userImage ? userData.userImage : '';
+export const addReply = async (commentId: string, postId: string, author: string, content: string, userData: { userImage: string }) => {
+    userData.userImage = userData.userImage ? userData.userImage : '';
     return push(ref(db, `posts/${postId}/comments/${commentId}/replies/`), {
         author,
         content,
@@ -272,7 +216,7 @@ export const addReply = async (commentId: string, postId: string, author: string
         commentId,
         likes: 0,
         dislikes: 0,
-        userImage:userData.userImage,
+        userImage: userData.userImage,
     });
 }
 
@@ -314,11 +258,11 @@ export const deleteReply = async (postId: string, commentId: string, replyId: st
     update(ref(db), deleteReply)
 }
 export const getPostsByCategory = async (category: string) => {
-    const snapshot=await get(query(ref(db, 'posts'), orderByChild('category'),equalTo(category)));
+    const snapshot = await get(query(ref(db, 'posts'), orderByChild('category'), equalTo(category)));
     if (!snapshot.exists()) {
         return [];
     }
- return Object.keys(snapshot.val()).map(key => ({
+    return Object.keys(snapshot.val()).map(key => ({
         id: key,
         ...snapshot.val()[key],
         createdOn: new Date(snapshot.val()[key].createdOn).toString(),

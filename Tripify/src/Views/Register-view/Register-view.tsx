@@ -4,7 +4,6 @@ import Button from '../../Components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../../Service/auth-service';
 import { createUserHandle, getUserByHandle } from '../../Service/user-service';
-import { doc } from 'firebase/firestore';
 export default function RegisterView() {
 
   const nav = useNavigate();
@@ -21,11 +20,12 @@ export default function RegisterView() {
 
   });
 
-useEffect(() => {
-  document.body.style.backgroundImage='url(https://images.squarespace-cdn.com/content/v1/5ad3c92c12b13fb122e90d3c/1566025164525-SF6MXDK5SDTFFGGAAYQV/IMG_5616.JPG)';
-return () =>{ document.body.style.backgroundImage='none';
-}
-},[] );
+  useEffect(() => {
+    document.body.style.backgroundImage = 'url(https://images.squarespace-cdn.com/content/v1/5ad3c92c12b13fb122e90d3c/1566025164525-SF6MXDK5SDTFFGGAAYQV/IMG_5616.JPG)';
+    return () => {
+      document.body.style.backgroundImage = 'none';
+    }
+  }, []);
 
   const submit = async (): Promise<void> => {
     let username = ''
@@ -43,7 +43,6 @@ return () =>{ document.body.style.backgroundImage='none';
         username = 'valid';
       }
     } catch (error) {
-      console.log(error);
     }
     if (!form.email.includes('@')) {
       email = 'Email must be a valid email.';

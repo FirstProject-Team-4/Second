@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom"
-import './Category-view.css'
-import { PostType } from "../AllPosts/AllPosts";
+import { PostType } from "../AllPosts/AllPosts-view/AllPosts";
 import { useEffect, useState } from "react";
 import { getPostsByCategory } from "../../Service/post-service";
 import Post from "../../Components/Post/Post/Post";
@@ -23,7 +22,7 @@ export default function CategoryView() {
     document.body.style.backgroundAttachment = 'fixed';
     document.body.style.backgroundPosition = 'center';
   }, []);
-  
+
   return (
 
     posts && <div>

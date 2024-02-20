@@ -1,18 +1,17 @@
-.user-inf{
+.user-inf {
   margin: 20px;
   font-family: "Pacifico", cursive;
 }
 
-.border-users{
-    color: black;
-    background-color: #ffffffec; 
-    border: 1px solid #000000; 
-    padding: 10px; 
-    margin-bottom: 10px; 
-    border-radius: 5px; 
-
-    font-size: 17px; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.801); /* Shadow effect */
+.border-users {
+  color: black;
+  background-color: #ffffffec;
+  border: 1px solid #000000;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 17px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.801);
 }
 
 .search {
@@ -53,4 +52,3 @@
 #btn-search:active {
   background-color: #06305e;
 }
-

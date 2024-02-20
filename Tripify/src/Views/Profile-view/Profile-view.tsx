@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppContext } from "../../Context/AppContext";
 import { useEffect, useState } from "react";
 import { getAllPostsByUser } from "../../Service/post-service";
-import { PostType } from "../AllPosts/AllPosts";
+import { PostType } from "../AllPosts/AllPosts-view/AllPosts";
 import Post from "../../Components/Post/Post/Post";
 import { saveImage } from "../../Service/firebase-storage";
 import { push, ref, update } from "firebase/database";
@@ -64,12 +64,12 @@ const Profile = () => {
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundAttachment = 'fixed';
         document.body.style.backgroundPosition = 'center';
-      }, []);
+    }, []);
 
     const handleUploadClick = async () => {
         document.getElementById('fileInput')?.click();
     }
-    
+
     const handleFileSelect = async (e: any) => {
         const file = e.target.files[0];
         const url = await saveImage(file)
@@ -80,8 +80,6 @@ const Profile = () => {
         setContext({ ...user, userData: { ...userData, userImage: url } })
 
     }
-    ///////////////////////////////////////////////////////
-
 
 
     const handleSubmit = async (e: any) => {
@@ -132,7 +130,6 @@ const Profile = () => {
     }
 
     const friendsRequest = () => {
-        // const updatePost: { [key: string]: any } = {};
         const path = `/users/${currentUser.handle}/friendsRequest/`
         const newRequest = {
             handle: userData.handle,

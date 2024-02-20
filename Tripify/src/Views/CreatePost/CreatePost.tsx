@@ -31,7 +31,7 @@ export default function CreatePost() {
     document.body.style.backgroundAttachment = 'fixed';
     document.body.style.backgroundPosition = 'center';
   }, []);
-  
+
   const handleSubmit = (event: any) => {
     setCategory(event.target.value);
   };
@@ -44,7 +44,6 @@ export default function CreatePost() {
     });
   };
   const updateImage = (value: any, key: string) => {
-    console.log(value);
     if (!value) {
       setPost({
         ...post,
@@ -83,7 +82,6 @@ export default function CreatePost() {
       currentUserImage = userData.handle[0];
     }
 
-    console.log(category);
     await addPost(userData.handle, post.title, post.content, post.image, currentUserImage, category); // Pass the image to the service function
 
     setPost({

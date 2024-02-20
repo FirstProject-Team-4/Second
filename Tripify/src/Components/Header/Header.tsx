@@ -24,7 +24,6 @@ export const Header = () => {
                 <NavLink to='/home'  className='logo'>
                     <img src="img/Tripify-forum.png" alt="Logo"  />
                 </NavLink>
-                <NavLink to='/home' className='home'>Home</NavLink>
                 {user && userData?.isAdmin && <NavLink to="/allUsers" className='admin' >Check Users</NavLink>}
                 {!user && <NavLink to="/register" className='register'>Register</NavLink>}
                 {!user && <NavLink to="/login" className='login'>Login</NavLink>}

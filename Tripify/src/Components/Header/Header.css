@@ -21,7 +21,7 @@
 }
  .register {
    position: relative;
-   left: 800px;
+   left: 950px;
    bottom: 50px;
    font-size: large;
    border: 2px solid black;
@@ -30,7 +30,7 @@
 
  .login {
    position: relative;
-   left: 820px;
+   left: 960px;
    bottom: 50px;
    font-size: large;
    border: 2px solid black;
@@ -40,14 +40,14 @@
 
  .admin {
    position: relative;
-   right: 50px;
+   left: 217px;
    bottom: 50px;
    font-size: large;
  }
 
  .create-post {
    position: relative;
-   right: 30px;
+   right: 250px;
    bottom: 50px;
    /* font-size: large; */
 
@@ -55,7 +55,7 @@
 
 .friends{
   position: relative;
-  right: 10px;
+  right: 250px;
   bottom: 50px;
   /* font-size: large; */
 }
@@ -63,14 +63,14 @@
  .user {
    position: relative;
    bottom: 50px;
-   left:400px ;
+   left:490px ;
    /* font-size: large; */
  }
 
  #logout-button {
    position: relative;
    bottom: 50px;
-   left:420px ;
+   left:500px ;
  }
 
 

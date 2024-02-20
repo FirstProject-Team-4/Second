@@ -13,14 +13,15 @@ export default function FriendsView() {
     console.log(userData?.friendsRequest);
         return (
             <>
-            {userData?.friendsRequest?<div>
+            {userData?.friendsRequest?<div className='friend-request-id'>
                 { <FriendRequests friendsRequest={userData.friendsRequest} />}
             </div>
-            :<div>no requests</div>}
-                        {userData?.friends?<div>
+            :<div className="friend-request-id">no requests</div>}
+            
+                        {userData?.friends?<div className='friends-container-id'>
                             {<Friends friends={userData.friends}/>}
                         </div>
-                        :<div>no friends</div>}
+                        :<div className="friends-container-id">no friends</div>}
                         
                         
                         

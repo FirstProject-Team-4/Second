@@ -28,7 +28,7 @@ const navigateToChat=(friendUID:string)=>{
  nav(`/chat/${combineId(userData.uid,friendUID)}`)
 }
     return (
-        <div>
+        <>
             {friendList && friendList.map((friend: any, index: number) => {
                 return (
                     <div key={index}>
@@ -38,6 +38,6 @@ const navigateToChat=(friendUID:string)=>{
                     </div>
                 )
             })}
-        </div>
+        </>
     )
 }

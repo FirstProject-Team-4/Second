@@ -5,6 +5,7 @@ import { useAppContext } from "../../Context/AppContext";
 import { logoutUser } from "../../Service/auth-service";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import FriendsView from "../../Views/Friends-view/Friends-view";
 
 export const Header = () => {
     const navigate = useNavigate();
@@ -46,5 +47,8 @@ export const Header = () => {
                     <NavLink to="/category/stories" className="nav-link">Travel Stories</NavLink>
                 </div>
             )}
+            {location.pathname!==`/login`&&location.pathname!=='/register'&&location.pathname!=='/allUsers'&&<div id="friend-view" >
+                <FriendsView />
+                </div>}
         </header>);
 }

@@ -36,6 +36,7 @@ export default function AllUsers() {
                     return <div className="border-users" key={user.id}>
                           <div className="header">
                           {user?.userImage?.length > 1 && <img src={user.userImage} className='img' alt="profile" />}
+                          {!user.userImage && <span className="letter">{user.handle[0]}</span>}
                           <div className="information">
                         <NavLink to={`/profile/${user.handle}`}>{user.handle}</NavLink>
                         </div>

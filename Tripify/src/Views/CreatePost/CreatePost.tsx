@@ -92,11 +92,11 @@ export default function CreatePost() {
     if (userData.isBlock) {
       return alert('You are blocked');
     }
-    if (post.title.length < 16 || post.title.length > 64) {
-      return alert('The title must be between 16 and 64 symbols.');
+    if (post.title.length < 10 || post.title.length > 64) {
+      return alert('The title must be between 10 and 64 symbols.');
     }
-    if (post.content.length < 32 || post.content.length > 8192) {
-      return alert('The content must be between 32 symbols and 8192 symbols.');
+    if (post.content.length < 20 || post.content.length > 8192) {
+      return alert('The content must be between 20 symbols and 8192 symbols.');
     }
     let currentUserImage;
     if (userData.userImage) {

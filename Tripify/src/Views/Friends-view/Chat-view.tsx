@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { chatOwners, sendMessage } from "../../Service/friends-service";
 import { useAppContext } from "../../Context/AppContext";
 import UserImage from "../../Components/Post/UserImage/UserImage";
 import Button from "../../Components/Button/Button";
 import { onValue, ref } from "firebase/database";
 import { db } from "../../config/config-firebase";
+import Messages from "../../Components/Friends/Message";
+import "./Chat-view.css";
 
 export default function ChatView() {
     const { id } = useParams<{ id: string }>();
@@ -13,6 +15,7 @@ export default function ChatView() {
     const [currentMessage, setCurrentMessage] = useState('' as string)
     const [messageList, setMessageList] = useState([] as any)
     const [friend, setFriend] = useState({} as any)
+    const nav=useNavigate()
 
 
     useEffect(() => {
@@ -32,6 +35,7 @@ export default function ChatView() {
                     }))
                     setMessageList(messages)
                 }
+                
             })
      
             chatOwners(id).then((owners) => {
@@ -43,7 +47,7 @@ export default function ChatView() {
             })
             return () => unsubscribe()
         }
-    }, [id])
+    }, [id,userData])
 
     const sendCurrentMessage = () => {
         if (id) {
@@ -54,20 +58,18 @@ export default function ChatView() {
     }
 
     return (
-        <div style={{ background: `red` }}>
+       id?.includes(userData?.uid)? <div className="chat-container">
+            <div className="chat-header-image-name">
             {friend?.handle && <UserImage author={friend.handle} />}
             <h1>{friend?.handle}</h1>
-            <div style={{ height: `400px`, width: `200px` }}>
-                {messageList && messageList.map((message: any,) => {
-                    return (
-                        <div key={message.id}>
-                            <p>{message.content}</p>
-                        </div>
-                    )
-                })}
+            </div>
+            <div className="messages-container">
+               <Messages messages={messageList} />
+               <div ref={(el) => { el?.scrollIntoView({ behavior: "smooth" }) }} />
             </div>
             <input type="text" value={currentMessage} onChange={(e) => { setCurrentMessage(e.target.value) }} />
             <Button onClick={sendCurrentMessage}>Send message</Button>
-        </div>
+        </div>:
+        <p> You are not allowed to see this chat</p>
     )
 }

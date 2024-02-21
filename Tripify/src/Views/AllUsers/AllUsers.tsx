@@ -4,6 +4,11 @@ import { NavLink } from "react-router-dom";
 import Button from "../../Components/Button/Button";
 import './AllUsers.css'
 
+/**
+ * Renders a component that displays a list of users and allows searching by username.
+ * 
+ * @returns The rendered component.
+ */
 export default function AllUsers() {
     const [users, setUsers] = useState([] as any);
     const [search, setSearch] = useState('');
@@ -20,11 +25,19 @@ export default function AllUsers() {
 
 
 
+    /**
+     * Handles the search functionality.
+     * 
+     * @param value - The search value entered by the user.
+     */
     const handleSearch = (value: string) => {
         setSearch(value);
         searchUser();
-
     }
+
+    /**
+     * Searches for users based on the provided search term.
+     */
     const searchUser = async () => {
         const snapshot = await getAllUsers();
         const filtered = snapshot.filter((user: any) => {

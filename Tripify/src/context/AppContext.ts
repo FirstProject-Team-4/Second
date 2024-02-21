@@ -10,6 +10,11 @@ type AppContextType = {
 };
 
 export const AppContext = React.createContext<AppContextType | undefined>(undefined);
+/**
+ * Custom hook to access the AppContext.
+ * @returns The AppContext object.
+ * @throws {Error} If used outside of an AppContextProvider.
+ */
 export const useAppContext = () => {
   const context = React.useContext(AppContext);
   if (!context) {

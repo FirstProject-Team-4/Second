@@ -5,10 +5,15 @@ import Friends from "../../Components/Friends/Friends";
 import { onValue, ref } from "firebase/database";
 import { db } from "../../config/config-firebase";
 
+/**
+ * Renders the FriendsView component.
+ * 
+ * @returns JSX.Element
+ */
 export default function FriendsView() {
 
     const { userData } = useAppContext();
-    const[requests, setRequests] = useState<any>({})
+    const [requests, setRequests] = useState<any>({})
 
     useEffect(() => {
         if (userData?.friendsRequest) {
@@ -22,6 +27,7 @@ export default function FriendsView() {
             }
         })
     }, [userData]);
+
     return (
         <>
             {requests ? <div className='friend-request-id'>

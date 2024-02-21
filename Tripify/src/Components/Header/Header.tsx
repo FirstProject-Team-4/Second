@@ -8,17 +8,24 @@ import { useLocation } from "react-router-dom";
 import FriendsView from "../../Views/Friends-view/Friends-view";
 import logo from '/img/Tripify-forum.png';
 
+/**
+ * Renders the header component.
+ * 
+ * @returns The header component.
+ */
 export const Header = () => {
     const navigate = useNavigate();
     const { user, userData, setContext } = useAppContext();
     const location = useLocation();
+    
+    /**
+     * Logs out the user, clears the user context, and navigates to the home page.
+     */
     const logout = async () => {
         await logoutUser();
         setContext({ user: null, userData: null });
         navigate('/home');
-
     }
- 
 
 
     return (

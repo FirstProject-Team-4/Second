@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { chatOwners, sendMessage } from "../../Service/friends-service";
 import { useAppContext } from "../../Context/AppContext";
 import UserImage from "../../Components/Post/UserImage/UserImage";
@@ -9,13 +9,17 @@ import { db } from "../../config/config-firebase";
 import Messages from "../../Components/Friends/Message";
 import "./Chat-view.css";
 
+/**
+ * Renders the chat view component.
+ * 
+ * @returns The chat view component.
+ */
 export default function ChatView() {
     const { id } = useParams<{ id: string }>();
     const { userData } = useAppContext();
     const [currentMessage, setCurrentMessage] = useState('' as string)
     const [messageList, setMessageList] = useState([] as any)
     const [friend, setFriend] = useState({} as any)
-    const nav=useNavigate()
 
 
     useEffect(() => {
@@ -35,9 +39,9 @@ export default function ChatView() {
                     }))
                     setMessageList(messages)
                 }
-                
+
             })
-     
+
             chatOwners(id).then((owners) => {
                 if (owners) {
                     Object.keys(owners).filter((key) => key !== userData?.handle && key !== `messages`).map((key) => {
@@ -47,8 +51,11 @@ export default function ChatView() {
             })
             return () => unsubscribe()
         }
-    }, [id,userData])
+    }, [id, userData])
 
+    /**
+     * Sends the current message to the specified recipient.
+     */
     const sendCurrentMessage = () => {
         if (!currentMessage) {
             return
@@ -57,18 +64,17 @@ export default function ChatView() {
             sendMessage(id, { author: userData?.handle, createdOn: Number(new Date()), content: currentMessage })
         }
         setCurrentMessage('')
-
     }
 
     return (
-       id?.includes(userData?.uid)? <div className="chat-container">
+        id?.includes(userData?.uid) ? <div className="chat-container">
             <div className="chat-header-image-name">
-            {friend?.handle && <UserImage author={friend.handle} />}
-            <h1>{friend?.handle}</h1>
+                {friend?.handle && <UserImage author={friend.handle} />}
+                <h1>{friend?.handle}</h1>
             </div>
             <div className="messages-container">
-               <Messages messages={messageList} />
-               <div ref={(el) => { el?.scrollIntoView({ behavior: "smooth" }) }} />
+                <Messages messages={messageList} />
+                <div ref={(el) => { el?.scrollIntoView({ behavior: "smooth" }) }} />
             </div>
             <input type="text" onKeyDown={(event)=>{
                 if(event.key==='Enter'){
@@ -77,7 +83,7 @@ export default function ChatView() {
                 }
             }} placeholder="Type message..." value={currentMessage} onChange={(e) => { setCurrentMessage(e.target.value) }} />
             <Button onClick={sendCurrentMessage}>Send message</Button>
-        </div>:
-        <p> You are not allowed to see this chat</p>
+        </div> :
+            <p> You are not allowed to see this chat</p>
     )
 }

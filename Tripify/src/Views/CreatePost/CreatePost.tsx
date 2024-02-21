@@ -9,6 +9,11 @@ import './CreatePost.css';
 
 
 
+/**
+ * Component for creating a post.
+ *
+ * @returns The CreatePost component.
+ */
 export default function CreatePost() {
 
 
@@ -32,17 +37,34 @@ export default function CreatePost() {
     document.body.style.backgroundPosition = 'center';
   }, []);
 
+  /**
+   * Handles the submit event and updates the category state.
+   * @param {any} event - The submit event object.
+   * @returns {void}
+   */
   const handleSubmit = (event: any) => {
     setCategory(event.target.value);
   };
 
 
+  /**
+   * Updates the post object with a new value for the specified key.
+   * @param {string} value - The new value to be assigned.
+   * @param {string} key - The key of the property to be updated.
+   */
   const updatePost = (value: string, key: string) => {
     setPost({
       ...post,
       [key]: value,
     });
   };
+
+  /**
+   * Updates the image URL in the post object.
+   * 
+   * @param value - The selected image file.
+   * @param key - The key of the image property in the post object.
+   */
   const updateImage = (value: any, key: string) => {
     if (!value) {
       setPost({
@@ -57,12 +79,14 @@ export default function CreatePost() {
           ...post,
           [key]: url,
         });
-      }
-      );
+      });
     }
   }
 
 
+  /**
+   * Creates a new post.
+   */
   const createPost = async () => {
 
     if (userData.isBlock) {

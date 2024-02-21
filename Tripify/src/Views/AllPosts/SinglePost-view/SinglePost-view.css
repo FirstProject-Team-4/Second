@@ -1,10 +1,10 @@
-#comment-input{
- margin-left: 490px;
- border-radius: 15%;
- font-size: 25px;
+#comment-input {
+    margin-left: 490px;
+    border-radius: 15%;
+    font-size: 25px;
 }
 
-#add-comments{
+#add-comments {
     margin-left: 10px;
     border-radius: 15%;
     background-color: #b59fff80;
@@ -12,17 +12,16 @@
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.801);
 }
 
-#reply-input{
+#reply-input {
     margin-left: 400px;
     border-radius: 15%;
     font-size: 25px;
-   }
-   
-   #add-reply{
-       margin-left: 10px;
-       border-radius: 15%;
-       background-color: #e19fff80;
-       border: 1px solid #ffc2ff58;
-       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.801);
-   }
+}
 
+#add-reply {
+    margin-left: 10px;
+    border-radius: 15%;
+    background-color: #e19fff80;
+    border: 1px solid #ffc2ff58;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.801);
+}

@@ -28,7 +28,7 @@ export default function friendsRequest({ friendsRequest }: any) {
         })
         setRequest(currentRequests)
     }, [friendsRequest])
-    
+
     /**
      * Accepts a friend request.
      * 
@@ -56,11 +56,11 @@ export default function friendsRequest({ friendsRequest }: any) {
             <h4 id='title-request'>Friend Requests</h4>
             {request.map((request: any, index: number) => {
                 return (
-                    
+
                     <div key={index} id="fr-id">
                         <p>{request.handle}</p>
                         <button className="btn" onClick={() => acceptRequest(request)}>Accept</button>
-                        <button  className='btn' onClick={() => rejectRequest(request)}>Reject</button>
+                        <button className='btn' onClick={() => rejectRequest(request)}>Reject</button>
                     </div>
                 )
             })}

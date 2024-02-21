@@ -1,6 +1,5 @@
 
 import { useAppContext } from "../Context/AppContext";
-// import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 /**
@@ -10,7 +9,6 @@ import { useEffect } from "react";
  * @returns The authenticated component.
  */
 export default function Authentication(prop: any) {
-    // const navigate = useNavigate();
     const { userData } = useAppContext();
 
     useEffect(() => {

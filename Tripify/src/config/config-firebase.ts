@@ -3,6 +3,9 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 import { getStorage } from 'firebase/storage';
 
+/**
+ * Firebase configuration object.
+ */
 const firebaseConfig = {
   apiKey: "AIzaSyD1VIi7cSYs-MGQTBai7xyxmlUK9Pzt-NU",
   authDomain: "tripify-375f2.firebaseapp.com",

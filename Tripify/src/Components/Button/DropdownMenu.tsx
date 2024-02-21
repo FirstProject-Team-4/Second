@@ -15,12 +15,12 @@ function DropdownMenu(props: any) {
    * @param {any} event - The event object.
    * @returns {void}
    */
-  const handleChange = (event: any) => {
+  const handleChange = (event: any): void => {
     setSelectedOption(event.target.value);
     filter(event.target.value);
   };
 
- 
+
   /**
    * Filters the array based on the selected option.
    * @param option - The selected option for filtering.
@@ -34,7 +34,6 @@ function DropdownMenu(props: any) {
     }
     props.setArray([...props.array].sort((a: any, b: any) => b[option] - a[option]));
   };
-  
   return (
     <select value={selectedOption} onChange={handleChange} id='drop-down'>
       <option value="">Filter</option>

@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 
-type User = any; 
-type UserData = any; 
+type User = any;
+type UserData = any;
 
 type AppContextType = {
   user: User | null;

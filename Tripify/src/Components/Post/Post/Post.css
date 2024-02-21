@@ -13,7 +13,7 @@
   margin-left: 170px;
 }
 
-.date{
+.date {
   font-size: 20px;
   margin-left: 10px;
   margin-right: 0px;
@@ -37,7 +37,7 @@
   word-wrap: break-word;
 }
 
-#delete{
+#delete {
   margin-left: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -52,7 +52,7 @@
 }
 
 #edit-button {
-  background-color: #008CBA; 
+  background-color: #008CBA;
   border: none;
   color: white;
   padding: 10px 24px;
@@ -93,6 +93,6 @@
   background-color: #4c0065;
 }
 
-button{
+button {
   padding: 0px;
 }

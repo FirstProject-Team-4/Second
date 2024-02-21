@@ -17,7 +17,7 @@ export const Header = () => {
     const navigate = useNavigate();
     const { user, userData, setContext } = useAppContext();
     const location = useLocation();
-    
+
     /**
      * Logs out the user, clears the user context, and navigates to the home page.
      */
@@ -31,8 +31,8 @@ export const Header = () => {
     return (
         <header>
             <div className="header-class" >
-                <NavLink to='/home'  className='logo'>
-                    <img src={logo} alt="Logo"  />
+                <NavLink to='/home' className='logo'>
+                    <img src={logo} alt="Logo" />
                 </NavLink>
                 {user && userData?.isAdmin && <NavLink to="/allUsers" className='admin' >Check Users</NavLink>}
                 {!user && <NavLink to="/register" className='register'>Register</NavLink>}

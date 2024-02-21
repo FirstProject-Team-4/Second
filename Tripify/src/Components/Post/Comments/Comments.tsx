@@ -38,7 +38,7 @@ export default function Comments(prop: any) {
 
     getPostById(prop.comment.postId).then((value: any) => {
 
-      setComments(value[0].comments.filter((c: any) => c.id === comments.id)[0]) 
+      setComments(value[0].comments.filter((c: any) => c.id === comments.id)[0])
     });
     setReplyIsActive(true);
     setReply('');

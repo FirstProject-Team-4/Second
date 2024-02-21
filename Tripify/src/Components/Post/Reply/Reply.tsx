@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 import './Reply.css';
 import UserImage from "../UserImage/UserImage";
 
-export default function Reply(prop: { reply: { content: string,author:string, createdOn:string, likes: number,userImage:string, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string }, setCommends: any , comment: any}) {
+export default function Reply(prop: { reply: { content: string, author: string, createdOn: string, likes: number, userImage: string, dislikes: number, likedBy: string[], dislikesBy: string[], postId: string, commentId: string, id: string }, setCommends: any, comment: any }) {
     const [reply, setReply] = useState(prop.reply);
     const { userData } = useAppContext();
     const [isEditing, setIsEditing] = useState(false);
@@ -19,10 +19,10 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
     const toggleReplyLikes = async () => {
         if (!user) {
             return alert('Login to count your opinions');
-          }
+        }
         if (userData.isBlock) {
             return alert('You are blocked');
-          }
+        }
         if (reply.dislikesBy?.includes(userData.handle)) {
             await removeDislikeReply(userData.handle, reply.postId, reply.commentId, reply.id, reply.dislikes - 1);
         }
@@ -51,11 +51,11 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
     const toggleDisLikeReply = async () => {
         if (!user) {
             return alert('Login to count your opinions');
-          }
+        }
 
         if (userData.isBlock) {
             return alert('You are blocked');
-          }
+        }
         if (reply.likedBy?.includes(userData.handle)) {
             await removeLikeReply(userData.handle, reply.postId, reply.commentId, reply.id, reply.likes - 1);
         }
@@ -86,8 +86,8 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
 
             const updatePost: { [key: string]: any } = {};
             updatePost[`/posts/${reply.postId}/comments/${reply.commentId}/replyCounter`] = prop.comment.replyCounter - 1;
-    
-            update(ref(db),updatePost);
+
+            update(ref(db), updatePost);
             deleteReply(prop.reply.postId, prop.reply.commentId, prop.reply.id);
 
             prop.setCommends((comments: any) => {
@@ -116,11 +116,11 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
     }
 
     const confirmEdit = () => {
-        const updateReply: {[key: string]: any} = {};
+        const updateReply: { [key: string]: any } = {};
         updateReply[`/posts/${reply.postId}/comments/${reply.commentId}/replies/${reply.id}/content`] = editedReply;
         update(ref(db), updateReply);
-       
-      
+
+
         prop.setCommends((comments: any) => {
             let updatedPost = { ...comments };
             updatedPost.replies = updatedPost.replies.map((r: any) => {
@@ -133,39 +133,40 @@ export default function Reply(prop: { reply: { content: string,author:string, cr
         });
 
         setIsEditing(false);
-        setReply({...reply, content: editedReply});
-      };
+        setReply({ ...reply, content: editedReply });
+    };
     return (
         isEditing ?
-        // <div style={{ border: '2px solid green' }}>
-        <div className="border-reply">
-          <NavLink to={`/profile/${reply.author}`}>{reply.author}</NavLink>
-        <span>{new Date(reply.createdOn).toLocaleString()}</span>
-        <input value={editedReply} type="text" name="comment" id="comment-input" onChange={(e) => {
-          setEditedReply(e.target.value) }} />
-        <Button onClick={confirmEdit}>Save</Button>
-        <Button onClick={() => { setIsEditing(false) }}>Cancel</Button>
-        
-      </div>
-      :
-        reply &&
-        <div className="border-reply">
-        <div className="comment-container">
-        <div className="header">
-       <UserImage author={reply.author}></UserImage>
-        <div className="information">
-        <NavLink to={`/profile/${reply.author}`}>{reply.author}</NavLink>
-        <span>{new Date(reply.createdOn).toLocaleString()}</span>
-        </div>
-        </div>
-        </div>
-            <p>{prop.reply.content}</p>
-            <Button color={setLikeButtonColor()} onClick={toggleReplyLikes}>{reply.likes}👍</Button>
-            <Button color={setDislikeButtonColor()} onClick={toggleDisLikeReply}>{reply.dislikes}👎</Button>
-            {userData?.isAdmin===true? <Button onClick={deleteCurrentReply}>❌</Button>:reply.author === userData?.handle && <Button onClick={deleteCurrentReply}>❌</Button>}
-           {reply.author===userData.handle&&<Button onClick={isEdinOn}>✎</Button>}
-            
+            // <div style={{ border: '2px solid green' }}>
+            <div className="border-reply">
+                <NavLink to={`/profile/${reply.author}`}>{reply.author}</NavLink>
+                <span>{new Date(reply.createdOn).toLocaleString()}</span>
+                <input value={editedReply} type="text" name="comment" id="comment-input" onChange={(e) => {
+                    setEditedReply(e.target.value)
+                }} />
+                <Button onClick={confirmEdit}>Save</Button>
+                <Button onClick={() => { setIsEditing(false) }}>Cancel</Button>
 
-        </div>
+            </div>
+            :
+            reply &&
+            <div className="border-reply">
+                <div className="comment-container">
+                    <div className="header">
+                        <UserImage author={reply.author}></UserImage>
+                        <div className="information">
+                            <NavLink to={`/profile/${reply.author}`}>{reply.author}</NavLink>
+                            <span>{new Date(reply.createdOn).toLocaleString()}</span>
+                        </div>
+                    </div>
+                </div>
+                <p>{prop.reply.content}</p>
+                <Button color={setLikeButtonColor()} onClick={toggleReplyLikes}>{reply.likes}👍</Button>
+                <Button color={setDislikeButtonColor()} onClick={toggleDisLikeReply}>{reply.dislikes}👎</Button>
+                {userData?.isAdmin === true ? <Button onClick={deleteCurrentReply}>❌</Button> : reply.author === userData?.handle && <Button onClick={deleteCurrentReply}>❌</Button>}
+                {reply.author === userData.handle && <Button onClick={isEdinOn}>✎</Button>}
+
+
+            </div>
     )
 }

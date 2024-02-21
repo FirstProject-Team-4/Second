@@ -12,9 +12,9 @@ import { db } from "../../config/config-firebase";
 export default function Friends({ friends }: { friends: any }) {
 
     const [friendList, setFriendList] = useState<any>([]);
-    const { userData ,setContext} = useAppContext();
+    const { userData, setContext } = useAppContext();
     const nav = useNavigate();
-    
+
     useEffect(() => {
         if (friends) {
             const currentFriendList = Object.keys(friends).map((key) => { return friends[key] });
@@ -22,13 +22,13 @@ export default function Friends({ friends }: { friends: any }) {
         }
     }, [userData])
 
-  
+
     /**
      * Deletes a friend from the friend list and updates the context.
      * @param currentFriend - The friend object to be deleted.
      */
     const deleteFriend = (currentFriend: { handle: string, uid: string }) => {
-        if (window.confirm(`Are you sure you want to delete ${currentFriend.handle} from your friends?`)){
+        if (window.confirm(`Are you sure you want to delete ${currentFriend.handle} from your friends?`)) {
             removeFriend(userData.handle, currentFriend.handle)
             setFriendList(friendList.filter((friend: any) => friend.handle !== currentFriend))
             update(ref(db), { [`/chat/${combineId(userData.uid, currentFriend.uid)}`]: null });

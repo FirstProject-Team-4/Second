@@ -50,6 +50,9 @@ export default function ChatView() {
     }, [id,userData])
 
     const sendCurrentMessage = () => {
+        if (!currentMessage) {
+            return
+        }
         if (id) {
             sendMessage(id, { author: userData?.handle, createdOn: Number(new Date()), content: currentMessage })
         }
@@ -67,7 +70,12 @@ export default function ChatView() {
                <Messages messages={messageList} />
                <div ref={(el) => { el?.scrollIntoView({ behavior: "smooth" }) }} />
             </div>
-            <input type="text" value={currentMessage} onChange={(e) => { setCurrentMessage(e.target.value) }} />
+            <input type="text" onKeyDown={(event)=>{
+                if(event.key==='Enter'){
+                    event.preventDefault()
+                    sendCurrentMessage()
+                }
+            }} placeholder="Type message..." value={currentMessage} onChange={(e) => { setCurrentMessage(e.target.value) }} />
             <Button onClick={sendCurrentMessage}>Send message</Button>
         </div>:
         <p> You are not allowed to see this chat</p>

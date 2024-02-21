@@ -21,7 +21,7 @@ export default function SinglePostView() {
     const [posts, setPosts] = useState<PostType[]>([]);
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('')
-    const { userData } = useAppContext();
+    const { userData, user } = useAppContext();
     const [fak, setFak] = useState(false);
 
     useEffect(() => {
@@ -53,11 +53,14 @@ export default function SinglePostView() {
      * Clears the comment input field.
      */
     const addCurrentComment = async () => {
-        if (userData.isBlock) {
+        if (userData?.isBlock) {
             return alert('You are blocked');
         }
         if (comment.length < 1) {
             return;
+        }
+        if (!user) {
+            return alert('Login to count your opinions');
         }
         addComment(posts[0].id, userData, comment,);
         if (id) {

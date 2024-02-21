@@ -19,6 +19,11 @@ import AllUsers from './Views/AllUsers/AllUsers'
 import Authentication from './Hoc/Authentication'
 import ChatView from './Views/Friends-view/Chat-view'
 
+/**
+ * The main component of the application.
+ * Renders the header, main content, and footer.
+ * Manages the user context and authentication state.
+ */
 function App() {
   const [context, setContext] = useState({
     user: null as any,
@@ -48,7 +53,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomeView />} />
               <Route path="/home" element={<HomeView />} />
-              <Route path="/chat/:id" element={<ChatView />} /> {/*TODO: add authentication*/}
+              <Route path="/chat/:id" element={<ChatView />} />
               <Route path="/allUsers" element={<Authentication>{<AllUsers />}</Authentication>} />
               <Route path="/login" element={<LoginView />} />
               <Route path="/register" element={<RegisterView />} />

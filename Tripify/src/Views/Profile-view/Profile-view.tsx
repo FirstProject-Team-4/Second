@@ -13,6 +13,11 @@ import Button from "../../Components/Button/Button";
 import DropdownMenu from "../../Components/Button/DropdownMenu";
 import { combineId, removeFriend } from "../../Service/friends-service";
 
+/**
+ * Renders the profile view component.
+ * 
+ * @returns The profile view component.
+ */
 const Profile = () => {
     const { user, userData, setContext } = useAppContext();
     const [post, setPosts] = useState<PostType[]>([]);
@@ -66,10 +71,18 @@ const Profile = () => {
         document.body.style.backgroundPosition = 'center';
     }, []);
 
+    /**
+     * Handles the click event for the upload button.
+     */
     const handleUploadClick = async () => {
         document.getElementById('fileInput')?.click();
     }
 
+    /**
+     * Handles the selection of a file and updates the user's profile image.
+     * 
+     * @param e - The event object containing the selected file.
+     */
     const handleFileSelect = async (e: any) => {
         const file = e.target.files[0];
         const url = await saveImage(file)
@@ -78,10 +91,14 @@ const Profile = () => {
         await update(ref(db), updatePost)
 
         setContext({ ...user, userData: { ...userData, userImage: url } })
-
     }
 
 
+    /**
+     * Handles the form submission for updating user profile information.
+     * 
+     * @param e - The form submission event.
+     */
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
@@ -96,8 +113,10 @@ const Profile = () => {
 
         setShowEdit(false);
         setErrorMessage('');
-
     }
+    /**
+     * Loads the user profile data and updates the state variables.
+     */
     const loadUserProfile = () => {
         setFirstName(currentUser.firstName);
         setLastName(currentUser.lastName);
@@ -107,6 +126,9 @@ const Profile = () => {
         setShowEdit(!showEdit);
     }
 
+    /**
+     * Toggles the block status of the current user.
+     */
     const handelBlock = () => {
         if (currentUser?.isBlock) {
             const updatePost: { [key: string]: any } = {};
@@ -121,6 +143,13 @@ const Profile = () => {
         }
     }
 
+    /**
+     * Toggles the block status of the current user.
+     * If the user is currently blocked, returns 'Unblock'.
+     * If the user is not blocked, returns 'Block'.
+     * 
+     * @returns The string 'Unblock' or 'Block'.
+     */
     const toggleBlock = () => {
         if (currentUser?.isBlock) {
             return 'Unblock';
@@ -129,6 +158,9 @@ const Profile = () => {
         }
     }
 
+    /**
+     * Sends a friend request to the current user.
+     */
     const friendsRequest = () => {
         const path = `/users/${currentUser.handle}/friendsRequest/`
         const newRequest = {
@@ -138,13 +170,15 @@ const Profile = () => {
         push(ref(db, path), newRequest)
         setFriendsRequest([...requestFriends, userData.handle]);
     }
+
+    /**
+     * Removes the current friend from the user's friend list and updates the chat history.
+     */
     const removeCurrentFriend = () => {
         removeFriend(currentUser.handle, userData.handle);
         setFriends(friends?.filter((friend: any) => friend !== userData.handle));
         update(ref(db), { [`/chat/${combineId(userData.uid, currentUser.uid)}`]: null });
         setContext({ ...user, userData: { ...userData, friends: friends?.filter((friend: any) => friend !== userData.handle) } })
-
-
     }
 
 

@@ -23,6 +23,11 @@ export type PostType = {
 
 };
 
+/**
+ * Renders the AllPosts component.
+ * 
+ * @returns The rendered AllPosts component.
+ */
 export default function AllPosts() {
     const [posts, setPosts] = useState<PostType[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -34,10 +39,10 @@ export default function AllPosts() {
     useEffect(() => {
         getAllPosts(search).then(setPosts);
     }, [search]);
+
     return (
         <div>
             <h1>All posts</h1>
-
 
             <label htmlFor="search" className="search-label" >Search </label>
             <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" className="search-view" placeholder="⌕ search... " /><br />

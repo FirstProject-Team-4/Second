@@ -11,6 +11,11 @@ import { db } from "../../../config/config-firebase";
 import DropdownMenu from "../../../Components/Button/DropdownMenu";
 import './SinglePost-view.css'
 
+/**
+ * Renders a single post view.
+ * 
+ * @returns The JSX element representing the single post view.
+ */
 export default function SinglePostView() {
     const { id } = useParams()
     const [posts, setPosts] = useState<PostType[]>([]);
@@ -30,50 +35,56 @@ export default function SinglePostView() {
             (async () => {
                 const post = await getPostById(id);
                 setPosts(post || []);
-                if(post){
-                     setComments(post[0].comments);
+                if (post) {
+                    setComments(post[0].comments);
                 }
             })();
         }
-    }, [comment,fak]);
-    
-    
+    }, [comment, fak]);
 
-    const addCurrentComment = async() => {
+
+
+    /**
+     * Adds a new comment to the single post view.
+     * If the user is blocked, it displays an alert.
+     * If the comment is empty, it does nothing.
+     * Updates the comment count of the post.
+     * Retrieves the updated comments for the post.
+     * Clears the comment input field.
+     */
+    const addCurrentComment = async () => {
         if (userData.isBlock) {
             return alert('You are blocked');
-          }
+        }
         if (comment.length < 1) {
             return;
         }
         addComment(posts[0].id, userData, comment,);
-        if(id){
+        if (id) {
             const updatePost: { [key: string]: any } = {};
-   
+
             updatePost[`/posts/${id}/commentsCount`] = posts[0].commentsCount + 1;
             posts[0].commentsCount++;
-            update(ref(db),updatePost);
+            update(ref(db), updatePost);
             const post = await getPostById(id);
-            if(post && post[0]){ 
+            if (post && post[0]) {
                 setComments(post[0].comments);
-              
             }
         }
         setComment('');
-           
-     
     }
-        return (
-           posts[0]&& <div>
-                <h1>Post</h1>
 
-                {posts[0] && <Post key={posts[0].id} post={posts[0]} setPosts={setPosts} ></Post>}
-                <input value={comment} type="text" name="comment" id="comment-input" onChange={e => setComment(e.target.value)} />
-                <Button onClick={addCurrentComment} id="add-comments" >Add Comment</Button>
-                {posts[0]  && <DropdownMenu array={comments} setArray={setComments} ></DropdownMenu>}
-                <div>
-                    {comments && comments.map((c: any) => <Comments key={c.id}  comment={c} fak={fak} setFak={setFak} post={posts[0]} />)}
-                </div>
+    return (
+        posts[0] && <div>
+            <h1>Post</h1>
+
+            {posts[0] && <Post key={posts[0].id} post={posts[0]} setPosts={setPosts} ></Post>}
+            <input value={comment} type="text" name="comment" id="comment-input" onChange={e => setComment(e.target.value)} />
+            <Button onClick={addCurrentComment} id="add-comments" >Add Comment</Button>
+            {posts[0] && <DropdownMenu array={comments} setArray={setComments} ></DropdownMenu>}
+            <div>
+                {comments && comments.map((c: any) => <Comments key={c.id} comment={c} fak={fak} setFak={setFak} post={posts[0]} />)}
             </div>
-        )
-    }
+        </div>
+    )
+}

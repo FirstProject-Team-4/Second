@@ -6,6 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../Service/auth-service';
 
 
+/**
+ * Renders the login view component.
+ * 
+ * @returns The login view component.
+ */
 export default function LoginView() {
   const navigate = useNavigate();
   const { setContext } = useAppContext();
@@ -28,6 +33,11 @@ export default function LoginView() {
     }
   }, []);
 
+  /**
+   * Logs in the user with the provided email and password.
+   * If the login is successful, sets the user context and navigates to the home page.
+   * If there is an error, sets the error state to true.
+   */
   const login = async (): Promise<void> => {
     try {
       const response = await loginUser(form.email, form.password);
@@ -36,7 +46,6 @@ export default function LoginView() {
     } catch (error: any) {
       setError(true);
     }
-
   }
 
 

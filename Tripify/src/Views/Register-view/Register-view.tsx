@@ -4,6 +4,11 @@ import Button from '../../Components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../../Service/auth-service';
 import { createUserHandle, getUserByHandle } from '../../Service/user-service';
+/**
+ * Renders the RegisterView component.
+ * 
+ * @returns The JSX element representing the RegisterView component.
+ */
 export default function RegisterView() {
 
   const nav = useNavigate();
@@ -21,12 +26,23 @@ export default function RegisterView() {
   });
 
   useEffect(() => {
-    document.body.style.backgroundImage = 'url(https://images.squarespace-cdn.com/content/v1/5ad3c92c12b13fb122e90d3c/1566025164525-SF6MXDK5SDTFFGGAAYQV/IMG_5616.JPG)';
+    document.body.style.backgroundImage = 'url(https://img.freepik.com/free-vector/camping-site-with-trailer-tent-burning-bonfire_107791-15732.jpg?w=1380&t=st=1708298852~exp=1708299452~hmac=71a2c81b635c4943ab5ec72802dfa52a0cdfe6fba75704eb0f32495c7d9ad021)';
+    document.body.style.backgroundSize = 'contain';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundPosition = 'center';
     return () => {
-      document.body.style.backgroundImage = 'none';
+      document.body.style.backgroundImage = 'url(https://img.freepik.com/free-vector/winter-landscape-with-frozen-lake-clouds_107791-1861.jpg?w=1380&t=st=1708300170~exp=1708300770~hmac=7f64d83fc68ab8082c106577bb1b910260a6e8acd782af2c01196102db24bb43)';
+
     }
   }, []);
 
+  /**
+   * Submits the registration form.
+   * 
+   * @returns A Promise that resolves to void.
+   */
   const submit = async (): Promise<void> => {
     let username = ''
     let email = ''
@@ -71,10 +87,12 @@ export default function RegisterView() {
       setError({ username: 'valid', password: 'valid', email: 'Email is already in use' });
       return;
     }
-
-
-
   }
+
+  /**
+   * Determines the color of the username based on the error state.
+   * @returns The color as a string ('green', 'red', or 'black').
+   */
   const usernameColor = (): string => {
     if (error.username === 'valid') {
       return 'green';
@@ -84,6 +102,11 @@ export default function RegisterView() {
     }
     return 'black';
   }
+
+  /**
+   * Determines the color of the email based on the error state.
+   * @returns The color as a string ('green', 'red', or 'black').
+   */
   const emailColor = (): string => {
     if (error.email === 'valid') {
       return 'green';
@@ -93,6 +116,11 @@ export default function RegisterView() {
     }
     return 'black';
   }
+
+  /**
+   * Determines the color of the password based on the error status.
+   * @returns The color as a string ('green', 'red', or 'black').
+   */
   const passwordColor = (): string => {
     if (error.password === 'valid') {
       return 'green';
@@ -103,18 +131,7 @@ export default function RegisterView() {
     return 'black';
   }
 
-  useEffect(() => {
-    document.body.style.backgroundImage = 'url(https://img.freepik.com/free-vector/camping-site-with-trailer-tent-burning-bonfire_107791-15732.jpg?w=1380&t=st=1708298852~exp=1708299452~hmac=71a2c81b635c4943ab5ec72802dfa52a0cdfe6fba75704eb0f32495c7d9ad021)';
-    document.body.style.backgroundSize = 'contain';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundAttachment = 'fixed';
-    document.body.style.backgroundPosition = 'center';
-    return () => {
-      document.body.style.backgroundImage = 'url(https://img.freepik.com/free-vector/winter-landscape-with-frozen-lake-clouds_107791-1861.jpg?w=1380&t=st=1708300170~exp=1708300770~hmac=7f64d83fc68ab8082c106577bb1b910260a6e8acd782af2c01196102db24bb43)';
 
-    }
-  }, []);
 
   return (
     <div className="register-view">

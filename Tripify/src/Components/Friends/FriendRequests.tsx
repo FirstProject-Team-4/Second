@@ -15,7 +15,7 @@ export default function friendsRequest({ friendsRequest }: any) {
             }
         })
         setRequest(currentRequests)
-    }, [])
+    }, [friendsRequest])
     const acceptRequest = (singlyRequest: { handle: string, uid: string, id: string }) => {
         addFriend({ handle: userData.handle, uid: userData.uid }, singlyRequest)
         setRequest(request.filter((request: any) => request.id !== singlyRequest.id))

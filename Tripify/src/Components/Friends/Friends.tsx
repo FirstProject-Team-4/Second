@@ -8,19 +8,25 @@ import { db } from "../../config/config-firebase";
 export default function Friends({ friends }: { friends: any }) {
 
     const [friendList, setFriendList] = useState<any>([]);
-    const { userData } = useAppContext();
+    const { userData ,setContext} = useAppContext();
     const nav = useNavigate();
     useEffect(() => {
         if (friends) {
             const currentFriendList = Object.keys(friends).map((key) => { return friends[key] });
             setFriendList(currentFriendList);
         }
-    }, [])
+    }, [userData])
 
     const deleteFriend = (currentFriend: { handle: string, uid: string }) => {
+        if (window.confirm(`Are you sure you want to delete ${currentFriend.handle} from your friends?`)){
         removeFriend(userData.handle, currentFriend.handle)
         setFriendList(friendList.filter((friend: any) => friend.handle !== currentFriend))
         update(ref(db), { [`/chat/${combineId(userData.uid, currentFriend.uid)}`]: null });
+        setContext({ ...userData, friends: { ...friendList.filter((friend: any) => friend.handle !== currentFriend) } })
+        }
+        else{
+            return
+        }
     }
     const navigateToChat = (friendUID: string) => {
         nav(`/chat/${combineId(userData.uid, friendUID)}`)

@@ -11,7 +11,7 @@ import { getUserByHandle } from "../../Service/user-service";
 import './Profile-view.css';
 import Button from "../../Components/Button/Button";
 import DropdownMenu from "../../Components/Button/DropdownMenu";
-import { removeFriend } from "../../Service/friends-service";
+import { combineId, removeFriend } from "../../Service/friends-service";
 
 const Profile = () => {
     const { user, userData, setContext } = useAppContext();
@@ -141,6 +141,9 @@ const Profile = () => {
     const removeCurrentFriend = () => {
         removeFriend(currentUser.handle, userData.handle);
         setFriends(friends?.filter((friend: any) => friend !== userData.handle));
+        update(ref(db), { [`/chat/${combineId(userData.uid, currentUser.uid)}`]: null });
+        setContext({ ...user, userData: { ...userData, friends: friends?.filter((friend: any) => friend !== userData.handle) } })
+
 
     }
 
